@@ -195,8 +195,8 @@ const heroes = [
     legal: 'WEAPON X // XAVIER INSTITUTE // CLASSIFIED',
     posterTag: 'ADAMANTIUM GRADE',
     posterSubject: 'SUBJECT: LOGAN // WEAPON X',
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBep0kvYp0fJ87tTVvgT88Z05mIjt_c1bcy_EOIi-kmmoTb3LJbcVJ6VIPuqENMeUKxKQvtshaEbpXIQEBY285iMzpc-6gGSbusCsyNJAnp5PSUNzh3D8jkVJ8r6uIIKKuXBBBKH7ybPfbgEfpJQcGsSjrqrcvM4j1Hptrh-vvWqnaOkHH9MIj09qhgTlQjGW8jGLeEwMwpqWFFXwBF9M3BXN39FapMSBp-gEewErU-jdJsl24uzJlTun4S98-jRQr3XeM',
-    backgroundImage: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBep0kvYp0fJ87tTVvgT88Z05mIjt_c1bcy_EOIi-kmmoTb3LJbcVJ6VIPuqENMeUKxKQvtshaEbpXIQEBY285iMzpc-6gGSbusCsyNJAnp5PSUNzh3D8jkVJ8r6uIIKKuXBBBKH7ybPfbgEfpJQcGsSjrqrcvM4j1Hptrh-vvWqnaOkHH9MIj09qhgTlQjGW8jGLeEwMwpqWFFXwBF9M3BXN39FapMSBp-gEewErU-jdJsl24uzJlTun4S98-jRQr3XeM',
+    image: 'assets/wolverine_card.jpg',
+    backgroundImage: 'assets/wolverine_backdrop.jpg',
     theme: {
       primary: '#facc15',
       secondary: '#eab308',

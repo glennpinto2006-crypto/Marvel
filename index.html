@@ -847,8 +847,8 @@ function getFallbackHeroes() {
     "legal": "WEAPON X // XAVIER INSTITUTE // CLASSIFIED",
     "posterTag": "ADAMANTIUM GRADE",
     "posterSubject": "SUBJECT: LOGAN // WEAPON X",
-    "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuBep0kvYp0fJ87tTVvgT88Z05mIjt_c1bcy_EOIi-kmmoTb3LJbcVJ6VIPuqENMeUKxKQvtshaEbpXIQEBY285iMzpc-6gGSbusCsyNJAnp5PSUNzh3D8jkVJ8r6uIIKKuXBBBKH7ybPfbgEfpJQcGsSjrqrcvM4j1Hptrh-vvWqnaOkHH9MIj09qhgTlQjGW8jGLeEwMwpqWFFXwBF9M3BXN39FapMSBp-gEewErU-jdJsl24uzJlTun4S98-jRQr3XeM",
-    "backgroundImage": "https://lh3.googleusercontent.com/aida-public/AB6AXuBep0kvYp0fJ87tTVvgT88Z05mIjt_c1bcy_EOIi-kmmoTb3LJbcVJ6VIPuqENMeUKxKQvtshaEbpXIQEBY285iMzpc-6gGSbusCsyNJAnp5PSUNzh3D8jkVJ8r6uIIKKuXBBBKH7ybPfbgEfpJQcGsSjrqrcvM4j1Hptrh-vvWqnaOkHH9MIj09qhgTlQjGW8jGLeEwMwpqWFFXwBF9M3BXN39FapMSBp-gEewErU-jdJsl24uzJlTun4S98-jRQr3XeM",
+    "image": "assets/wolverine_card.jpg",
+    "backgroundImage": "assets/wolverine_backdrop.jpg",
     "theme": {
       "primary": "#facc15",
       "secondary": "#eab308",
@@ -1132,6 +1132,42 @@ function updateBackground(hero) {
     amb3.style.height = '400px';
     amb3.style.top = '42%';
     amb3.style.left = '50%';
+  } else if (hero.id === 'wolverine') {
+    bgGradient.classList.remove('captain-shield-rings');
+    nextEl.style.backgroundImage = `url('${hero.backgroundImage}')`;
+    nextEl.style.backgroundPosition = 'center 40%';
+    nextEl.style.backgroundSize = 'cover';
+    nextEl.style.filter = 'contrast(1.25) brightness(0.9) saturate(1.15)';
+    nextEl.style.opacity = '0.92';
+
+    // Adamantium slash & Weapon X metallic atmospheric vignette
+    bgGradient.style.background = `
+      radial-gradient(circle at 50% 45%, transparent 22%, rgba(12,10,5,0.42) 54%, rgba(8,7,3,0.88) 84%, #070603 100%),
+      linear-gradient(to top, #070603 0%, transparent 42%, rgba(8,7,3,0.65) 100%),
+      linear-gradient(to right, rgba(8,7,3,0.68) 0%, transparent 32%, transparent 68%, rgba(8,7,3,0.68) 100%)
+    `;
+
+    if (bgMask) bgMask.style.opacity = '0.28';
+    if (bgDarkening) bgDarkening.style.opacity = '0.38';
+
+    // Berserker amber & adamantium silver-gold ambient energy glows
+    amb1.style.background = 'radial-gradient(circle, rgba(250, 204, 21, 0.32) 0%, rgba(202, 138, 4, 0.1) 50%, transparent 75%)';
+    amb1.style.width = '750px';
+    amb1.style.height = '750px';
+    amb1.style.top = '40%';
+    amb1.style.left = '50%';
+
+    amb2.style.background = 'radial-gradient(circle, rgba(234, 179, 8, 0.22) 0%, rgba(161, 98, 7, 0.06) 50%, transparent 75%)';
+    amb2.style.width = '620px';
+    amb2.style.height = '620px';
+    amb2.style.top = '45%';
+    amb2.style.left = '48%';
+
+    amb3.style.background = 'radial-gradient(circle, rgba(254, 240, 138, 0.24) 0%, transparent 70%)';
+    amb3.style.width = '380px';
+    amb3.style.height = '380px';
+    amb3.style.top = '42%';
+    amb3.style.left = '50%';
   } else {
     bgGradient.classList.remove('captain-shield-rings');
     if (bgMask) bgMask.style.opacity = '1';
@@ -1170,7 +1206,7 @@ function updateBackground(hero) {
 
   // Cross-fade with explicit opacity handling
   nextEl.classList.add('active');
-  nextEl.style.opacity = (hero.id === 'captain' || hero.id === 'strange') ? '0.92' : '1';
+  nextEl.style.opacity = (hero.id === 'captain' || hero.id === 'strange' || hero.id === 'wolverine') ? '0.92' : '1';
   currentEl.classList.remove('active');
   currentEl.style.opacity = '0';
   bgLayerToggle = nextLayer;
