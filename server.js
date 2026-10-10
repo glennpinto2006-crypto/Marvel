@@ -84,7 +84,7 @@ const heroes = [
     posterTag: 'STORMBREAKER ACTIVE',
     posterSubject: 'SUBJECT: THOR ODINSON // NEW ASGARD',
     image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBQqs4vNQCpE44D0PEGSUaN5BPh4QevthvMEYM7nvFCOGl7aqed8yI6GVhAEnSUDm7KNt9_zXeqnDkTCvve33p1WrFAREMyYdUKyhjMGqmywQXkJlPIWnyDQNi3ZIK5hynC_FZUluo6xIrtkMA3xrl1xS2u8UHntLF5aGNCENYKOqDPPKWibWdlYO14nlMBYKWgFOGz4Vp8FYmMyqPd_bC_I4LQLPb68b4LofizsJ5yQkp8TIg2J5YqbVL3UgHtxOyQ2cY',
-    backgroundImage: '',
+    backgroundImage: 'assets/thor_asgard.jpg',
     theme: {
       primary: '#38bdf8',
       secondary: '#0ea5e9',

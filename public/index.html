@@ -712,7 +712,7 @@ function getFallbackHeroes() {
     "posterTag": "STORMBREAKER ACTIVE",
     "posterSubject": "SUBJECT: THOR ODINSON // NEW ASGARD",
     "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuBQqs4vNQCpE44D0PEGSUaN5BPh4QevthvMEYM7nvFCOGl7aqed8yI6GVhAEnSUDm7KNt9_zXeqnDkTCvve33p1WrFAREMyYdUKyhjMGqmywQXkJlPIWnyDQNi3ZIK5hynC_FZUluo6xIrtkMA3xrl1xS2u8UHntLF5aGNCENYKOqDPPKWibWdlYO14nlMBYKWgFOGz4Vp8FYmMyqPd_bC_I4LQLPb68b4LofizsJ5yQkp8TIg2J5YqbVL3UgHtxOyQ2cY",
-    "backgroundImage": "",
+    "backgroundImage": "assets/thor_asgard.jpg",
     "theme": {
       "primary": "#38bdf8",
       "secondary": "#0ea5e9",
@@ -1168,6 +1168,42 @@ function updateBackground(hero) {
     amb3.style.height = '380px';
     amb3.style.top = '42%';
     amb3.style.left = '50%';
+  } else if (hero.id === 'thor') {
+    bgGradient.classList.remove('captain-shield-rings');
+    nextEl.style.backgroundImage = `url('${hero.backgroundImage}')`;
+    nextEl.style.backgroundPosition = 'center 42%';
+    nextEl.style.backgroundSize = 'cover';
+    nextEl.style.filter = 'contrast(1.22) brightness(0.92) saturate(1.15)';
+    nextEl.style.opacity = '0.92';
+
+    // Asgard golden realm & cosmic sky atmospheric vignette
+    bgGradient.style.background = `
+      radial-gradient(circle at 50% 45%, transparent 22%, rgba(8,20,38,0.42) 54%, rgba(4,10,22,0.88) 84%, #030712 100%),
+      linear-gradient(to top, #030712 0%, transparent 42%, rgba(4,10,22,0.65) 100%),
+      linear-gradient(to right, rgba(4,10,22,0.68) 0%, transparent 32%, transparent 68%, rgba(4,10,22,0.68) 100%)
+    `;
+
+    if (bgMask) bgMask.style.opacity = '0.26';
+    if (bgDarkening) bgDarkening.style.opacity = '0.36';
+
+    // Cosmic tempest lightning electric blue & Bifrost golden radiant glows
+    amb1.style.background = 'radial-gradient(circle, rgba(56, 189, 248, 0.32) 0%, rgba(14, 165, 233, 0.1) 50%, transparent 75%)';
+    amb1.style.width = '750px';
+    amb1.style.height = '750px';
+    amb1.style.top = '40%';
+    amb1.style.left = '50%';
+
+    amb2.style.background = 'radial-gradient(circle, rgba(245, 158, 11, 0.22) 0%, rgba(217, 119, 6, 0.06) 50%, transparent 75%)';
+    amb2.style.width = '620px';
+    amb2.style.height = '620px';
+    amb2.style.top = '45%';
+    amb2.style.left = '48%';
+
+    amb3.style.background = 'radial-gradient(circle, rgba(125, 211, 252, 0.24) 0%, transparent 70%)';
+    amb3.style.width = '380px';
+    amb3.style.height = '380px';
+    amb3.style.top = '42%';
+    amb3.style.left = '50%';
   } else {
     bgGradient.classList.remove('captain-shield-rings');
     if (bgMask) bgMask.style.opacity = '1';
@@ -1206,7 +1242,7 @@ function updateBackground(hero) {
 
   // Cross-fade with explicit opacity handling
   nextEl.classList.add('active');
-  nextEl.style.opacity = (hero.id === 'captain' || hero.id === 'strange' || hero.id === 'wolverine') ? '0.92' : '1';
+  nextEl.style.opacity = (hero.id === 'captain' || hero.id === 'strange' || hero.id === 'wolverine' || hero.id === 'thor') ? '0.92' : '1';
   currentEl.classList.remove('active');
   currentEl.style.opacity = '0';
   bgLayerToggle = nextLayer;
