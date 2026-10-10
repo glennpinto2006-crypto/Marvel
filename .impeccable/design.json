@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-10T05:50:00Z",
+  "title": "Design System: Marvel Cinematic Universe Archive",
+  "extensions": {
+    "colorMeta": {
+      "primary": { "role": "primary", "displayName": "Marvel Crimson", "canonical": "#E62429", "tonalRamp": ["#33080a", "#590d10", "#871519", "#b51c21", "#e62429", "#eb5054", "#f27c80", "#f9a8ab"] },
+      "primary-hover": { "role": "primary", "displayName": "Crimson Highlight", "canonical": "#FF3439", "tonalRamp": ["#3d080a", "#6b0f12", "#a3171b", "#db1f24", "#ff3439", "#ff5c60", "#ff8588", "#ffadaf"] },
+      "accent-gold": { "role": "secondary", "displayName": "Sovereign Gold", "canonical": "#F5C518", "tonalRamp": ["#332905", "#5c4909", "#8f720e", "#c29b13", "#f5c518", "#f7d146", "#f9dd74", "#fce9a2"] },
+      "canvas": { "role": "neutral", "displayName": "Deep Void Canvas", "canonical": "#080808", "tonalRamp": ["#040404", "#080808", "#121212", "#1e1e1e", "#2c2c2c", "#404040", "#606060", "#888888"] },
+      "surface-1": { "role": "neutral", "displayName": "Carbon Substrate Level 1", "canonical": "#0D0D0D", "tonalRamp": ["#050505", "#0d0d0d", "#181818", "#242424", "#363636", "#4e4e4e", "#707070", "#989898"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display Hero", "purpose": "Hero character titles and loading logo in uppercase." },
+      "headline": { "displayName": "Section Headline", "purpose": "Major section title banners." },
+      "title": { "displayName": "Real Name Title", "purpose": "Hero alter-ego and character naming." },
+      "body": { "displayName": "Body Dossier", "purpose": "Narrative hero profiles and tactical summaries." },
+      "label": { "displayName": "Telemetry Label", "purpose": "HUD tags, attribute metrics, and status readouts." }
+    },
+    "shadows": [
+      { "name": "carbon-resting", "value": "0 0 0 1px #242424", "purpose": "Default resting state for tactical cards." },
+      { "name": "interactive-lift", "value": "0 16px 40px rgba(0,0,0,0.8), 0 0 25px rgba(230,36,41,0.4)", "purpose": "Elevated card bloom on hover." },
+      { "name": "dock-levitation", "value": "0 16px 48px rgba(0,0,0,0.6), 0 0 30px rgba(230,36,41,0.3)", "purpose": "Floating bottom roster dock." }
+    ],
+    "motion": [
+      { "name": "kinetic-standard", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Default easing for state transitions." },
+      { "name": "crossfade-smooth", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Hero transition duration 1.2s." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "480px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" },
+      { "name": "xl", "value": "1440px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Tactile Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "High-contrast action trigger with crimson fill and glow.",
+      "html": "<button class=\"ds-btn-primary\">ARMOR SCHEMATICS</button>",
+      "css": ".ds-btn-primary { background: #E62429; color: #FFFFFF; padding: 14px 28px; font-family: 'Space Grotesk', monospace; font-size: 12px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; border: none; border-radius: 4px; cursor: pointer; transition: all 0.3s cubic-bezier(0.16,1,0.3,1); } .ds-btn-primary:hover { filter: brightness(1.2); box-shadow: 0 0 30px rgba(230,36,41,0.5); transform: translateY(-2px); }"
+    },
+    {
+      "name": "Secondary Ghost Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Tactical telemetry button with carbon substrate and hairline stroke.",
+      "html": "<button class=\"ds-btn-secondary\">J.A.R.V.I.S. UPLINK</button>",
+      "css": ".ds-btn-secondary { background: rgba(13,13,13,0.8); color: #D0D0D0; border: 1px solid #2A2A2A; border-radius: 4px; padding: 14px 28px; font-family: 'Space Grotesk', monospace; font-size: 12px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; backdrop-filter: blur(8px); transition: all 0.3s ease; } .ds-btn-secondary:hover { border-color: #E62429; color: #FFFFFF; box-shadow: 0 0 15px rgba(230,36,41,0.4); }"
+    },
+    {
+      "name": "Character Grid Card",
+      "kind": "card",
+      "refersTo": "card-character",
+      "description": "Tactical dossier card with hover elevation and threat pulse.",
+      "html": "<div class=\"ds-char-card\"><div class=\"ds-char-card-body\"><div class=\"ds-char-card-name\">IRON MAN</div><div class=\"ds-char-card-alias\">ANTHONY EDWARD STARK</div><div class=\"ds-char-card-threat\">OMEGA DEFENDER</div></div></div>",
+      "css": ".ds-char-card { background: #0D0D0D; border: 1px solid #242424; border-radius: 8px; padding: 20px; transition: all 0.4s cubic-bezier(0.16,1,0.3,1); } .ds-char-card:hover { transform: translateY(-8px); border-color: #E62429; box-shadow: 0 16px 40px rgba(230,36,41,0.2); } .ds-char-card-name { font-family: 'Bebas Neue', sans-serif; font-size: 28px; color: #FFF; letter-spacing: 0.04em; } .ds-char-card-alias { font-family: 'Space Grotesk', monospace; font-size: 11px; color: #F5C518; letter-spacing: 0.1em; margin-bottom: 8px; } .ds-char-card-threat { display: inline-block; font-family: 'Space Grotesk', monospace; font-size: 11px; color: #E62429; background: rgba(230,36,41,0.08); border: 1px solid rgba(230,36,41,0.2); padding: 4px 10px; border-radius: 4px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "Stark Classified Holoterminal",
+    "overview": "The Marvel Cinematic Universe Archive is an in-universe tactical intelligence interface built for Earth-616 hero reconnaissance. The aesthetic fuses aerospace carbon composite density, high-contrast dark-mode surfaces, classified military typography stamps, and reactive WebGL particle illumination.",
+    "keyCharacteristics": [
+      "In-Universe Tactical Atmosphere: Precision gridlines, scanline textures, HUD coordinates, and authentic classification identifiers.",
+      "Volumetric Holo-Depth: Three.js WebGL particle systems and 3D card tilt physics create tangible physical weight.",
+      "Disciplined Palette Restraint: Pure carbon canvas, vivid scarlet accents, and golden rank marks without color pollution.",
+      "Kinetic Micro-Interactions: Pill docks, laser stat meters, glowing hairline borders, and smooth hero cross-fades."
+    ],
+    "rules": [
+      { "name": "The Rarity of Red Rule", "body": "Marvel Crimson is never used as background wallpaper or large decorative fills; its power stems strictly from high-contrast focus on actionable controls, key stamps, and pulse indicators.", "section": "colors" },
+      { "name": "The Sovereign Gold Rule", "body": "Gold is strictly decorative and hierarchical—it denotes tier, clearance, and alter-ego identity, never arbitrary UI borders or buttons.", "section": "colors" },
+      { "name": "The Monospace Telemetry Rule", "body": "Every data point, attribute metric, security clearance, and technical tag must be rendered in Space Grotesk with letter-spacing >= 0.1em and uppercase styling.", "section": "typography" },
+      { "name": "The Layered Holo-Depth Rule", "body": "Surfaces rest flush on carbon grids; elevation is triggered dynamically by pointer proximity, unleashing 3D perspective rotation, border gradient illumination, and particle refraction.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do preserve the #080808 canvas to maintain infinite contrast for Three.js particles and neon glows.",
+      "Do format all telemetry data, badges, and metrics in uppercase Space Grotesk with letter-spacing >= 0.1em.",
+      "Do maintain smooth cross-fade transitions when switching between heroes (coordinated text, backdrops, and particles).",
+      "Do keep gold #F5C518 strictly confined to alter-egos, ratings, and threat tiers.",
+      "Do ensure all interactions provide keyboard accessibility and touch swipe equivalents."
+    ],
+    "donts": [
+      "Don't introduce solid colored background sections; all surfaces must be dark carbon substrates.",
+      "Don't use generic rounded buttons or playful bubbly shapes; maintain tactical aerospace geometry.",
+      "Don't dilute Marvel Crimson with secondary competing warm tones (e.g. orange or magenta).",
+      "Don't use standard browser fonts or unstyled serif typefaces.",
+      "Don't block user interactions during 3D particle rendering or background cross-fades."
+    ]
+  }
+}

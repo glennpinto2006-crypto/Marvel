@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>The Hulk // Marvel Cinematic Archive</title>
+<!-- Tailwind CSS v3 -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Teko:wght@700&amp;family=Chakra+Petch:wght@400;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            gamma: {
+              300: '#86efac',
+              400: '#4ade80',
+              500: '#22c55e',
+              600: '#16a34a',
+              700: '#15803d',
+              900: '#14532d',
+              950: '#052e16',
+            },
+            hulkPurple: '#3b0764',
+            darkSlate: '#020a04',
+          },
+          fontFamily: {
+            title: ['Teko', 'sans-serif'],
+            tech: ['"Chakra Petch"', 'monospace'],
+            body: ['Inter', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+<!-- BEGIN: Custom Styles -->
+<style data-purpose="typography">
+    .font-giant {
+      font-family: 'Teko', sans-serif;
+      line-height: 0.85;
+      letter-spacing: 0.04em;
+    }
+  </style>
+<style data-purpose="atmosphere-fx">
+    /* Deep radioactive obsidian canvas with intense gamma shockwaves & biohazard atmosphere */
+    .gamma-bg-glow {
+      background-color: #020a04;
+      background-image: 
+        radial-gradient(circle at 72% 45%, rgba(34, 197, 94, 0.32) 0%, rgba(21, 128, 61, 0.22) 28%, rgba(59, 7, 100, 0.15) 55%, transparent 75%),
+        radial-gradient(circle at 20% 70%, rgba(16, 185, 129, 0.2) 0%, rgba(5, 46, 22, 0.35) 40%, transparent 70%),
+        radial-gradient(circle at 50% -10%, rgba(74, 222, 128, 0.15) 0%, transparent 60%),
+        linear-gradient(rgba(34, 197, 94, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(34, 197, 94, 0.05) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 100% 100%, 48px 48px, 48px 48px;
+    }
+
+    /* Green pulse animation for danger lights & glowing reactors */
+    @keyframes gamma-pulse {
+      0%, 100% { opacity: 0.45; transform: scale(1); filter: drop-shadow(0 0 25px rgba(34,197,94,0.4)); }
+      50% { opacity: 0.95; transform: scale(1.08); filter: drop-shadow(0 0 60px rgba(34,197,94,0.85)); }
+    }
+    .animate-gamma-glow {
+      animation: gamma-pulse 3.8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+
+    /* Seismic soundwave ripple animation */
+    @keyframes seismic-wave {
+      0% { transform: scale(0.85); opacity: 0.7; }
+      50% { opacity: 0.3; }
+      100% { transform: scale(1.4); opacity: 0; }
+    }
+    .seismic-ripple-1 {
+      animation: seismic-wave 4s cubic-bezier(0.1, 0.8, 0.3, 1) infinite;
+    }
+    .seismic-ripple-2 {
+      animation: seismic-wave 4s cubic-bezier(0.1, 0.8, 0.3, 1) 1.5s infinite;
+    }
+    .seismic-ripple-3 {
+      animation: seismic-wave 4s cubic-bezier(0.1, 0.8, 0.3, 1) 2.8s infinite;
+    }
+
+    /* Particle float glow */
+    @keyframes float-particle {
+      0%, 100% { transform: translateY(0px) translateX(0px); opacity: 0.4; }
+      50% { transform: translateY(-24px) translateX(12px); opacity: 0.9; }
+    }
+    .particle-float {
+      animation: float-particle 5s ease-in-out infinite;
+    }
+
+    /* Custom scrollbar hide for horizontal dock */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+<!-- END: Custom Styles -->
+</head>
+<body class="gamma-bg-glow text-zinc-100 font-body min-h-screen overflow-x-hidden select-none relative flex flex-col justify-between">
+<!-- Toxic Biohazard Particle & Seismic Layer -->
+<div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+<!-- Subtle seismic ripple rings radiating from poster zone -->
+<div class="absolute right-[12%] top-[42%] -translate-y-1/2 w-[620px] h-[620px] rounded-full border border-gamma-500/20 seismic-ripple-1"></div>
+<div class="absolute right-[12%] top-[42%] -translate-y-1/2 w-[780px] h-[780px] rounded-full border border-gamma-400/15 seismic-ripple-2"></div>
+<div class="absolute right-[12%] top-[42%] -translate-y-1/2 w-[950px] h-[950px] rounded-full border border-gamma-600/10 seismic-ripple-3"></div>
+<!-- Toxic biohazard glowing particles -->
+<div class="absolute top-1/4 left-1/4 w-2 h-2 rounded-full bg-gamma-400 shadow-[0_0_12px_#4ade80] particle-float" style="animation-delay: 0s;"></div>
+<div class="absolute top-2/3 left-1/6 w-1.5 h-1.5 rounded-full bg-gamma-300 shadow-[0_0_10px_#86efac] particle-float" style="animation-delay: 1.8s;"></div>
+<div class="absolute top-1/3 right-1/3 w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_14px_#34d399] particle-float" style="animation-delay: 3s;"></div>
+<div class="absolute bottom-1/4 right-1/4 w-1.5 h-1.5 rounded-full bg-gamma-400 shadow-[0_0_10px_#22c55e] particle-float" style="animation-delay: 0.8s;"></div>
+</div>
+<!-- BEGIN: TopNavbar -->
+<header class="w-full relative z-30 pt-6 px-6 md:px-12 flex items-center justify-between" data-purpose="site-navigation">
+<!-- Left: Biohazard Logo + Spec Pill -->
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-zinc-950/90 border border-gamma-500/70 flex items-center justify-center text-gamma-400 shadow-[0_0_20px_rgba(34,197,94,0.55)]">
+<!-- Radiation Hazard Icon -->
+<svg class="w-6 h-6 animate-pulse" fill="currentColor" viewbox="0 0 24 24">
+<path d="M12 11a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-3.08-1.5A5.002 5.002 0 0 1 11 3.1V2a1 1 0 0 0-2 0v.09a7.002 7.002 0 0 0-4.95 4.96A1 1 0 0 0 5 8.13l.92.53a4.98 4.98 0 0 1 3-1.16zm6.16 0a4.98 4.98 0 0 1 3 1.16l.92-.53a1 1 0 0 0 .95-1.08 7.002 7.002 0 0 0-4.95-4.96V2a1 1 0 0 0-2 0v1.1a5.002 5.002 0 0 1 2.08 6.4zM12 15a5.002 5.002 0 0 1-4.08 2.13l-.92.53a1 1 0 0 0-.46.99 7.002 7.002 0 0 0 9.9 0 1 1 0 0 0-.46-.99l-.92-.53A5.002 5.002 0 0 1 12 15z"></path>
+</svg>
+</div>
+<div class="flex flex-col">
+<span class="font-tech text-xs tracking-widest text-gamma-400 font-bold uppercase drop-shadow-[0_0_10px_rgba(34,197,94,0.6)]">Gamma Hazard Archive</span>
+<span class="text-[10px] text-gamma-600 font-mono tracking-tighter uppercase font-semibold">SECTOR-07 // RESTRICTED CRITICAL</span>
+</div>
+</div>
+<!-- Center: Main Hero Navigation -->
+<nav class="hidden md:flex items-center gap-10 text-xs tracking-widest font-semibold text-zinc-300">
+<a class="hover:text-gamma-400 transition-colors duration-200" href="#">STORY</a>
+<a class="text-gamma-400 relative py-1 drop-shadow-[0_0_8px_rgba(34,197,94,0.7)]" href="#">
+        CHARACTERS
+        <span class="absolute bottom-0 left-0 right-0 h-[2px] bg-gamma-400 rounded-full shadow-[0_0_12px_rgba(34,197,94,1)]"></span>
+</a>
+<a class="hover:text-gamma-400 transition-colors duration-200" href="#">MERCH</a>
+</nav>
+<!-- Right: Hashtag + Mute/Audio Telemetry -->
+<div class="flex items-center gap-4">
+<span class="text-xs md:text-sm font-black tracking-wider text-gamma-400 font-tech drop-shadow-[0_0_12px_rgba(34,197,94,0.7)]">#HULK</span>
+<button aria-label="Toggle Sound" class="w-8 h-8 rounded-full border border-gamma-500/40 bg-zinc-950/80 hover:border-gamma-400 flex items-center justify-center text-gamma-400 shadow-[0_0_12px_rgba(34,197,94,0.3)] hover:shadow-[0_0_20px_rgba(34,197,94,0.6)] transition-all" type="button">
+<!-- Audio waves icon -->
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+</div>
+</header>
+<!-- END: TopNavbar -->
+<!-- BEGIN: MainHeroStage -->
+<main class="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-12 flex-1 flex flex-col justify-center my-4" data-purpose="character-spotlight">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center min-h-[640px]">
+<!-- Left Column: Character Narrative & Stats (Col 1 to 7) -->
+<section class="lg:col-span-7 flex flex-col justify-center space-y-6 max-w-2xl py-6" data-purpose="character-dossier">
+<!-- Header Tags -->
+<div class="flex flex-wrap items-center gap-3">
+<div class="inline-flex items-center px-2 py-0.5 rounded bg-red-600 text-white font-black text-xs tracking-wider uppercase shadow-[0_0_10px_rgba(220,38,38,0.4)]">
+            Marvel
+          </div>
+<span class="text-[11px] font-mono tracking-wider text-gamma-400/80 border-l border-gamma-800/80 pl-3">
+            EARTH-616 // CULVER UNIVERSITY INCIDENT
+          </span>
+</div>
+<!-- Huge Headline -->
+<div class="space-y-1">
+<h1 class="font-giant text-7xl sm:text-8xl md:text-9xl text-white uppercase tracking-tight drop-shadow-[0_10px_25px_rgba(0,0,0,0.95)]">
+            THE HULK
+          </h1>
+<div class="flex items-center gap-3">
+<span class="font-tech text-base sm:text-lg font-bold text-gamma-400 tracking-wider drop-shadow-[0_0_12px_rgba(34,197,94,0.6)]">
+              ROBERT BRUCE BANNER
+            </span>
+<span class="inline-block px-2.5 py-0.5 text-[10px] font-mono uppercase tracking-widest bg-gamma-950/90 border border-gamma-400/60 text-gamma-300 rounded-full shadow-[0_0_15px_rgba(34,197,94,0.35)]">
+              STRONGEST THERE IS // TITAN ALPHA
+            </span>
+</div>
+</div>
+<!-- Character Story Description -->
+<p class="text-zinc-300 text-sm sm:text-base leading-relaxed font-normal text-justify max-w-xl">
+          Dr. Robert Bruce Banner balances his fractured existence as a genius nuclear physicist with his towering alter-ego: The Hulk. Exposed to extreme lethal doses of synthetic gamma radiation, Banner awakens an indestructible force fueled by raw adrenaline and rage. With seismic thunderclaps capable of shattering tank divisions and boundless physical stamina, he stands as the world's most terrifying protector.
+        </p>
+<!-- Power Telemetry Metrics -->
+<div class="grid grid-cols-3 gap-3 py-3 border-y border-gamma-900/80 font-mono text-xs max-w-lg bg-gamma-950/20 backdrop-blur-sm px-2 rounded-lg" data-purpose="combat-metrics">
+<div>
+<div class="text-gamma-400/70 text-[10px] tracking-tight font-tech">STRENGTH</div>
+<div class="font-bold font-tech text-base text-gamma-400 drop-shadow-[0_0_10px_rgba(34,197,94,0.6)]">100 / 100</div>
+</div>
+<div>
+<div class="text-gamma-400/70 text-[10px] tracking-tight font-tech">RESILIENCE</div>
+<div class="font-bold font-tech text-base text-gamma-400 drop-shadow-[0_0_10px_rgba(34,197,94,0.6)]">100 / 100</div>
+</div>
+<div>
+<div class="text-gamma-400/70 text-[10px] tracking-tight font-tech">THREAT LEVEL</div>
+<div class="text-gamma-400 font-bold font-tech text-base tracking-wider flex items-center gap-1.5 drop-shadow-[0_0_12px_rgba(34,197,94,0.8)]">
+<span class="w-2 h-2 rounded-full bg-gamma-400 animate-ping"></span>
+              WORLD BREAKER
+            </div>
+</div>
+</div>
+<!-- Action CTA Buttons -->
+<div class="flex flex-wrap items-center gap-4 pt-1">
+<!-- Primary Pill Button -->
+<a class="px-7 py-3 rounded-full bg-gamma-500 hover:bg-gamma-400 text-zinc-950 font-tech font-bold text-xs tracking-widest transition-all duration-300 shadow-[0_0_25px_rgba(34,197,94,0.6)] hover:shadow-[0_0_35px_rgba(34,197,94,0.9)] hover:scale-105 flex items-center gap-2 uppercase" href="#dossier">
+<svg class="w-4 h-4 text-zinc-950" fill="currentColor" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" fill-rule="evenodd"></path>
+</svg>
+            Seismic Dossier
+          </a>
+<!-- Secondary Audio Log Button -->
+<button class="px-6 py-3 rounded-full border border-gamma-500/50 bg-zinc-950/80 hover:border-gamma-400 hover:text-gamma-300 hover:bg-gamma-950/60 text-gamma-400 font-tech text-xs tracking-widest shadow-[0_0_15px_rgba(34,197,94,0.2)] hover:shadow-[0_0_25px_rgba(34,197,94,0.5)] transition-all duration-300 flex items-center gap-2 uppercase" type="button">
+<svg class="w-4 h-4 text-gamma-400 animate-pulse" fill="currentColor" viewbox="0 0 20 20">
+<path clip-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" fill-rule="evenodd"></path>
+</svg>
+            Banner Audio Log
+          </button>
+</div>
+<!-- Small Metadata Subtext -->
+<div class="text-[10px] font-mono text-gamma-600 tracking-wider font-medium">
+          CLASSIFIED DATABASE // SULLIVAN BASE RECORD #0492-GREEN
+        </div>
+</section>
+<!-- Right Column: The Hulk Visual Poster (Col 8 to 12) -->
+<section class="lg:col-span-5 relative flex justify-center items-center" data-purpose="character-visual">
+<!-- Gamma Radiation Aura Background & Shockwave Glow -->
+<div class="absolute -inset-10 bg-gradient-to-tr from-gamma-500/50 via-emerald-600/35 to-gamma-400/20 blur-3xl -z-10 rounded-full animate-gamma-glow pointer-events-none"></div>
+<div class="absolute -inset-4 bg-gamma-400/25 blur-2xl -z-10 rounded-full pointer-events-none"></div>
+<!-- Poster Card Container -->
+<div class="relative w-full max-w-sm sm:max-w-md lg:max-w-none rounded-2xl overflow-hidden shadow-[0_25px_60px_rgba(0,0,0,0.95),0_0_45px_rgba(34,197,94,0.45)] border-2 border-gamma-400/60 bg-zinc-950">
+<!-- Image frame with aspect ratio -->
+<div class="relative w-full aspect-[2/3] overflow-hidden group">
+<img alt="The Incredible Hulk - Gamma Radiation Poster" class="w-full h-full object-cover object-center transform group-hover:scale-105 transition-transform duration-700 ease-out" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC59Guje7ZxEzeaR5NSqeAwAoQQXlFOD2IgUlAmaNeepcELZVNfGKAwIXQnxbp_mpvg9gMpngqyO0vG-LX26h8BzLS8DQC2xGQLqSpG1gJhqdvl-3TAX0oSU9zmryRftmVXN_NtPhtPPF2VdPax4KZ6HXOF0e306j-sKcMXJyJfIfHiQp53bflNQR8QCuxQ2AApzbaz6owczgd4SxjjgeMprJCOlJLYBR8grRD5FD4qkGIqgQcwMK4vXiDlYtB_p2JvR6Y"/>
+<!-- Vignette gradient overlays to blend seamlessly -->
+<div class="absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-transparent opacity-75"></div>
+<div class="absolute inset-0 bg-gradient-to-r from-zinc-950/40 via-transparent to-transparent"></div>
+<!-- Floating Spec Stamp in Image Corner -->
+<div class="absolute top-4 right-4 bg-zinc-950/90 backdrop-blur-md border border-gamma-400/60 rounded px-2.5 py-1 text-[10px] font-mono text-gamma-300 font-bold uppercase tracking-wider shadow-[0_0_12px_rgba(34,197,94,0.5)]">
+              BIO-SPECIMEN // 004
+            </div>
+<!-- Bottom Information Tag on Image -->
+<div class="absolute bottom-4 left-4 right-4 flex items-center justify-between pointer-events-none">
+<div class="bg-zinc-950/90 backdrop-blur-md border border-gamma-500/40 rounded-lg px-3 py-1.5 flex items-center gap-2 shadow-[0_0_15px_rgba(34,197,94,0.3)]">
+<span class="w-2 h-2 rounded-full bg-gamma-400 animate-ping"></span>
+<span class="text-[10px] font-mono uppercase text-gamma-300 font-semibold tracking-wider">GAMMA FLUX: STABLE CRITICAL</span>
+</div>
+<div class="text-[10px] font-mono text-gamma-500 uppercase font-semibold">CULVER LABS</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- END: MainHeroStage -->
+<!-- BEGIN: LeftRightNavArrows -->
+<!-- Left Navigation Arrow -->
+<button aria-label="Previous Character" class="hidden lg:flex fixed left-4 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full border border-gamma-900/80 bg-zinc-950/90 backdrop-blur text-zinc-400 hover:text-gamma-400 hover:border-gamma-400 hover:shadow-[0_0_20px_rgba(34,197,94,0.5)] items-center justify-center transition-all duration-200" type="button">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+<!-- Right Navigation Arrow -->
+<button aria-label="Next Character" class="hidden lg:flex fixed right-4 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full border border-gamma-900/80 bg-zinc-950/90 backdrop-blur text-zinc-400 hover:text-gamma-400 hover:border-gamma-400 hover:shadow-[0_0_20px_rgba(34,197,94,0.5)] items-center justify-center transition-all duration-200" type="button">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+<!-- END: LeftRightNavArrows -->
+<!-- BEGIN: FloatingHeroRosterDock -->
+<footer class="w-full relative z-20 pb-6 pt-2 flex flex-col items-center justify-center gap-2" data-purpose="character-roster-dock">
+<!-- Dock Container -->
+<div class="bg-zinc-950/90 border border-gamma-900/80 rounded-2xl p-2 px-3 backdrop-blur-md shadow-[0_10px_35px_rgba(0,0,0,0.8),0_0_20px_rgba(34,197,94,0.15)] flex items-center gap-3 overflow-x-auto max-w-[92vw] no-scrollbar">
+<!-- Spider-Man Thumbnail (Referencing the classic counterpart) -->
+<button class="group relative flex-shrink-0 w-12 h-12 md:w-14 md:h-14 rounded-xl overflow-hidden border border-zinc-800 hover:border-red-500 transition-all opacity-70 hover:opacity-100" type="button">
+<img alt="Spider-Man Thumbnail" class="w-full h-full object-cover object-top filter grayscale contrast-125 group-hover:filter-none transition-all duration-300" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAoOR_eL2G26MEEAjpd82zdNWckoP3FbTRCuqefCeS6DkWDup8YHWJMOSqZccOn4IrqpcWqNHE2uJ0kMKHisblep23sciIRTTD7g5oVvx11NiPggySljYAp3lbDuw-fKUqmfy7rRlu_GjqVA_5sPXDLBKm9eEo8nSrY70bGiSwmsLKm1ix4fOPa7OltCrOe0bubIwl2-jTiMV29CeFr-DPQYe0dbIh5APG_mmPVYyZ9DxzVsjK-aVD4E9yPnzziVQI7H2k"/>
+<div class="absolute inset-0 bg-red-950/20 group-hover:bg-transparent"></div>
+<span class="sr-only">Spider-Man</span>
+</button>
+<!-- Active: The Hulk Thumbnail -->
+<button class="group relative flex-shrink-0 w-14 h-14 md:w-16 md:h-16 rounded-xl overflow-hidden border-2 border-gamma-400 shadow-[0_0_22px_rgba(34,197,94,0.8)] transition-all scale-105" type="button">
+<img alt="The Hulk Active Thumbnail" class="w-full h-full object-cover object-center" src="https://lh3.googleusercontent.com/aida-public/AB6AXuATQmAHQU8tIt7oyT7AqrrUl9z2ihsNwKxIZrekErugdkRjdgC3KI2xRMl3zN6TwVqyOjq3eyiinXPdK7Ll_TRigPUDLK4rPpum54DmYAdZxpZiK4B1pYwhvkwmxdqEIwiD0vTUzBoA11huBbwve8SGtQb_1bV_0o7g6m8XNzhPjjTBnNzvY5muGtLHqA-d0MAIG7dYhy2GYd_dYJ-vThrDVNXyhYv7ON4GoyyYxdtm_i57pciUe1i5xDMQAXJu3_ecAHk"/>
+<!-- Active indicator pill inside avatar -->
+<span class="absolute bottom-1 right-1 w-2.5 h-2.5 rounded-full bg-gamma-400 border border-zinc-950 shadow-[0_0_8px_#4ade80]"></span>
+<span class="sr-only">The Hulk</span>
+</button>
+<!-- Iron Man Thumbnail -->
+<div class="flex-shrink-0 w-12 h-12 md:w-14 md:h-14 rounded-xl border border-zinc-800/80 bg-zinc-900/60 flex items-center justify-center text-zinc-500 hover:text-amber-400 hover:border-amber-500/60 transition-all cursor-pointer">
+<span class="font-tech text-xs font-bold uppercase">STARK</span>
+</div>
+<!-- Thor Thumbnail -->
+<div class="flex-shrink-0 w-12 h-12 md:w-14 md:h-14 rounded-xl border border-zinc-800/80 bg-zinc-900/60 flex items-center justify-center text-zinc-500 hover:text-sky-400 hover:border-sky-500/60 transition-all cursor-pointer">
+<span class="font-tech text-xs font-bold uppercase">THOR</span>
+</div>
+<!-- Black Widow Thumbnail -->
+<div class="flex-shrink-0 w-12 h-12 md:w-14 md:h-14 rounded-xl border border-zinc-800/80 bg-zinc-900/60 flex items-center justify-center text-zinc-500 hover:text-red-400 hover:border-red-500/60 transition-all cursor-pointer">
+<span class="font-tech text-xs font-bold uppercase">NATASHA</span>
+</div>
+<!-- Hawkeye Thumbnail -->
+<div class="flex-shrink-0 w-12 h-12 md:w-14 md:h-14 rounded-xl border border-zinc-800/80 bg-zinc-900/60 flex items-center justify-center text-zinc-500 hover:text-purple-400 hover:border-purple-500/60 transition-all cursor-pointer">
+<span class="font-tech text-xs font-bold uppercase">BARTON</span>
+</div>
+</div>
+<!-- Designer / Copyright Line -->
+<div class="text-[9px] text-gamma-600 font-mono tracking-widest uppercase">
+      ARCHIVE FILE // EARTH-616 RECOVERY LOG
+    </div>
+</footer>
+<!-- END: FloatingHeroRosterDock -->
+</body></html>

@@ -1,0 +1,244 @@
+<!DOCTYPE html><html lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Captain America - Marvel Archive</title>
+<!-- Tailwind CSS CDN with Forms and Container Queries -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            marvelRed: '#E62429',
+            shieldBlue: '#0a3871',
+            patriotBlue: '#1d4ed8',
+            stealthBlue: '#2563eb',
+            vibraniumSilver: '#DCE5EE',
+            rogersGold: '#F5C518',
+            darkBackdrop: '#040914',
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Impact', 'Teko', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+<!-- BEGIN: Custom CSS Styles -->
+<style data-purpose="custom-typography">
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Oswald:wght@500;700&display=swap');
+
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    .title-font {
+      font-family: 'Oswald', sans-serif;
+      letter-spacing: -0.02em;
+    }
+  </style>
+<style data-purpose="lighting-and-effects">
+    /* Deep Marvel cinematic stealth navy & vibranium shield atmosphere */
+    .hero-bg-gradient {
+      background: radial-gradient(circle at 75% 40%, #0d2347 0%, #08152e 35%, #040914 75%);
+    }
+    
+    .vibranium-glow {
+      box-shadow: 0 0 35px -5px rgba(37, 99, 235, 0.5), 0 0 20px -8px rgba(59, 130, 246, 0.6);
+    }
+    
+    .poster-glow {
+      box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.95), 0 0 35px rgba(37, 99, 235, 0.35);
+    }
+
+    /* Subtle concentric circular vibranium shield rings & grid */
+    .shield-rings {
+      background-image: 
+        radial-gradient(circle at 75% 45%, transparent 160px, rgba(59, 130, 246, 0.08) 161px, transparent 163px),
+        radial-gradient(circle at 75% 45%, transparent 290px, rgba(59, 130, 246, 0.06) 291px, transparent 293px),
+        radial-gradient(circle at 75% 45%, transparent 420px, rgba(59, 130, 246, 0.05) 421px, transparent 424px),
+        radial-gradient(circle at 75% 45%, transparent 560px, rgba(37, 99, 235, 0.04) 561px, transparent 564px),
+        linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 64px 64px, 64px 64px;
+    }
+  </style>
+<!-- END: Custom CSS Styles -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;family=Oswald:wght@500;700&amp;display=swap" data-snapdom="injected-import"></head>
+<body class="bg-[#040914] text-white min-h-screen overflow-x-hidden selection:bg-blue-600 selection:text-white flex flex-col justify-between">
+<!-- Left & Right Carousel Switch Arrows (Fixed Navigation Overlay) -->
+<button aria-label="Previous Hero" class="hidden md:flex fixed left-4 top-1/2 -translate-y-1/2 z-40 w-11 h-11 items-center justify-center rounded-full bg-white/5 border border-white/10 hover:bg-blue-600/20 hover:border-blue-500/40 backdrop-blur-md transition-all text-white/60 hover:text-white group">
+<svg class="w-5 h-5 transition-transform group-hover:-translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+<button aria-label="Next Hero" class="hidden md:flex fixed right-4 top-1/2 -translate-y-1/2 z-40 w-11 h-11 items-center justify-center rounded-full bg-white/5 border border-white/10 hover:bg-blue-600/20 hover:border-blue-500/40 backdrop-blur-md transition-all text-white/60 hover:text-white group">
+<svg class="w-5 h-5 transition-transform group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+<!-- BEGIN: MainHeader -->
+<header class="relative z-50 w-full px-6 md:px-12 lg:px-16 pt-7 pb-4 flex items-center justify-between" data-purpose="site-navigation">
+<!-- Brand identity & shield badge -->
+<div class="flex items-center space-x-3.5" data-purpose="brand-identity">
+<!-- Vibranium Star Shield Icon -->
+<div class="w-10 h-10 rounded-full border-2 border-blue-500/80 bg-slate-950 flex items-center justify-center relative shadow-lg shadow-blue-950/70">
+<svg class="w-5 h-5 text-blue-400" fill="currentColor" viewBox="0 0 24 24">
+<path d="M12 2l2.9 6.26L21.8 9.27l-5.1 4.73L17.9 21 12 17.6 6.1 21l1.2-7L2.2 9.27l6.9-1.01L12 2z"></path>
+</svg>
+</div>
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold tracking-widest bg-blue-950/50 border border-blue-500/30 text-vibraniumSilver uppercase backdrop-blur-md">
+        S.H.I.E.L.D. TACTICAL ARCHIVE
+      </span>
+</div>
+<!-- Center Navigation Links -->
+<nav class="hidden sm:flex items-center space-x-8 md:space-x-12" data-purpose="nav-menu">
+<a class="text-xs md:text-sm font-semibold tracking-wider text-slate-400 hover:text-white transition duration-150" href="#">
+        STORY
+      </a>
+<a class="relative text-xs md:text-sm font-semibold tracking-wider text-white py-1 transition duration-150" href="#">
+        CHARACTERS
+        <!-- Active indicator underline matching layout in Image 4 -->
+<span class="absolute bottom-0 left-0 w-full h-[2px] bg-blue-500 rounded-full shadow-[0_0_8px_rgba(59,130,246,0.8)]"></span>
+</a>
+<a class="text-xs md:text-sm font-semibold tracking-wider text-slate-400 hover:text-white transition duration-150" href="#">
+        MERCH
+      </a>
+</nav>
+<!-- Header Right Hashtag & Audio Button -->
+<div class="flex items-center space-x-4" data-purpose="utility-tools">
+<span class="text-xs md:text-sm font-bold tracking-wider text-vibraniumSilver uppercase hover:text-blue-400 cursor-pointer transition">
+        #CAPTAINAMERICA
+      </span>
+<button aria-label="Toggle Tactical Audio" class="w-8 h-8 rounded-full border border-blue-500/20 bg-blue-950/40 flex items-center justify-center hover:bg-blue-600/20 hover:border-blue-500/40 transition text-slate-300 hover:text-white">
+<!-- Sound Wave Icon -->
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+</div>
+</header>
+<!-- END: MainHeader -->
+<!-- BEGIN: MainHeroSection -->
+<main class="hero-bg-gradient shield-rings relative z-20 flex-grow flex items-center px-6 md:px-12 lg:px-20 py-8 lg:py-12" data-purpose="hero-overview"><div class="fixed inset-0 pointer-events-none overflow-hidden z-0 flex items-center justify-center"><div class="absolute inset-0 bg-[#040914]"></div><div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-blue-500/20 rounded-full blur-3xl pointer-events-none"></div><div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px] bg-red-600/20 rounded-full blur-3xl pointer-events-none"></div><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuClX1C1BdiRgNScfna5NOQE97Tg_CDyVHv2-roVFFuL5p_GTZUf0483DqOD6QYK3AfO4c3oTB-tQ_-QryGHT8rp3EAUX_7oBHROPDW5AMU63moBrFkWvrI87qpmzeCDdrpX9gyrKb71mTiVmWZzNdk8jQLmZn2k8L2R-dBiAXJGIvMwlFaXI0UiA6WOAoGkwHcWtlP1AWvZ98Bw4BV07WOtzeKwYi9zF7v9-tSJEAc1R5SMvYCtYENRZ5TAeWFxkBTbIcY" alt="Vibranium Shield Backdrop" class="w-full h-full object-cover object-center scale-105 opacity-80 filter contrast-125 transition-transform duration-1000"><div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 rounded-full bg-blue-400/20 blur-2xl pointer-events-none"></div><div class="absolute inset-0 radial-vignette" style="background: radial-gradient(circle at 50% 50%, transparent 35%, rgba(4,9,20,0.5) 65%, #040914 95%);"></div><div class="absolute inset-0 bg-gradient-to-t from-[#040914] via-transparent to-[#040914]/80 pointer-events-none"></div><div class="absolute inset-0 bg-gradient-to-r from-[#040914]/70 via-transparent to-[#040914]/60 pointer-events-none"></div></div>
+<!-- Outer Grid: Content on Left (5 cols) & Character Visual on Right (7 cols) -->
+<div class="w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+<!-- Left Column: Dossier Information -->
+<div class="lg:col-span-6 flex flex-col justify-center text-left space-y-6 z-10" data-purpose="character-details">
+<!-- Header Tagline & Marvel Ribbon -->
+<div class="space-y-3">
+<div class="flex flex-wrap items-center gap-2.5">
+<!-- Marvel Badge -->
+<span class="bg-marvelRed text-white text-xs font-black tracking-widest px-2.5 py-0.5 uppercase shadow-sm">
+              MARVEL
+            </span>
+<span class="text-[11px] font-mono tracking-widest text-blue-200/60 uppercase">
+              EARTH-616 // S.H.I.E.L.D. FILE #1941
+            </span>
+</div>
+<!-- Hero Name (Main Title) -->
+<h1 class="title-font text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black uppercase text-white tracking-tight leading-none drop-shadow-md">
+            CAPTAIN<br class="hidden sm:block"> AMERICA
+          </h1>
+<!-- Real Identity and Epithet -->
+<div class="flex items-center space-x-3 pt-1">
+<span class="text-sm font-bold tracking-wider text-rogersGold uppercase">
+              STEVEN GRANT ROGERS
+            </span>
+<span class="text-xs px-2 py-0.5 rounded bg-blue-950/60 border border-blue-500/20 text-slate-200 font-medium">
+              FIRST AVENGER &amp; SENTINEL OF LIBERTY
+            </span>
+</div>
+</div>
+<!-- Narrative Description matching the Spider-Man template paragraph style -->
+<p class="text-sm md:text-base text-slate-300 font-normal leading-relaxed max-w-xl text-justify sm:text-left">
+          From the streets of Brooklyn to becoming the pinnacle of human capability through the Super-Soldier Serum, Steve Rogers stands as the indestructible shield against tyranny. Wielding his circular vibranium shield and unyielding moral resolve, he inspires both humanity and fellow champions, spearheading the Avengers through every cosmic and earthly extinction threat with timeless courage.
+        </p>
+<!-- Power & Telemetry Stats Row -->
+<div class="grid grid-cols-3 gap-4 pt-2 pb-1 border-y border-blue-500/20 max-w-lg" data-purpose="telemetry-stats">
+<div>
+<div class="text-[10px] uppercase font-mono tracking-wider text-blue-300/70">Tactical Leadership</div>
+<div class="text-lg font-black text-white">100 <span class="text-xs text-blue-400 font-normal">/ 100</span></div>
+</div>
+<div>
+<div class="text-[10px] uppercase font-mono tracking-wider text-blue-300/70">Physical Endurance</div>
+<div class="text-lg font-black text-white">98 <span class="text-xs text-blue-400 font-normal">/ 100</span></div>
+</div>
+<div>
+<div class="text-[10px] uppercase font-mono tracking-wider text-blue-300/70">Threat Level</div>
+<div class="text-sm font-bold text-rogersGold pt-1">COMMANDER PRIME</div>
+</div>
+</div>
+<!-- Action CTA Buttons -->
+<div class="flex flex-wrap items-center gap-4 pt-2" data-purpose="action-buttons">
+<button class="bg-white text-zinc-950 hover:bg-blue-50 transition-all font-bold px-7 py-3 rounded-full text-xs tracking-wider uppercase flex items-center space-x-2 shadow-lg shadow-blue-900/30 hover:shadow-blue-500/30">
+<!-- Shield Star Icon -->
+<svg class="w-4 h-4 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
+<path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"></path>
+</svg>
+<span class="">TACTICAL MATRIX</span>
+</button>
+<button class="border border-blue-500/30 hover:border-blue-400 text-white hover:bg-blue-900/30 transition-all font-semibold px-6 py-3 rounded-full text-xs tracking-wider uppercase flex items-center space-x-2 backdrop-blur-sm">
+<svg class="w-4 h-4 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+<path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="">DEPUTY LOG</span>
+</button>
+</div>
+<!-- System Tag Footer in Content Column -->
+<div class="text-[10px] font-mono tracking-widest text-slate-500 uppercase">
+          AVENGERS FACILITY // COMMAND OVERRIDE // CLASSIFIED 0-8-4
+        </div>
+</div>
+<!-- Right Column: Captain America Visual Display -->
+<div class="lg:col-span-6 flex justify-center items-center relative" data-purpose="character-visual"><div class="absolute w-96 lg:w-[540px] h-72 lg:h-96 bg-blue-600/20 rounded-full blur-3xl pointer-events-none"></div><div class="absolute w-72 lg:w-80 h-72 lg:h-80 bg-cyan-500/15 rounded-full blur-2xl pointer-events-none"></div><div class="relative w-full max-w-sm sm:max-w-md rounded-2xl overflow-hidden border border-blue-500/40 poster-glow transition-all duration-300 hover:scale-[1.01] bg-[#070e1c]/80 shadow-2xl"><div class="relative w-full aspect-[3/4] overflow-hidden flex items-center justify-center bg-slate-950"><img alt="Captain America Steve Rogers" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700 ease-out object-center" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCbpCzMswC5uXjewXLjSGVTsD1xNmx9QxWbX3M3D0FL9NAmhIYUqrO6vfXcNwssu_AQFz37nmM01VmoW5IZZahAN6eLPO7oyPA5plGfpotABQ-UJ1_QWfwyvimpk5DRV1SNlrKiEHW5-7QnebdQ93FUgic82A2zssUhMLpTUns7NV-IPkt4d2PvumFu-gEQP4GOP8lsg0yFpiuQ48EvzextQazSO0nGrlQtOIhpGBA1IefOInsZi9I5t2d5xaTFrXLyF38"><div class="absolute inset-0 bg-gradient-to-t from-[#040914]/90 via-transparent to-[#040914]/30 pointer-events-none"></div><div class="absolute inset-0 bg-gradient-to-r from-[#040914]/50 via-transparent to-[#040914]/50 pointer-events-none"></div><div class="absolute top-3 left-3 z-10 flex items-center space-x-2"><span class="inline-flex items-center px-2 py-0.5 rounded text-[9px] font-mono tracking-widest bg-marvelRed/90 text-white uppercase font-bold">SEC-OP: LIBERTY</span><span class="inline-flex items-center px-2 py-0.5 rounded text-[9px] font-mono tracking-widest bg-slate-950/80 border border-blue-500/30 text-blue-300 backdrop-blur-md">VIBRANIUM MK II</span></div><div class="absolute bottom-3 right-3 z-10"><span class="inline-flex items-center px-3 py-1 rounded-md text-[10px] font-mono tracking-widest bg-slate-950/85 border border-blue-500/30 text-slate-200 backdrop-blur-md shadow-lg">SUBJECT: STEVE ROGERS // BROOKLYN, NY</span></div><div class="absolute bottom-3 left-3 z-10 hidden sm:flex items-center space-x-1.5 text-[9px] font-mono text-blue-400/80 bg-blue-950/40 px-2.5 py-1 rounded border border-blue-500/20 backdrop-blur-sm"><span class="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse"></span><span class="">LIVE TELEMETRY FEED</span></div></div></div></div>
+</div>
+</main>
+<!-- END: MainHeroSection -->
+<!-- BEGIN: AvengersRosterDock -->
+<footer class="relative z-30 pb-6 pt-2 px-6" data-purpose="hero-selection-dock">
+<div class="max-w-md sm:max-w-xl mx-auto backdrop-blur-xl bg-[#070e1c]/80 border border-blue-500/20 rounded-2xl p-2.5 flex items-center justify-between shadow-2xl shadow-black/80">
+<!-- Dock Item: Iron Man -->
+<button class="flex items-center space-x-2 px-3 py-1.5 rounded-xl hover:bg-white/5 opacity-50 hover:opacity-90 transition">
+<div class="w-8 h-8 rounded-lg bg-zinc-800 border border-amber-500/40 flex items-center justify-center text-[10px] font-bold text-amber-400">
+          IM
+        </div>
+<span class="hidden sm:inline text-xs font-semibold tracking-wider text-gray-300">IRON MAN</span>
+</button>
+<!-- Dock Item: Captain America (Active Highlighted) -->
+<button class="flex items-center space-x-2 px-4 py-2 rounded-xl bg-blue-950/60 border border-blue-500/60 shadow-inner vibranium-glow">
+<div class="w-8 h-8 rounded-lg bg-blue-600 text-white flex items-center justify-center font-bold text-[11px] shadow-sm">
+          ★
+        </div>
+<div class="text-left">
+<div class="text-[9px] uppercase font-mono text-blue-400 leading-tight">ACTIVE</div>
+<span class="text-xs font-bold tracking-wider text-white">CAPT. AMERICA</span>
+</div>
+</button>
+<!-- Dock Item: Thor -->
+<button class="flex items-center space-x-2 px-3 py-1.5 rounded-xl hover:bg-white/5 opacity-50 hover:opacity-90 transition">
+<div class="w-8 h-8 rounded-lg bg-zinc-800 border border-sky-400/40 flex items-center justify-center text-[10px] font-bold text-sky-400">
+          TH
+        </div>
+<span class="hidden sm:inline text-xs font-semibold tracking-wider text-gray-300">THOR</span>
+</button>
+<!-- Dock Item: Black Widow -->
+<button class="flex items-center space-x-2 px-3 py-1.5 rounded-xl hover:bg-white/5 opacity-50 hover:opacity-90 transition">
+<div class="w-8 h-8 rounded-lg bg-zinc-800 border border-red-600/40 flex items-center justify-center text-[10px] font-bold text-red-400">
+          BW
+        </div>
+<span class="hidden sm:inline text-xs font-semibold tracking-wider text-gray-300">NATASHA</span>
+</button>
+</div>
+</footer>
+<!-- END: AvengersRosterDock -->
+
+
+
+
+
+
+
+
+</body></html>

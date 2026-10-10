@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Thor Odinson - God of Thunder | Marvel Archive</title>
+<!-- Tailwind CSS v3 with Plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration -->
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            asgard: {
+              gold: '#F5C518',
+              cyan: '#38BDF8',
+              lightning: '#00F0FF',
+              dark: '#030712',
+              surface: '#0B132B'
+            }
+          },
+          fontFamily: {
+            display: ['Impact', 'Arial Black', 'sans-serif'],
+            sans: ['system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+<!-- BEGIN: Custom Styles -->
+<style data-purpose="atmospheric-effects">
+    .lightning-glow {
+      text-shadow: 0 0 15px rgba(56, 189, 248, 0.9), 0 0 30px rgba(14, 165, 233, 0.6), 0 0 50px rgba(103, 232, 249, 0.4);
+    }
+    .gold-glow {
+      text-shadow: 0 0 15px rgba(245, 197, 24, 0.6), 0 0 30px rgba(245, 197, 24, 0.2);
+    }
+    .bg-storm-tempest {
+      background-color: #030712;
+      background-image: 
+        radial-gradient(circle at 78% 42%, rgba(14, 165, 233, 0.22) 0%, rgba(3, 7, 18, 0) 55%),
+        radial-gradient(circle at 25% 25%, rgba(56, 189, 248, 0.12) 0%, rgba(3, 7, 18, 0) 45%),
+        radial-gradient(circle at 50% 90%, rgba(30, 58, 138, 0.25) 0%, rgba(3, 7, 18, 0) 60%);
+    }
+    @keyframes lightning-pulse {
+      0%, 100% { opacity: 0.35; transform: scale(1); }
+      50% { opacity: 0.75; transform: scale(1.04); }
+    }
+    .animate-tempest-glow {
+      animation: lightning-pulse 4s ease-in-out infinite;
+    }
+    @keyframes lightning-flicker {
+      0%, 92%, 94%, 98%, 100% { opacity: 0.4; }
+      93%, 97% { opacity: 0.95; }
+    }
+    .animate-flicker {
+      animation: lightning-flicker 5s infinite;
+    }
+  </style>
+<!-- END: Custom Styles -->
+</head>
+<body class="h-full bg-storm-tempest text-slate-100 antialiased overflow-x-hidden selection:bg-cyan-500 selection:text-black flex flex-col justify-between relative">
+<!-- Background Ambient Lightning & Cosmic Tempest SVG Overlays -->
+<div class="fixed inset-0 pointer-events-none z-0 overflow-hidden"><!-- Lightning Thunderstorm Background Layer -->
+<div class="absolute inset-0 z-0">
+<img alt="Cosmic Lightning Tempest Background" class="w-full h-full object-cover object-center filter brightness-90 contrast-125 mix-blend-screen opacity-35" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCa9qJVuNDiQZ8Jx1v68vfR7j1v4VCVrCCpRfGy58sVttyhLxA3jjx-MgYZmfpXOP_yk83cAamtgNo3JBsqwRozWHeRcpzGv-eTb5Q7mSUiYjsp_d5LZe57PrMjPuNmsw2lyNkUnM9-9nGj3j0oM6ZwT8mTxxcWlZm6eMA1Z-gwWWD-7BL83VW49QbJWQkUTedFsjqTnD4DwNLDPe-S81WeLpzl9gmZVEOG2TOGl6h5--IYBwauRw5-edfwsY5NrRFAgOE"/>
+<!-- Darkening and Electric Blue Vignettes for pristine text contrast -->
+<div class="absolute inset-0 bg-gradient-to-r from-[#030712] via-[#030712]/75 to-transparent"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-[#030712] via-transparent to-[#030712]/80"></div>
+<div class="absolute inset-0 bg-sky-950/20 mix-blend-color"></div>
+</div>
+<!-- Atmospheric Cyan Clouds / Radial Tempest Glows -->
+<div class="absolute top-[-10%] right-[-5%] w-[650px] h-[650px] bg-cyan-500/15 rounded-full blur-[120px] animate-tempest-glow"></div>
+<div class="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] bg-blue-600/15 rounded-full blur-[130px]"></div>
+<div class="absolute top-[20%] right-[30%] w-[450px] h-[450px] bg-sky-400/10 rounded-full blur-[100px]"></div>
+<!-- Thunderstorm Lightning Arcs Overlay -->
+<svg class="absolute inset-0 w-full h-full opacity-35 animate-flicker mix-blend-screen" preserveaspectratio="none" viewbox="0 0 1440 900" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<filter height="140%" id="lightning-blur" width="140%" x="-20%" y="-20%">
+<fegaussianblur result="blur" stddeviation="3"></fegaussianblur>
+<femerge>
+<femergenode in="blur"></femergenode>
+<femergenode in="SourceGraphic"></femergenode>
+</femerge>
+</filter>
+</defs>
+<!-- Lightning bolt behind right poster side -->
+<path d="M1020 -20 L980 160 L1030 190 L950 380 L1010 410 L920 620 L970 650 L890 920" fill="none" filter="url(#lightning-blur)" opacity="0.8" stroke="#67e8f9" stroke-width="1.75"></path>
+<path d="M1020 -20 L980 160 L1030 190 L950 380 L1010 410 L920 620 L970 650 L890 920" fill="none" filter="url(#lightning-blur)" opacity="0.3" stroke="#38bdf8" stroke-width="4.5"></path>
+<!-- Secondary splinter arc -->
+<path d="M980 160 L920 240 L950 270 L870 370" fill="none" opacity="0.6" stroke="#bae6fd" stroke-width="1.2"></path>
+<!-- Distant Left Storm Fork -->
+<path d="M220 -10 L260 140 L230 210 L310 320 L270 380 L340 500" fill="none" opacity="0.25" stroke="#38bdf8" stroke-width="1"></path>
+</svg></div>
+<!-- BEGIN: MainHeader -->
+<header class="w-full relative z-40 px-6 lg:px-14 pt-6 pb-2 flex items-center justify-between" data-purpose="site-navigation">
+<!-- Left: Mjolnir Emblem + Asgardian Archive Tag -->
+<div class="flex items-center space-x-3">
+<div class="w-10 h-10 rounded-full border border-cyan-400/50 bg-sky-950/50 flex items-center justify-center shadow-[0_0_20px_rgba(56,189,248,0.4)] backdrop-blur-md">
+<!-- SVG Hammer/Mjolnir Emblem -->
+<svg aria-hidden="true" class="w-5 h-5 text-cyan-300 drop-shadow-[0_0_8px_rgba(103,232,249,0.8)]" fill="currentColor" viewbox="0 0 24 24">
+<path d="M4 4h16v6H4V4zm7 6h2v11h-2V10zM2 6h2v2H2V6zm18 0h2v2h-2V6z"></path>
+</svg>
+</div>
+<div class="hidden sm:flex items-center space-x-2 border border-cyan-800/60 bg-slate-900/80 rounded-full px-3.5 py-1 backdrop-blur-md shadow-[0_0_12px_rgba(14,165,233,0.2)]">
+<span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_8px_#38bdf8]"></span>
+<span class="text-[10px] tracking-widest font-semibold uppercase text-cyan-200">Asgardian Royal Archive</span>
+</div>
+</div>
+<!-- Center Navigation Links -->
+<nav aria-label="Main Navigation" class="flex items-center space-x-8 md:space-x-12 text-sm font-bold tracking-widest uppercase">
+<a class="text-slate-400 hover:text-cyan-300 transition-colors duration-200" href="#story">Story</a>
+<a class="text-white relative py-1 hover:text-cyan-300 transition-colors duration-200 drop-shadow-[0_0_10px_rgba(56,189,248,0.6)]" href="#characters">
+        Characters
+        <span class="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-cyan-400 via-sky-300 to-cyan-400 shadow-[0_0_10px_#38bdf8]"></span>
+</a>
+<a class="text-slate-400 hover:text-cyan-300 transition-colors duration-200" href="#merch">Merch</a>
+</nav>
+<!-- Right: Hashtag & Audio Speaker Button -->
+<div class="flex items-center space-x-4">
+<span class="text-sm font-black tracking-widest text-[#38BDF8] lightning-glow">#THOR</span>
+<button aria-label="Toggle Sound" class="w-9 h-9 rounded-full border border-cyan-800/50 bg-slate-900/80 flex items-center justify-center text-cyan-300 hover:text-white hover:border-cyan-400 hover:shadow-[0_0_15px_rgba(56,189,248,0.5)] transition-all shadow-md backdrop-blur-md" type="button">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</button>
+</div>
+</header>
+<!-- END: MainHeader -->
+<!-- BEGIN: HeroMainContent -->
+<main class="relative flex-grow flex items-center z-20 px-6 lg:px-14 py-4" data-purpose="hero-showcase">
+<!-- Grid Container mirroring the Spider-Man layout -->
+<div class="w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+<!-- Left Content Column -->
+<div class="lg:col-span-6 xl:col-span-6 flex flex-col justify-center space-y-5 lg:pr-6">
+<!-- Top Marvel Badge line -->
+<div class="flex items-center space-x-3">
+<span class="bg-[#E23636] text-white text-[11px] font-black tracking-wider px-2 py-0.5 rounded uppercase shadow-[0_0_12px_rgba(226,54,54,0.4)]">MARVEL</span>
+<span class="text-[10px] tracking-widest text-cyan-300/80 font-mono">REALM-001 // ASGARD CONTINUITY</span>
+</div>
+<!-- Huge Headline -->
+<div class="relative">
+<h1 class="text-7xl sm:text-8xl lg:text-9xl font-black tracking-tight text-white uppercase leading-none font-display drop-shadow-[0_0_25px_rgba(56,189,248,0.2)]">
+            THOR
+          </h1>
+<div class="mt-2 flex flex-wrap items-center gap-3">
+<span class="text-lg md:text-xl font-black tracking-widest uppercase text-[#F5C518] gold-glow">
+              THOR ODINSON
+            </span>
+<span class="bg-cyan-950/80 border border-cyan-400/60 text-cyan-200 text-[10px] font-semibold tracking-wider px-3.5 py-1 rounded-full uppercase shadow-[0_0_15px_rgba(56,189,248,0.35)] backdrop-blur-md">
+              God of Thunder &amp; Protector of Nine Realms
+            </span>
+</div>
+</div>
+<!-- Narrative Paragraph -->
+<p class="text-slate-300 text-sm md:text-base leading-relaxed max-w-xl font-normal drop-shadow">
+          Prince of Asgard and rightful heir to Odin's throne, Thor Odinson commands the raw fury of cosmic tempest and primordial lightning. Wielding Mjolnir and Stormbreaker across the cosmic sea, he bridges realms and shatters existential threats to preserve mortal life across Midgard and the greater universe.
+        </p>
+<!-- Power Telemetry Row -->
+<div class="grid grid-cols-3 gap-3 pt-2 max-w-lg border-y border-cyan-500/30 py-3.5 bg-gradient-to-r from-cyan-950/40 via-slate-900/50 to-cyan-950/30 backdrop-blur-md rounded-lg px-3.5 shadow-[0_0_20px_rgba(14,165,233,0.12)]">
+<div>
+<div class="text-[10px] uppercase tracking-wider text-cyan-300/80 font-mono">Energy Emission</div>
+<div class="text-base font-black text-white mt-0.5">97 <span class="text-[11px] text-cyan-400/60 font-mono">/ 100</span></div>
+</div>
+<div>
+<div class="text-[10px] uppercase tracking-wider text-cyan-300/80 font-mono">Godlike Strength</div>
+<div class="text-base font-black text-white mt-0.5">99 <span class="text-[11px] text-cyan-400/60 font-mono">/ 100</span></div>
+</div>
+<div>
+<div class="text-[10px] uppercase tracking-wider text-cyan-300/80 font-mono">Threat Level</div>
+<div class="text-base font-black text-[#38BDF8] lightning-glow mt-0.5">COSMIC SAVIOUR</div>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="flex flex-wrap items-center gap-4 pt-2">
+<!-- Primary Button -->
+<button class="group flex items-center space-x-2 bg-gradient-to-r from-cyan-400 to-sky-200 text-slate-950 hover:from-cyan-300 hover:to-white px-6 py-3 rounded-full font-bold text-xs uppercase tracking-widest transition-all duration-300 shadow-[0_0_25px_rgba(56,189,248,0.6)] hover:shadow-[0_0_35px_rgba(103,232,249,0.85)] hover:scale-[1.02]" type="button">
+<svg class="w-4 h-4 text-slate-950 group-hover:rotate-12 transition-transform" fill="currentColor" viewbox="0 0 24 24">
+<path d="M4 4h16v6H4V4zm7 6h2v11h-2V10z"></path>
+</svg>
+<span>Lightning Manifest</span>
+</button>
+<!-- Secondary Button -->
+<button class="flex items-center space-x-2 bg-slate-900/90 border border-cyan-500/50 hover:border-cyan-300 hover:bg-cyan-950/50 hover:shadow-[0_0_20px_rgba(56,189,248,0.4)] text-cyan-100 px-6 py-3 rounded-full font-semibold text-xs uppercase tracking-widest transition-all duration-300 backdrop-blur-md" type="button">
+<svg class="w-4 h-4 text-cyan-400 drop-shadow-[0_0_6px_rgba(56,189,248,0.8)]" fill="currentColor" viewbox="0 0 24 24">
+<path d="M8 5v14l11-7z"></path>
+</svg>
+<span>Bifrost Chronicles</span>
+</button>
+</div>
+<!-- Footer Meta Text -->
+<div class="pt-2 text-[10px] text-cyan-400/60 font-mono uppercase tracking-wider">
+          Asgard Crown Archive // All Rights Reserved
+        </div>
+</div>
+<!-- Right Image Column (Poster Image) -->
+<div class="lg:col-span-6 xl:col-span-6 relative flex justify-center items-center">
+<!-- Ambient Lightning Aura & Radial Storm Glows Behind Mjolnir / Poster -->
+<div class="absolute w-96 h-96 bg-cyan-400/25 rounded-full blur-[100px] pointer-events-none -top-12 -right-8 animate-tempest-glow"></div>
+<div class="absolute w-80 h-80 bg-sky-600/30 rounded-full blur-[90px] pointer-events-none bottom-[-20px] left-2"></div>
+<div class="absolute w-64 h-64 bg-cyan-200/20 rounded-full blur-[70px] pointer-events-none top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"></div>
+<!-- Radial Crackle Halo SVG behind poster -->
+<div class="absolute -inset-4 pointer-events-none flex items-center justify-center">
+<div class="w-full h-full max-w-[480px] max-h-[620px] rounded-3xl border border-cyan-400/30 bg-cyan-500/5 blur-sm shadow-[0_0_50px_rgba(56,189,248,0.3)]"></div>
+</div>
+<!-- Character Poster Container -->
+<div class="relative w-full max-w-[440px] rounded-2xl overflow-hidden border-2 border-cyan-400/50 shadow-[0_0_50px_rgba(56,189,248,0.45),0_0_20px_rgba(14,165,233,0.3)] group">
+<img alt="Thor Odinson summoning thunder with Mjolnir" class="w-full h-auto max-h-[580px] object-cover object-top filter contrast-110 brightness-105 group-hover:scale-105 transition-transform duration-700 ease-out" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQqs4vNQCpE44D0PEGSUaN5BPh4QevthvMEYM7nvFCOGl7aqed8yI6GVhAEnSUDm7KNt9_zXeqnDkTCvve33p1WrFAREMyYdUKyhjMGqmywQXkJlPIWnyDQNi3ZIK5hynC_FZUluo6xIrtkMA3xrl1xS2u8UHntLF5aGNCENYKOqDPPKWibWdlYO14nlMBYKWgFOGz4Vp8FYmMyqPd_bC_I4LQLPb68b4LofizsJ5yQkp8TIg2J5YqbVL3UgHtxOyQ2cY"/>
+<!-- Electric overlay vignette -->
+<div class="absolute inset-0 pointer-events-none bg-gradient-to-t from-[#030712] via-transparent to-transparent opacity-85"></div>
+<div class="absolute inset-0 pointer-events-none border border-cyan-300/30 rounded-2xl shadow-[inset_0_0_25px_rgba(56,189,248,0.25)]"></div>
+<!-- Poster Metadata Tag -->
+<div class="absolute bottom-4 right-4 bg-slate-950/85 backdrop-blur-md border border-cyan-400/60 rounded-full px-4 py-1.5 flex items-center space-x-2 shadow-[0_0_15px_rgba(56,189,248,0.35)]">
+<span class="w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_8px_#38BDF8] animate-ping"></span>
+<span class="text-[10px] tracking-widest font-mono text-cyan-200 uppercase font-bold">SUBJECT: THOR ODINSON // NEW ASGARD</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- END: HeroMainContent -->
+<!-- BEGIN: LateralNavArrows -->
+<!-- Left Navigation Arrow -->
+<button aria-label="Previous Character" class="hidden md:flex fixed left-4 top-1/2 -translate-y-1/2 z-30 w-11 h-11 rounded-full border border-cyan-800/60 bg-slate-950/80 backdrop-blur-md items-center justify-center text-slate-300 hover:text-white hover:border-cyan-400 hover:shadow-[0_0_20px_rgba(56,189,248,0.6)] transition-all">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewbox="0 0 24 24">
+<path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</button>
+<!-- Right Navigation Arrow -->
+<button aria-label="Next Character" class="hidden md:flex fixed right-4 top-1/2 -translate-y-1/2 z-30 w-11 h-11 rounded-full border border-cyan-800/60 bg-slate-950/80 backdrop-blur-md items-center justify-center text-slate-300 hover:text-white hover:border-cyan-400 hover:shadow-[0_0_20px_rgba(56,189,248,0.6)] transition-all">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewbox="0 0 24 24">
+<path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</button>
+<!-- END: LateralNavArrows -->
+<!-- BEGIN: FloatingRosterDock -->
+<!-- Bottom Character Carousel / Quick Switcher -->
+<footer class="relative z-30 pb-4 pt-2 px-6 flex justify-center" data-purpose="roster-selector">
+<div class="bg-slate-950/90 border border-cyan-900/50 rounded-full px-4 py-2 flex items-center space-x-3 backdrop-blur-xl shadow-[0_0_25px_rgba(0,0,0,0.8),0_0_15px_rgba(14,165,233,0.15)]">
+<span class="text-[9px] uppercase tracking-widest font-mono text-cyan-400/60 pl-2 pr-1 hidden sm:inline">Roster</span>
+<!-- Thor Button (Active) -->
+<button class="relative flex items-center space-x-2 px-3 py-1.5 rounded-full bg-cyan-950/80 border border-cyan-400 text-cyan-200 shadow-[0_0_15px_rgba(56,189,248,0.5)]">
+<span class="w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_8px_#38BDF8]"></span>
+<span class="text-xs font-bold tracking-wider uppercase">Thor</span>
+</button>
+<!-- Iron Man -->
+<button class="flex items-center space-x-2 px-3 py-1.5 rounded-full hover:bg-slate-900 border border-transparent hover:border-cyan-800/50 text-slate-400 hover:text-slate-200 transition-colors">
+<span class="text-xs font-bold tracking-wider uppercase">Iron Man</span>
+</button>
+<!-- Spider-Man -->
+<button class="flex items-center space-x-2 px-3 py-1.5 rounded-full hover:bg-slate-900 border border-transparent hover:border-cyan-800/50 text-slate-400 hover:text-slate-200 transition-colors">
+<span class="text-xs font-bold tracking-wider uppercase">Spider-Man</span>
+</button>
+<!-- Captain America -->
+<button class="flex items-center space-x-2 px-3 py-1.5 rounded-full hover:bg-slate-900 border border-transparent hover:border-cyan-800/50 text-slate-400 hover:text-slate-200 transition-colors">
+<span class="text-xs font-bold tracking-wider uppercase">Cap</span>
+</button>
+<!-- Loki -->
+<button class="flex items-center space-x-2 px-3 py-1.5 rounded-full hover:bg-slate-900 border border-transparent hover:border-cyan-800/50 text-slate-400 hover:text-slate-200 transition-colors">
+<span class="text-xs font-bold tracking-wider uppercase">Loki</span>
+</button>
+</div>
+</footer>
+<!-- END: FloatingRosterDock -->
+</body></html>

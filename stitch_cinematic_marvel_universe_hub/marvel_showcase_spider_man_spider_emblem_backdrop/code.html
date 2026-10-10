@@ -1,0 +1,675 @@
+<!DOCTYPE html><html class="dark" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>MARVEL - Cinematic Character Spotlight</title>
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Bebas+Neue&amp;family=Manrope:wght@400;500;600;700;800&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ["'Bebas Neue'", "'Anton'", "sans-serif"],
+            brand: ["'Anton'", "sans-serif"],
+            body: ["'Manrope'", "sans-serif"],
+            mono: ["'Space Grotesk'", "monospace"]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    @layer base {
+      html, body {
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+        background-color: #0b0203;
+      }
+      ::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #080808;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #333333;
+        border-radius: 3px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #e62429;
+      }
+    }
+
+    /* Ambient Spotlight Transitions */
+    .theme-transition {
+      transition: background 0.7s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease;
+    }
+
+    .hero-img-transition {
+      transition: opacity 0.5s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .text-glow {
+      text-shadow: 0 0 20px rgba(255,255,255,0.25);
+    }
+  </style>
+</head>
+<body class="text-white font-body antialiased min-h-screen flex flex-col justify-between selection:bg-[#E62429] selection:text-white">
+<!-- DYNAMIC BACKGROUND CANVAS WRAPPER -->
+<div class="theme-transition fixed inset-0 z-0 bg-gradient-to-br from-[#d4000b] via-[#940007] to-[#140003] overflow-hidden" id="dynamicHeroStage"><!-- Deep obsidian to rich crimson burgundy cinematic gradient backdrop --><div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#3a0913] via-[#140407] to-[#080305]"></div><!-- Multi-layered Atmospheric Mystic / Cosmic Blooms --><div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1100px] h-[1000px] rounded-full bg-[radial-gradient(circle_at_50%_45%,rgba(255,60,75,0.28)_0%,rgba(230,36,41,0.16)_35%,rgba(10,8,12,0)_72%)] pointer-events-none blur-3xl opacity-90"></div><div class="absolute top-1/4 left-1/3 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[650px] rounded-full bg-[radial-gradient(circle,rgba(255,100,110,0.18)_0%,rgba(200,20,35,0.08)_45%,transparent_75%)] pointer-events-none blur-2xl"></div><div class="absolute top-1/2 right-1/4 -translate-y-1/2 w-[750px] h-[750px] rounded-full bg-[radial-gradient(circle,rgba(230,36,41,0.22)_0%,rgba(140,10,25,0.1)_50%,transparent_75%)] pointer-events-none blur-3xl"></div><!-- Majestic Glowing Spider Logo Watermark with Smooth Radial Edge Fade --><div class="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden"><div class="relative w-full h-full flex items-center justify-center mix-blend-screen opacity-70 drop-shadow-[0_0_50px_rgba(230,36,41,0.65)]"><img alt="Spider Emblem Background" class="w-full h-full object-contain filter contrast-[1.1] brightness-[1.08] drop-shadow-[0_0_35px_rgba(255,50,65,0.8)]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCUQJHCoDXf1eX0iNX-_J19wJnBGPJBnOGgX5Rnt1NMc-2ZCMuGYXPuZuIYxmHgWRgqYFej1DZzBD6ndV_EP7A9rU1SETfIyG6OueE1pBrydMscUfY3ToGHiVwgQMN1Y2ol3wVbBST0KSNox6qEJLf7su6bhzmzIxCk-2gUU1w8v87tQUwRilGB42Ns4uPTvw0QSg2vRvn6CAt_SGISdS4LITiTP7DkrLaRbH8NwLh2NzBYdxvPJEaPUQ"></div></div><!-- Soft Vignette & Subtle Film Texture Grid --><div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_25%,rgba(5,2,4,0.85)_100%)] pointer-events-none"></div><div class="absolute inset-0 opacity-[0.03] bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:28px_28px] pointer-events-none"></div></div>
+<!-- FLOATING MINIMAL HEADER (Matches reference: Top left emblem, center nav, right #hashtag) -->
+<header class="relative z-30 w-full pt-6 md:pt-8 px-6 sm:px-10 lg:px-16 flex items-center justify-between">
+<!-- Left: Character Specific Icon Emblem -->
+<div class="flex items-center gap-4">
+<div class="w-11 h-11 sm:w-12 sm:h-12 flex items-center justify-center text-white drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)] transition-transform duration-300 hover:scale-110 cursor-pointer" id="emblemContainer">
+<!-- SVG / Vector Emblem: Spider-Man Default -->
+<svg class="w-9 h-9 sm:w-10 sm:h-10 fill-current" id="heroEmblemSvg" viewBox="0 0 100 100"><path d="M50 15 C47 25 43 32 38 35 C32 28 22 25 15 28 C24 35 30 46 32 54 C24 50 14 50 6 56 C15 62 25 62 31 60 C26 70 18 78 10 84 C21 82 30 76 36 67 C39 77 44 85 50 92 C56 85 61 77 64 67 C70 76 79 82 90 84 C82 78 74 70 69 60 C75 62 85 62 94 56 C86 50 76 50 68 54 C70 46 76 35 85 28 C78 25 68 28 62 35 C57 32 53 25 50 15 Z M50 38 C54 38 58 44 58 52 C58 60 54 66 50 66 C46 66 42 60 42 52 C42 44 46 38 50 38 Z"></path></svg>
+</div>
+<a class="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded bg-black/30 border border-white/15 backdrop-blur-md text-[11px] font-mono tracking-widest uppercase hover:bg-white/10 transition-colors" href="#">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+<span class="">MCU ACTIVE ARCHIVE</span>
+</a>
+</div>
+<!-- Center Navigation Links (STORY, CHARACTERS, MERCH) -->
+<nav class="flex items-center gap-6 sm:gap-10 font-mono text-[13px] sm:text-[14px] font-bold tracking-[0.25em] text-white/90">
+<button class="hover:text-white uppercase transition-all duration-200 hover:drop-shadow-[0_0_10px_rgba(255,255,255,0.8)] border-b-2 border-transparent hover:border-white pb-0.5" onclick="openLoreModal('story')">
+        STORY
+      </button>
+<button class="text-white uppercase font-extrabold border-b-2 border-white pb-0.5 drop-shadow-[0_0_8px_rgba(255,255,255,0.7)]" onclick="focusCharacterSelector()">
+        CHARACTERS
+      </button>
+<button class="hover:text-white uppercase transition-all duration-200 hover:drop-shadow-[0_0_10px_rgba(255,255,255,0.8)] border-b-2 border-transparent hover:border-white pb-0.5" onclick="openLoreModal('merch')">
+        MERCH
+      </button>
+</nav>
+<!-- Right: Branded Character Hashtag & Audio Cue -->
+<div class="flex items-center gap-3 sm:gap-5">
+<span class="font-mono text-xs sm:text-sm font-extrabold uppercase tracking-widest text-[#FFEAEA] drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]" id="heroHashtag">#SPIDERMAN</span>
+<button class="w-9 h-9 rounded-full bg-black/40 hover:bg-black/60 border border-white/20 backdrop-blur-md flex items-center justify-center text-white/90 hover:text-white transition-transform hover:scale-105 shadow-md" id="sfxToggleBtn" onclick="toggleAudioTheme()" title="Soundtrack &amp; SFX Atmospheric Cue">
+<span class="material-symbols-outlined text-[19px]" id="audioIcon">volume_up</span>
+</button>
+</div>
+</header>
+<!-- MAIN SHOWCASE HERO STAGE (Exact Visual Blueprint of Reference Image) -->
+<main class="relative z-10 flex-1 w-full max-w-[1580px] mx-auto px-6 sm:px-10 lg:px-16 flex items-center min-h-[580px] lg:min-h-[640px] my-auto">
+<div class="w-full grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center py-6">
+<!-- Left Column: Typography, Lore, Attributes & Action CTA -->
+<div class="lg:col-span-6 xl:col-span-5 flex flex-col justify-center gap-5 z-20 relative p-6 sm:p-8 rounded-2xl bg-black/25 backdrop-blur-md border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+<!-- Marvel Iconic Brand Logo Badge -->
+<div class="flex items-center gap-3">
+<div class="bg-[#E62429] text-white px-2 py-0.5 shadow-[0_4px_14px_rgba(0,0,0,0.5)] border border-white/20 inline-flex items-center justify-center">
+<span class="font-brand text-[22px] sm:text-[24px] tracking-tight leading-none uppercase">MARVEL</span>
+</div>
+<span class="font-mono text-[11px] sm:text-[12px] uppercase tracking-[0.25em] text-white/75 drop-shadow" id="heroSubUniverse">EARTH-616 CONTINUITY</span>
+</div>
+<!-- Giant Character Cinematic Headline (Bebas / Anton condensed impact) -->
+<h1 class="font-display text-[68px] sm:text-[88px] xl:text-[104px] uppercase tracking-normal leading-[0.88] text-white text-glow drop-shadow-[0_12px_24px_rgba(0,0,0,0.85)]" id="heroTitle">SPIDER-MAN</h1>
+<!-- Character Real Name & Alias Pill -->
+<div class="flex items-center gap-3">
+<span class="font-mono text-xs sm:text-sm uppercase tracking-widest text-[#f5c518] font-bold drop-shadow" id="heroRealName">PETER BENJAMIN PARKER</span>
+<span class="text-white/40">•</span>
+<span class="px-2.5 py-0.5 rounded-full text-[11px] font-mono tracking-wider uppercase bg-white/10 backdrop-blur-md border border-white/20 text-white/90" id="heroRoleBadge">FRIENDLY NEIGHBORHOOD HERO</span>
+</div>
+<!-- Narrative Bio Text (Crisp white/silver, matching reference paragraph style) -->
+<p class="text-white/85 text-[15px] sm:text-[16px] xl:text-[17px] leading-[1.65] font-normal max-w-xl drop-shadow-[0_2px_10px_rgba(0,0,0,0.7)]" id="heroBio">Peter Parker balances his life as an ordinary high school student in Queens with his superhero alter-ego Spider-Man, and finds himself on the trail of a new menace prowling the skies of New York City. A young Peter Parker begins to navigate his newfound identity as the web-slinging superhero Spider-Man.</p>
+<!-- Dynamic Tactical Attributes & Stats -->
+<div class="grid grid-cols-3 gap-3 pt-2 max-w-md border-t border-white/15">
+<div class="flex flex-col">
+<span class="text-[10px] font-mono tracking-widest uppercase text-white/60">Power Factor</span>
+<span class="text-base sm:text-lg font-bold font-mono text-white" id="statPower">96 / 100</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[10px] font-mono tracking-widest uppercase text-white/60">Agility / Reflex</span>
+<span class="text-base sm:text-lg font-bold font-mono text-white" id="statAgility">99 / 100</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[10px] font-mono tracking-widest uppercase text-white/60">Threat Level</span>
+<span class="text-base sm:text-lg font-bold font-mono text-[#F5C518]" id="statThreat">OMEGA PROTECTOR</span>
+</div>
+</div>
+<!-- Interactive Action Cluster -->
+<div class="flex flex-wrap items-center gap-4 pt-3">
+<button class="px-7 py-3.5 bg-white text-[#870007] hover:bg-neutral-100 font-mono font-bold text-xs sm:text-sm tracking-[0.2em] uppercase rounded shadow-[0_8px_25px_rgba(0,0,0,0.5)] hover:scale-105 active:scale-95 transition-all flex items-center gap-2" id="primaryActionBtn" onclick="openLoreModal('abilities')">
+<span class="">EXPLORE ABILITIES</span>
+<span class="material-symbols-outlined text-[18px]">bolt</span>
+</button>
+<button class="px-6 py-3.5 bg-black/35 hover:bg-black/55 text-white border border-white/30 hover:border-white font-mono text-xs sm:text-sm tracking-[0.2em] uppercase rounded backdrop-blur-md hover:scale-105 active:scale-95 transition-all flex items-center gap-2" onclick="playHeroAudioEffect()">
+<span class="material-symbols-outlined text-[18px]">play_circle</span>
+<span class="">VOICE LOG</span>
+</button>
+</div>
+<!-- Designer Reference Watermark Label (Bottom left tag from reference) -->
+<div class="pt-4 text-[10px] font-mono tracking-[0.25em] text-white/40 uppercase">
+          MARVEL ENTERTAINMENT // ALL RIGHTS RESERVED
+        </div>
+</div>
+<!-- Right Column: Massive Hero Action Dynamic Cutout (Bursting off canvas) -->
+<div class="lg:col-span-6 xl:col-span-7 relative flex items-center select-none justify-end">
+<!-- Subtle Backlit Ring Behind Character -->
+<div class="absolute w-[400px] h-[400px] sm:w-[560px] sm:h-[560px] rounded-full bg-[radial-gradient(circle,rgba(230,36,41,0.45)_0%,rgba(255,80,90,0.15)_45%,transparent_70%)] blur-3xl pointer-events-none transition-all duration-700 right-0" id="heroHaloGlow"></div>
+<!-- Primary Hero Cutout Image View -->
+<div class="relative w-full max-w-[580px] lg:max-w-[700px] xl:max-w-[760px] h-[440px] sm:h-[560px] lg:h-[660px] flex items-center justify-center rounded-3xl overflow-hidden border border-white/15 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.85),0_0_40px_rgba(230,36,41,0.3)] bg-gradient-to-t from-black/60 via-transparent to-black/20 backdrop-blur-sm">
+<img alt="SPIDER-MAN Hero Spotlight" class="hero-img-transition w-full h-full object-contain drop-shadow-[0_25px_50px_rgba(0,0,0,0.85)] filter contrast-[1.05]" id="heroMainImage" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA1t1lJrVk3JaADdkRzXqiVGqIuyPRGK6FTm-gVYoZKNL9WHsrujjGhbzsu4o23FXU8O4MXfSf0v359zVxHNkq3WJjjVFH81DjHi44fdFzaA1t7IL22nNjFpG1r9tDMitMn9fRIsPvvkLJN3zJCstkQZ-Aql_cxi5hisPl0O4TGTezQY3BkrGw4wdvLCkvK_Qhv-SBz463sK8QUK1-Cv0ycmgUJWRG1SoKWeB8NPPAOaLvKsa7Jd5khUWOiVunLNAgShQ4" style="opacity: 1; transform: scale(1) translateY(0px);">
+<!-- Tactical Overlay Floating Badge on Hero visual -->
+<div class="absolute bottom-4 right-4 sm:bottom-10 sm:right-8 px-3.5 py-1.5 rounded bg-black/60 border border-white/25 backdrop-blur-md flex items-center gap-2 shadow-2xl" id="heroTagBadge">
+<span class="w-2 h-2 rounded-full bg-red-500 animate-ping" id="heroTagDot"></span>
+<span class="font-mono text-[11px] tracking-widest text-white uppercase" id="heroTagText">SUBJECT: PETER PARKER // QUEENS</span>
+</div>
+<!-- Quick Switcher Prev / Next Chevrons on Hero Visual -->
+<button class="absolute left-0 sm:-left-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-black/40 hover:bg-black/70 border border-white/25 backdrop-blur-md flex items-center justify-center text-white hover:scale-110 active:scale-95 transition-all shadow-xl" onclick="navigateHero(-1)" title="Previous Character">
+<span class="material-symbols-outlined text-[24px]">chevron_left</span>
+</button>
+<button class="absolute right-0 sm:-right-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-black/40 hover:bg-black/70 border border-white/25 backdrop-blur-md flex items-center justify-center text-white hover:scale-110 active:scale-95 transition-all shadow-xl" onclick="navigateHero(1)" title="Next Character">
+<span class="material-symbols-outlined text-[24px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+<!-- INTERACTIVE CHARACTER SWITCHER DOCK (Bottom floating gallery selector for ALL heroes) -->
+<footer class="relative z-30 w-full pb-6 pt-2 px-4 sm:px-10 max-w-[1580px] mx-auto" id="characterDockSection">
+<div class="bg-black/45 border border-white/20 backdrop-blur-xl rounded-2xl p-3 sm:p-4 shadow-[0_16px_40px_rgba(0,0,0,0.7)] flex flex-col md:flex-row items-center justify-between gap-3">
+<!-- Dock Label & Controls Info -->
+<div class="hidden xl:flex flex-col border-r border-white/15 pr-5 min-w-[160px]">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+<span class="font-mono text-[11px] font-bold tracking-[0.2em] uppercase text-white/90">ROSTER DOCK</span>
+</div>
+<span class="text-[11px] font-mono text-white/60">SELECT HERO TO TRANSFORM</span>
+</div>
+<!-- Scrollable Hero Thumbnails Carousel -->
+<div class="flex items-center gap-2.5 sm:gap-4 overflow-x-auto w-full py-1 px-1 scrollbar-none justify-start md:justify-center" id="heroThumbnailRow">
+<!-- Hero 1: Spider-Man -->
+<button class="hero-thumb active-thumb group relative flex items-center gap-3 px-3 py-2 rounded-xl bg-white/20 border-2 border-white text-left transition-all duration-300 hover:scale-105 flex-shrink-0 shadow-[0_0_15px_rgba(255,255,255,0.4)]" data-hero-index="0" onclick="selectHero(0)">
+<div class="w-10 h-10 sm:w-12 sm:h-12 rounded-lg overflow-hidden bg-black/40 border border-white/30 flex-shrink-0">
+<img alt="Spider-Man" class="w-full h-full object-cover object-top" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLoPfKIjb32tjjPRaUjONsCzvU8aCvYHh4vj4CIzcsa_gGvF8yS2xPF3RkyAsd3ROCYKwQWtkmSoZF14HpVls-bUYZewvWVQVTsAndX0nlvybeUZYNZkBoIQaHGxKfyDDeDhy9N0_q0ihC1YWiwaaOvby3gnI5guyHtEzdwWN_J1yrT2l_MPUVtcmD0MuTl3htxs68VMiwMoU-k-qKPB9exJwaWO_yjvyXt4acYSFE0EkcROs1NMD3HEtLeLowUreUx-o">
+</div>
+<div class="flex flex-col">
+<span class="font-display text-base sm:text-lg leading-none tracking-wide text-white uppercase group-hover:text-white">SPIDER-MAN</span>
+<span class="font-mono text-[10px] text-white/80">#PETER</span>
+</div>
+</button>
+<!-- Hero 2: Iron Man -->
+<button class="hero-thumb group relative flex items-center gap-3 px-3 py-2 rounded-xl bg-black/40 border border-white/15 hover:border-white/50 text-left transition-all duration-300 hover:scale-105 flex-shrink-0" data-hero-index="1" onclick="selectHero(1)">
+<div class="w-10 h-10 sm:w-12 sm:h-12 rounded-lg overflow-hidden bg-black/40 border border-white/30 flex-shrink-0">
+<img alt="Iron Man" class="w-full h-full object-cover object-top" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCeGmnjWgCLVz8xNFctrqPo68uJncZMKF9hm7cSb4CAGosYB3-4DGwkvIIF-Xky1zB4XcQcbCnxpzdDGvragBxkiYjeSejA5y0jxyiVDV22dSM0bRKumInrFXkP2biAPvIPsy0KlBq3aGqykyK7xAHXFRrvg_lBtXfHBcCiiCkLk9gqzomz51bnQwDh-PngQ6VcFHwrZdYQORSB-3EcgUw4XYQ3Xewob8W5lMXHpltBimfne0uylpoNi5wgXO7WrUdDJcE">
+</div>
+<div class="flex flex-col">
+<span class="font-display text-base sm:text-lg leading-none tracking-wide text-white/85 uppercase group-hover:text-white">IRON MAN</span>
+<span class="font-mono text-[10px] text-white/60">#STARK</span>
+</div>
+</button>
+<!-- Hero 3: Wolverine -->
+<button class="hero-thumb group relative flex items-center gap-3 px-3 py-2 rounded-xl bg-black/40 border border-white/15 hover:border-white/50 text-left transition-all duration-300 hover:scale-105 flex-shrink-0" data-hero-index="2" onclick="selectHero(2)">
+<div class="w-10 h-10 sm:w-12 sm:h-12 rounded-lg overflow-hidden bg-black/40 border border-white/30 flex-shrink-0">
+<img alt="Wolverine" class="w-full h-full object-cover object-top" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBGjpWcC9QWR0YLOyRFwIYzufOuBukK10e5QJOJSi0iUNhTf_5vuSICe4pvrbZeXd7SDAs2SbBvjZMMQK50WF6OfetHwZoOf8sLOPNuf17-in47kVamGHha4I1WrCOPkLe6DjvKCFfaGJxM8kderTxZCNfKiJinV-bD1MOl8wuOSN_MrpA4c8iSO3lpJ9Gn0dV4jtiac9okw7S0dMPJxU4PyAIfqWcjV1kO558XnKwfFyVTRtUMwRO1HegK5Z-iYCJrNjk">
+</div>
+<div class="flex flex-col">
+<span class="font-display text-base sm:text-lg leading-none tracking-wide text-white/85 uppercase group-hover:text-white">WOLVERINE</span>
+<span class="font-mono text-[10px] text-white/60">#LOGAN</span>
+</div>
+</button>
+<!-- Hero 4: Captain America -->
+<button class="hero-thumb group relative flex items-center gap-3 px-3 py-2 rounded-xl bg-black/40 border border-white/15 hover:border-white/50 text-left transition-all duration-300 hover:scale-105 flex-shrink-0" data-hero-index="3" onclick="selectHero(3)">
+<div class="w-10 h-10 sm:w-12 sm:h-12 rounded-lg overflow-hidden bg-black/40 border border-white/30 flex-shrink-0">
+<img alt="Captain America" class="w-full h-full object-cover object-top" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAtSWKyTOskW50kWt6VvEemszGKoY_rRh-PoucfyHSmgf6nqkZ-ywAnI_WpnxoU3r0qtUReeZEvK29aX537JwI2PairAtpU1eht_MPUgPbGBhM3KlGUi34Np3CbX81KCFTIjMo7bwezVdoL-hK5ZowtXhZh1TRs8gQWcv5OxpFOh2PQC4WVjlX2GrwmDeTou5yLMZ2uuYMuccnRWLY_-oLwP_Swg30nNS-VkTUZGunFPlclId8NQBelLXaLuLBfCnQyADc">
+</div>
+<div class="flex flex-col">
+<span class="font-display text-base sm:text-lg leading-none tracking-wide text-white/85 uppercase group-hover:text-white">CAPT. AMERICA</span>
+<span class="font-mono text-[10px] text-white/60">#ROGERS</span>
+</div>
+</button>
+<!-- Hero 5: Doctor Strange -->
+<button class="hero-thumb group relative flex items-center gap-3 px-3 py-2 rounded-xl bg-black/40 border border-white/15 hover:border-white/50 text-left transition-all duration-300 hover:scale-105 flex-shrink-0" data-hero-index="4" onclick="selectHero(4)">
+<div class="w-10 h-10 sm:w-12 sm:h-12 rounded-lg overflow-hidden bg-black/40 border border-white/30 flex-shrink-0">
+<img alt="Doctor Strange" class="w-full h-full object-cover object-top" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPyrJEm83pmD-IXIwsWqcSKnsrt-VNht9fQtnCohSF8-8uzNBkruyQQedk19rXtizvTcJOekgU3D494liSRMjkZuCZBViTTo1m66ZxX0fTXTTyi8uRp-jttYqC2XXP7BCf228xGnkJIyt9yR--vWSPBUCaLZJFUEe30_YY3WBdoA1Rv8ETLE6VqvHnfXfMVKIToHNeW4HtjQYe1-TMlv_dWXc4c03nEoFf5nOO-2uvqnd3mrukSRFvvO4kFo_rHZqtfN4">
+</div>
+<div class="flex flex-col">
+<span class="font-display text-base sm:text-lg leading-none tracking-wide text-white/85 uppercase group-hover:text-white">DR. STRANGE</span>
+<span class="font-mono text-[10px] text-white/60">#STEPHEN</span>
+</div>
+</button>
+<!-- Hero 6: Thor -->
+<button class="hero-thumb group relative flex items-center gap-3 px-3 py-2 rounded-xl bg-black/40 border border-white/15 hover:border-white/50 text-left transition-all duration-300 hover:scale-105 flex-shrink-0" data-hero-index="5" onclick="selectHero(5)">
+<div class="w-10 h-10 sm:w-12 sm:h-12 rounded-lg overflow-hidden bg-black/40 border border-white/30 flex-shrink-0">
+<img alt="Thor" class="w-full h-full object-cover object-top" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCicCpW3_7PsPlTUL09-ojsuNfZWY31JejTh1_QSn3Dtmj_fsHTz0KNl40fgEmHqPjaxPAm_UIMarcOcNYREsiygVhNkVeGmsNasZV_VP8gDffizmWV_dGVaFB4R7pImd-gsBNwnmSomEOjBSEnWGBdn8mRYHHEzFJC4DJVVn5ndrDB_7VKAJiKS5mD0lrJhUieRBEH6pJ2pgZ7dSVWPaiJJXwRyGdY1MgTEmuIMh8WF7RfBgz1izy8RYgAJ6KAPZKnnjY">
+</div>
+<div class="flex flex-col">
+<span class="font-display text-base sm:text-lg leading-none tracking-wide text-white/85 uppercase group-hover:text-white">THOR</span>
+<span class="font-mono text-[10px] text-white/60">#ODINSON</span>
+</div>
+</button>
+<!-- Hero 7: The Hulk -->
+<button class="hero-thumb group relative flex items-center gap-3 px-3 py-2 rounded-xl bg-black/40 border border-white/15 hover:border-white/50 text-left transition-all duration-300 hover:scale-105 flex-shrink-0" data-hero-index="6" onclick="selectHero(6)">
+<div class="w-10 h-10 sm:w-12 sm:h-12 rounded-lg overflow-hidden bg-black/40 border border-white/30 flex-shrink-0">
+<img alt="The Hulk" class="w-full h-full object-cover object-top" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDKXRXRVdtKzTDI-HoEX9X8nZwMbwffUQmMIKJn6Q3h3ScRVJ4BWaJuOb--coAtkTikUonYIP9FGaRR4Ksghc3POuah-Eof1JirDzrgetG8BUx3NqduhrCI7jarHZrd14DlK_5Z7-cvo-neisg4GMzRhMkLOOpiKOPfXwDBN9059ojZ070M8CE_L6oc82-voE61XUR2RsDRPxQMSoJTM1KShGCZ-uKs8YQudbOMz42_MOfjcuCosOfF1P0HODqQwpxpkdI">
+</div>
+<div class="flex flex-col">
+<span class="font-display text-base sm:text-lg leading-none tracking-wide text-white/85 uppercase group-hover:text-white">THE HULK</span>
+<span class="font-mono text-[10px] text-white/60">#BANNER</span>
+</div>
+</button>
+</div>
+<!-- Quick Fullscreen / Audio Status indicator -->
+<div class="hidden lg:flex items-center gap-3 border-l border-white/15 pl-4 flex-shrink-0">
+<button class="p-2 rounded-lg bg-white/10 hover:bg-white/20 text-white/80 hover:text-white transition-colors" onclick="toggleFullscreen()" title="Toggle Cinematic Mode">
+<span class="material-symbols-outlined text-[20px]">fullscreen</span>
+</button>
+</div>
+</div>
+</footer>
+<!-- INTERACTIVE MODAL (STORY / ABILITIES / MERCH DOSSIER) -->
+<div class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden items-center justify-center p-4" id="loreModal">
+<div class="relative w-full max-w-2xl bg-[#141414] border border-white/20 rounded-2xl shadow-[0_25px_60px_rgba(0,0,0,0.9)] overflow-hidden flex flex-col">
+<!-- Modal Header -->
+<div class="px-6 py-5 border-b border-white/10 flex items-center justify-between bg-black/40">
+<div class="flex items-center gap-3">
+<div class="bg-[#E62429] px-2 py-0.5 text-white font-brand text-lg">MARVEL</div>
+<h3 class="font-display text-2xl uppercase tracking-wide text-white" id="modalHeaderTitle">CHARACTER ARCHIVE BRIEF</h3>
+</div>
+<button class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white/80 hover:text-white" onclick="closeLoreModal()">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<!-- Modal Body Content -->
+<div class="p-6 sm:p-8 overflow-y-auto max-h-[70vh] space-y-6" id="modalBodyContent">
+<!-- Content will be injected dynamically based on button clicked -->
+</div>
+<!-- Modal Footer -->
+<div class="px-6 py-4 border-t border-white/10 bg-black/40 flex items-center justify-between font-mono text-xs text-white/60">
+<span class="">SECURITY CLEARANCE: LEVEL 9 OMEGA</span>
+<button class="px-4 py-2 bg-white text-black font-bold uppercase rounded hover:bg-neutral-200" onclick="closeLoreModal()">CLOSE INTEL</button>
+</div>
+</div>
+</div>
+<!-- AUDIO FEEDBACK NOTIFICATION TOAST -->
+<div class="fixed bottom-24 right-8 z-50 bg-black/85 border border-white/30 backdrop-blur-md px-4 py-2.5 rounded-xl shadow-2xl flex items-center gap-3 transition-opacity duration-300 pointer-events-none opacity-0" id="audioToast">
+<span class="material-symbols-outlined text-[#F5C518] text-[20px]">graphic_eq</span>
+<span class="font-mono text-xs uppercase tracking-wider text-white" id="toastMessage">SPIDER-MAN // ACTIVATED</span>
+</div>
+<!-- CHARACTER DATABASE & INTERACTIVE SHOWCASE ENGINE -->
+<script>
+    const HERO_DATA = [
+      {
+        id: "spider-man",
+        title: "SPIDER-MAN",
+        realName: "PETER BENJAMIN PARKER",
+        role: "FRIENDLY NEIGHBORHOOD HERO",
+        hashtag: "#SPIDERMAN",
+        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuA1t1lJrVk3JaADdkRzXqiVGqIuyPRGK6FTm-gVYoZKNL9WHsrujjGhbzsu4o23FXU8O4MXfSf0v359zVxHNkq3WJjjVFH81DjHi44fdFzaA1t7IL22nNjFpG1r9tDMitMn9fRIsPvvkLJN3zJCstkQZ-Aql_cxi5hisPl0O4TGTezQY3BkrGw4wdvLCkvK_Qhv-SBz463sK8QUK1-Cv0ycmgUJWRG1SoKWeB8NPPAOaLvKsa7Jd5khUWOiVunLNAgShQ4",
+        themeGradient: "from-[#d4000b] via-[#940007] to-[#140003]",
+        accentColor: "#E62429",
+        btnColor: "text-[#870007]",
+        subUniverse: "EARTH-616 CONTINUITY",
+        tagText: "SUBJECT: PETER PARKER // QUEENS",
+        bio: "Peter Parker balances his life as an ordinary high school student in Queens with his superhero alter-ego Spider-Man, and finds himself on the trail of a new menace prowling the skies of New York City. A young Peter Parker begins to navigate his newfound identity as the web-slinging superhero Spider-Man.",
+        stats: { power: "96 / 100", agility: "99 / 100", threat: "OMEGA PROTECTOR" },
+        abilities: [
+          { name: "Spider-Sense", desc: "Clairvoyant danger intuition warning of immediate ballistic or physical threats." },
+          { name: "Wall-Crawling", desc: "Bio-magnetic electrostatic adhesion enabling ascension of sheer surfaces." },
+          { name: "Web-Fluid Formulation", desc: "Synthetic tensile compound with 300 psi tensile resistance." }
+        ],
+        merch: "Official Marvel Spider-Man PS5 Action Replica, Web-Shooter Collectible Replica, Classic Comic Book Foil Variant.",
+        voiceQuote: "«With great power, there must also come great responsibility.»",
+        emblemSvg: `<path d="M50 15 C47 25 43 32 38 35 C32 28 22 25 15 28 C24 35 30 46 32 54 C24 50 14 50 6 56 C15 62 25 62 31 60 C26 70 18 78 10 84 C21 82 30 76 36 67 C39 77 44 85 50 92 C56 85 61 77 64 67 C70 76 79 82 90 84 C82 78 74 70 69 60 C75 62 85 62 94 56 C86 50 76 50 68 54 C70 46 76 35 85 28 C78 25 68 28 62 35 C57 32 53 25 50 15 Z M50 38 C54 38 58 44 58 52 C58 60 54 66 50 66 C46 66 42 60 42 52 C42 44 46 38 50 38 Z"/>`
+      },
+      {
+        id: "iron-man",
+        title: "IRON MAN",
+        realName: "ANTHONY EDWARD STARK",
+        role: "STARK INDUSTRIES ARCHITECT",
+        hashtag: "#IRONMAN",
+        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuASeRdwzqeKHOfb4GLu8EIht5wNIDN4HV-3Mccu-13jpFZ9ZlPaUjfa6vc4lYco6pFAnIMktKi9SFVmW9L_Fcvo9CyPrpVTYUsYSv7GQDWyLUv_xwy4B4tiH-fncofkUa-aS1njRE5qdTVAkGK5B3vhxx398e5w1rP_QUHjRo9N7S2eE8NAXhvy1UmOIJbEX9NfaRNMG3IUxG8WEztPFRKQfAevAUhF9Mf5S8DDkNaSVacpy-r13i9qWMlgOZ2x2zAh6aQ",
+        themeGradient: "from-[#b91c1c] via-[#700f13] to-[#150305]",
+        accentColor: "#F5C518",
+        btnColor: "text-[#700f13]",
+        subUniverse: "STARK TOWER PROTOCOLS",
+        tagText: "SUBJECT: TONY STARK // MARK LXXXV",
+        bio: "Genius, billionaire, playboy, philanthropist. After surviving a life-threatening shrapnel injury, Tony Stark built an armored exoskeleton to save his life and protect the world as the vanguard tech titan of the Avengers.",
+        stats: { power: "98 / 100", agility: "92 / 100", threat: "AVENGER PRIME" },
+        abilities: [
+          { name: "Nanotech Armor Matrix", desc: "Instantaneous weapon deployment, repulsors, and unibeam plasma emissions." },
+          { name: "Genius Level Intellect", desc: "Master engineer responsible for arc reactor synthesis and quantum time GPS." },
+          { name: "Supersonic Flight", desc: "Stabilized high-altitude thrusters exceeding Mach 5 velocity." }
+        ],
+        merch: "Hot Toys 1/6 Scale Diecast Mark 85, Arc Reactor Display Prop, Stark Industries Tactical Bomber Jacket.",
+        voiceQuote: "«I am Iron Man.»",
+        emblemSvg: `<circle cx="50" cy="50" r="32" fill="none" stroke="currentColor" stroke-width="6"/><circle cx="50" cy="50" r="14" fill="currentColor"/><path d="M50 12 L50 24 M50 76 L50 88 M12 50 L24 50 M76 50 L88 50" stroke="currentColor" stroke-width="4"/>`
+      },
+      {
+        id: "wolverine",
+        title: "WOLVERINE",
+        realName: "JAMES 'LOGAN' HOWLETT",
+        role: "WEAPON X EXPERIMENT",
+        hashtag: "#WOLVERINE",
+        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuAmXCNSgeGtNAnu0rzZ_CqeJG7URm3p3-LbxtHKxhQkK81cCGchbWbX8c_XJMWCleRQ4_DZoEo-Ig84QZgWZF5bKo_YwZOPLMpw8HUBgo_0kM-3p9-NtyFiZ2SmT1NYLWPF7QKURQCy3dfpsD_5JtkzfsTP8dNwjVRYRkP_sjc4PZDkuxCBzDaQ_ta9BJLTPBWTej7U5JjhbHBJP941Yi5kdHGoyHPDCls_6188zfHJOhVfDYnMed6wBtORhkOXCz52k-4",
+        themeGradient: "from-[#cca300] via-[#754e00] to-[#120a00]",
+        accentColor: "#FFCC00",
+        btnColor: "text-[#583900]",
+        subUniverse: "X-MEN MUTANT COVERT ORA",
+        tagText: "SUBJECT: LOGAN // ADAMANTIUM SKELETON",
+        bio: "Born with animal-keen senses, enhanced physical capabilities, and an accelerated healing factor, Logan was subjected to the Weapon X program, binding indestructible adamantium metal to his skeletal framework and razor-sharp claws.",
+        stats: { power: "95 / 100", agility: "94 / 100", threat: "MUTANT CLASS ALPHA" },
+        abilities: [
+          { name: "Accelerated Regeneration", desc: "Biological cellular healing factor rendering him virtually unkillable." },
+          { name: "Adamantium Claws", desc: "Retractable 12-inch blades slicing cleanly through reinforced metals." },
+          { name: "Berserker Rage", desc: "Primal combat sensory overclocking ignoring all pain thresholds." }
+        ],
+        merch: "Adamantium Claw Replica Set, Marvel Legacy Wolverine Leather Jacket, 90s X-Men Action Figure Special Edition.",
+        voiceQuote: "«I'm the best there is at what I do. But what I do isn't very nice.»",
+        emblemSvg: `<path d="M25 80 L35 20 L40 20 L30 80 Z M48 85 L50 15 L53 15 L51 85 Z M75 80 L65 20 L60 20 L70 80 Z"/>`
+      },
+      {
+        id: "captain-america",
+        title: "CAPTAIN AMERICA",
+        realName: "STEVEN GRANT ROGERS",
+        role: "THE FIRST AVENGER",
+        hashtag: "#CAPTAINAMERICA",
+        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuDPtrJQX9IQC3D09-817hlheUjs_8AYEVAkxgxSV4ECICVLVmfQ56SwdIw2OpniJLcoq4UA7VFHB2YDbIl_8b9unpZktGgU0qmx5xZGLmqolegtjfgVuB3d6-G5FiRBCu3ygGN0vbFWFEnqCMNyHSiEw09xb9poAKobIHrHo62p4kypsmFJjstXqKd-WlQi6PfgHR9ZP3UraGBjHzBuWeShGvcFdQ0FYHTarpFhZsdNizn4R-PbTGsnI2CgopkZZ6lAe-U",
+        themeGradient: "from-[#173866] via-[#0c1f38] to-[#040810]",
+        accentColor: "#3B82F6",
+        btnColor: "text-[#0c1f38]",
+        subUniverse: "STRATEGIC SCIENTIFIC RESERVE",
+        tagText: "SUBJECT: STEVE ROGERS // SUPER SOLDIER",
+        bio: "Recipient of the Super-Soldier Serum during World War II, Steve Rogers became Captain America, the living symbol of freedom. Armed with his indestructible Vibranium shield and tactical genius, he leads the defense of the planet across centuries.",
+        stats: { power: "94 / 100", agility: "95 / 100", threat: "AVENGER COMMANDER" },
+        abilities: [
+          { name: "Super-Soldier Physiology", desc: "Peak human strength, agility, stamina, reflexes, and accelerated mental processing." },
+          { name: "Vibranium Shield Mastery", desc: "Total kinetic energy absorption with flawless ricochet trajectory calculation." },
+          { name: "Master Field Strategist", desc: "Decades of combat command leading Earth's defense against planetary extinction." }
+        ],
+        merch: "Full-Metal Vibranium Shield 1:1 Scale, Marvel Legends Vintage Steve Rogers Figure, Compass Keepsake Replica.",
+        voiceQuote: "«I can do this all day.»",
+        emblemSvg: `<circle cx="50" cy="50" r="38" fill="none" stroke="currentColor" stroke-width="6"/><circle cx="50" cy="50" r="22" fill="none" stroke="currentColor" stroke-width="6"/><polygon points="50,28 54,40 67,40 56,48 60,60 50,52 40,60 44,48 33,40 46,40" fill="currentColor"/>`
+      },
+      {
+        id: "doctor-strange",
+        title: "DOCTOR STRANGE",
+        realName: "DR. STEPHEN STRANGE",
+        role: "SORCERER SUPREME",
+        hashtag: "#DOCTORSTRANGE",
+        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuDTyv4qktGCcBwxzJP03yK2iOAo9XII0L7CpewGGVr8Bft6kguyc1RIF62m-ktXuci8ak8kFr38L9M9raWUwk9bJ9pZIVVRmkjk9sbXonP5kkOU5sCydJe_eIf0MBmi-1Jwl5X71dq1LvQNz3r2KqgLXnZ5t8ac7ZVWSkPuLFhNQXlrhSk_NXDxW6UgQBIMmKhXj5RkbCdvnqoRjfK9liOvq0IJoS-Fpqfp9G8FWpVxbzegsQ77n1et3BfZBqko-zallV4",
+        themeGradient: "from-[#6a1b9a] via-[#380e54] to-[#0d0214]",
+        accentColor: "#c084fc",
+        btnColor: "text-[#380e54]",
+        subUniverse: "KAMAR-TAJ MYSTIC REALM",
+        tagText: "SUBJECT: STEPHEN STRANGE // EYE OF AGAMOTTO",
+        bio: "After a horrific accident ruined his surgical career, Dr. Stephen Strange traveled to Kamar-Taj and unlocked the mysteries of the mystic arts. Now wielding eldritch magic and temporal spells, he stands as reality's guardian against dimensional warlords.",
+        stats: { power: "99 / 100", agility: "89 / 100", threat: "MYSTIC SUPREME" },
+        abilities: [
+          { name: "Eldritch Magic & Shields", desc: "Forges energy mandalas, Tao mandalas, and mystical shields from cosmic energy." },
+          { name: "Interdimensional Portals", desc: "Sling Ring mastery tearing wormholes across galaxies and alternate dimensions." },
+          { name: "Astral Form Projection", desc: "Consciousness separation capable of phase-shifting through physical space." }
+        ],
+        merch: "Eye of Agamotto Light-Up Talisman, Cloak of Levitation Replica, Sanctum Sanctorum Architectural Book.",
+        voiceQuote: "«We never lose our demons, we only learn to live above them.»",
+        emblemSvg: `<circle cx="50" cy="50" r="34" fill="none" stroke="currentColor" stroke-width="5"/><path d="M26 35 Q50 65 74 35 M26 65 Q50 35 74 65" fill="none" stroke="currentColor" stroke-width="4"/><circle cx="50" cy="50" r="6" fill="currentColor"/>`
+      },
+      {
+        id: "thor",
+        title: "THOR",
+        realName: "THOR ODINSON",
+        role: "GOD OF THUNDER",
+        hashtag: "#THOR",
+        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuCBs1xUNXZJScflumnXh3tOBdmbD5wVN5HL_p6cj3g7ru30n3AE2v1glf-92-3x5NRYV4ypMYkZYRF0g-oCin_8dq_6UVbnT1sgfXNE4gD3bs44SOU4C0w5YkowXU6ju2Sj6Yg_nCBGQVxGxGMcC3oSp_-teRfA8GdICKL7_ovMC7V3bE_ZLoHg15eWvoZJtXiP80z8lY9gtpmHQpnGsGtYr-WpHlpiHLvmGScL-7vduIXtcVT8v6eVtlLpU9z4RuDlIdg",
+        themeGradient: "from-[#0369a1] via-[#073650] to-[#020e17]",
+        accentColor: "#38bdf8",
+        btnColor: "text-[#073650]",
+        subUniverse: "ASGARDIAN REALM CONTINUITY",
+        tagText: "SUBJECT: THOR // MJOLNIR & STORMBREAKER",
+        bio: "The crown prince of Asgard and son of Odin, Thor commands primordial thunder, weather, and lightning. Armed with Mjolnir and Stormbreaker, he travels through realms via the Bifrost, fighting to protect the Nine Realms and the cosmos.",
+        stats: { power: "99 / 100", agility: "92 / 100", threat: "COSMIC DEITY" },
+        abilities: [
+          { name: "Primordial Weather Manipulation", desc: "Summons thunderbolts, galactic tempests, and electric plasma storms." },
+          { name: "Godlike Physiology", desc: "Immunity to mortal diseases, extreme cellular density, and cosmic resilience." },
+          { name: "Bifrost Summoning", desc: "Instantaneous dimensional warp bridging across distant galaxies." }
+        ],
+        merch: "Electronic Mjolnir Hammer with Sound FX, Stormbreaker Prop Replica, Asgardian Royal Cloak.",
+        voiceQuote: "«Bring me Thanos!»",
+        emblemSvg: `<path d="M36 28 L64 28 L68 45 L32 45 Z M47 45 L47 82 L53 82 L53 45 Z" fill="currentColor"/><circle cx="50" cy="85" r="4" fill="currentColor"/>`
+      },
+      {
+        id: "the-hulk",
+        title: "THE HULK",
+        realName: "DR. ROBERT BRUCE BANNER",
+        role: "GAMMA POWER TITAN",
+        hashtag: "#HULK",
+        image: "https://lh3.googleusercontent.com/aida-public/AB6AXuC-gq9CNfHYHB83IHSpS-W-U5xaA-4raUCYfaDKP9bF5kfCuS-307JqxIEbeNxNQjm_QgVI5Qk_y6qzgEk9DBw2e6-_bAiAd-SMpnWrOjF8_pv4vrPgbSU_vB5CHfT1SySmQYkn6kgrIWl2GClffmdy4fAwLjkRQPRMZ3MGI2sXLTzqhZmV0beEuStttBtTh3emsJmQGim8nZ9GJkHdgbkFBx0AieK31VJQgUMFFNLhQayNBWEu_snrQQs1lVJK7ICy_No",
+        themeGradient: "from-[#15803d] via-[#0d4a22] to-[#031408]",
+        accentColor: "#4ade80",
+        btnColor: "text-[#0d4a22]",
+        subUniverse: "GAMMA RADIATION RESEARCH LAB",
+        tagText: "SUBJECT: BRUCE BANNER // THE GREEN GOLIATH",
+        bio: "Exposed to lethal doses of gamma radiation, mild-mannered nuclear physicist Dr. Bruce Banner transforms in moments of rage into the Incredible Hulk—a colossal behemoth of boundless physical strength, capable of leveling mountain ranges with a single blow.",
+        stats: { power: "100 / 100", agility: "88 / 100", threat: "GAMMA CALAMITY" },
+        abilities: [
+          { name: "Limitless Physical Force", desc: "Strength scales infinitely with emotional anger and adrenaline surges." },
+          { name: "Superhuman Leap", desc: "Generates kinetic thrust capable of clearing miles and reaching low orbit." },
+          { name: "Gamma Shockwave Clap", desc: "Discharges sonic concussive shockwaves capable of deflecting ballistic artillery." }
+        ],
+        merch: "Marvel Legends 12-inch Incredible Hulk, Gamma Core Neon Desk Light, Ripped Canvas Hulk Art Print.",
+        voiceQuote: "«HULK SMASH!»",
+        emblemSvg: `<circle cx="50" cy="50" r="36" fill="none" stroke="currentColor" stroke-width="5"/><circle cx="50" cy="50" r="10" fill="currentColor"/><path d="M50 20 L50 36 M50 64 L50 80 M20 50 L36 50 M64 50 L80 50" stroke="currentColor" stroke-width="5"/>`
+      }
+    ];
+
+    let currentHeroIndex = 0;
+    let isMuted = false;
+
+    // FUNCTION: SELECT HERO AND TRANSFORM ENTIRE STAGE
+    function selectHero(index) {
+      if (index < 0) index = HERO_DATA.length - 1;
+      if (index >= HERO_DATA.length) index = 0;
+      currentHeroIndex = index;
+      const hero = HERO_DATA[index];
+
+      // 1. Stage Background Transformation
+      const stage = document.getElementById('dynamicHeroStage');
+      stage.className = `theme-transition fixed inset-0 z-0 bg-gradient-to-br ${hero.themeGradient} overflow-hidden`;
+
+      // 2. Animate Hero Image (Smooth Fade & Scale)
+      const heroImg = document.getElementById('heroMainImage');
+      heroImg.style.opacity = '0';
+      heroImg.style.transform = 'scale(0.95) translateY(10px)';
+      
+      setTimeout(() => {
+        heroImg.src = hero.image;
+        heroImg.alt = `${hero.title} Hero Spotlight`;
+        heroImg.style.opacity = '1';
+        heroImg.style.transform = 'scale(1) translateY(0)';
+      }, 250);
+
+      // 3. Update Text Content
+      document.getElementById('heroTitle').textContent = hero.title;
+      document.getElementById('heroRealName').textContent = hero.realName;
+      document.getElementById('heroRoleBadge').textContent = hero.role;
+      document.getElementById('heroBio').textContent = hero.bio;
+      document.getElementById('heroHashtag').textContent = hero.hashtag;
+      document.getElementById('heroSubUniverse').textContent = hero.subUniverse;
+      document.getElementById('heroTagText').textContent = hero.tagText;
+
+      // 4. Update Stats
+      document.getElementById('statPower').textContent = hero.stats.power;
+      document.getElementById('statAgility').textContent = hero.stats.agility;
+      document.getElementById('statThreat').textContent = hero.stats.threat;
+
+      // 5. Update Emblem Vector
+      document.getElementById('heroEmblemSvg').innerHTML = hero.emblemSvg;
+
+      // 6. Update CTA Button Accent Styling
+      const primaryBtn = document.getElementById('primaryActionBtn');
+      primaryBtn.className = `px-7 py-3.5 bg-white ${hero.btnColor} hover:bg-neutral-100 font-mono font-bold text-xs sm:text-sm tracking-[0.2em] uppercase rounded shadow-[0_8px_25px_rgba(0,0,0,0.5)] hover:scale-105 active:scale-95 transition-all flex items-center gap-2`;
+
+      // 7. Update Active State in Thumbnail Dock
+      const thumbs = document.querySelectorAll('.hero-thumb');
+      thumbs.forEach((th, idx) => {
+        if (idx === index) {
+          th.classList.remove('bg-black/40', 'border-white/15');
+          th.classList.add('active-thumb', 'bg-white/20', 'border-2', 'border-white', 'shadow-[0_0_15px_rgba(255,255,255,0.4)]');
+        } else {
+          th.classList.remove('active-thumb', 'bg-white/20', 'border-2', 'border-white', 'shadow-[0_0_15px_rgba(255,255,255,0.4)]');
+          th.classList.add('bg-black/40', 'border', 'border-white/15');
+        }
+      });
+
+      // Show brief subtle toast notification
+      showToast(`${hero.title} // ACTIVATED`);
+    }
+
+    // ARROW NAVIGATION PREV / NEXT
+    function navigateHero(direction) {
+      selectHero(currentHeroIndex + direction);
+    }
+
+    // KEYBOARD NAVIGATION (Left / Right keys switch character)
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') navigateHero(1);
+      if (e.key === 'ArrowLeft') navigateHero(-1);
+      if (e.key === 'Escape') closeLoreModal();
+    });
+
+    // SCROLL TO DOCK FOR MOBILE
+    function focusCharacterSelector() {
+      document.getElementById('characterDockSection').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // LORE MODAL CONTROLLER
+    function openLoreModal(tab) {
+      const hero = HERO_DATA[currentHeroIndex];
+      const modal = document.getElementById('loreModal');
+      const title = document.getElementById('modalHeaderTitle');
+      const body = document.getElementById('modalBodyContent');
+
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+
+      if (tab === 'story') {
+        title.textContent = `${hero.title} // DOSSIER CHRONICLES`;
+        body.innerHTML = `
+          <div class="space-y-4">
+            <h4 class="font-display text-3xl text-white">${hero.realName}</h4>
+            <p class="text-white/80 leading-relaxed">${hero.bio}</p>
+            <div class="p-4 bg-black/40 border border-white/10 rounded-xl space-y-2">
+              <span class="font-mono text-xs uppercase tracking-wider text-[#F5C518]">QUOTE OF RECORD</span>
+              <p class="italic text-lg font-mono text-white/95">${hero.voiceQuote}</p>
+            </div>
+            <div class="grid grid-cols-2 gap-3 pt-2">
+              <div class="p-3 bg-white/5 rounded border border-white/10">
+                <span class="text-[11px] font-mono uppercase text-white/50">AFFILIATION</span>
+                <p class="font-bold text-sm uppercase">${hero.subUniverse}</p>
+              </div>
+              <div class="p-3 bg-white/5 rounded border border-white/10">
+                <span class="text-[11px] font-mono uppercase text-white/50">THREAT RATING</span>
+                <p class="font-bold text-sm uppercase text-[#E62429]">${hero.stats.threat}</p>
+              </div>
+            </div>
+          </div>
+        `;
+      } else if (tab === 'abilities') {
+        title.textContent = `${hero.title} // COMBAT ABILITIES`;
+        let abilitiesHtml = hero.abilities.map(a => `
+          <div class="p-4 bg-black/40 border border-white/10 rounded-xl hover:border-white/30 transition-all">
+            <h5 class="font-mono text-base font-bold text-[#F5C518] uppercase tracking-wide">${a.name}</h5>
+            <p class="text-sm text-white/80 mt-1 leading-relaxed">${a.desc}</p>
+          </div>
+        `).join('');
+
+        body.innerHTML = `
+          <div class="space-y-4">
+            <p class="text-white/70 text-sm">Classified tactical telemetry and physical augmentation scans:</p>
+            <div class="space-y-3">${abilitiesHtml}</div>
+          </div>
+        `;
+      } else if (tab === 'merch') {
+        title.textContent = `${hero.title} // LICENSED ARCHIVAL MERCH`;
+        body.innerHTML = `
+          <div class="space-y-4">
+            <p class="text-white/80 leading-relaxed">${hero.merch}</p>
+            <div class="p-5 border border-dashed border-white/20 rounded-xl bg-white/5 text-center">
+              <span class="material-symbols-outlined text-[36px] text-white/70">shopping_bag</span>
+              <p class="text-sm font-mono text-white mt-2">MARVEL COLLECTIBLES VAULT OPEN</p>
+              <button class="mt-4 px-6 py-2.5 bg-[#E62429] hover:bg-red-600 text-white font-mono text-xs uppercase tracking-widest rounded transition-all">
+                VISIT MARVEL STORE
+              </button>
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    function closeLoreModal() {
+      const modal = document.getElementById('loreModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    // AUDIO & SFX SIMULATOR
+    function playHeroAudioEffect() {
+      const hero = HERO_DATA[currentHeroIndex];
+      showToast(`AUDIO LOG: ${hero.voiceQuote}`);
+      
+      // Web Audio API micro beep synthesis for realistic tactical UI feedback
+      try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(440, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.15);
+        gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.2);
+      } catch (e) {
+        // Fallback silently if unsupported
+      }
+    }
+
+    function toggleAudioTheme() {
+      isMuted = !isMuted;
+      const icon = document.getElementById('audioIcon');
+      icon.textContent = isMuted ? 'volume_off' : 'volume_up';
+      showToast(isMuted ? 'AUDIO CUES MUTED' : 'AUDIO CUES ENABLED');
+    }
+
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        if (document.exitFullscreen) document.exitFullscreen();
+      }
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('audioToast');
+      const toastText = document.getElementById('toastMessage');
+      toastText.textContent = msg;
+      toast.classList.remove('opacity-0');
+      toast.classList.add('opacity-100');
+      clearTimeout(window._toastTimeout);
+      window._toastTimeout = setTimeout(() => {
+        toast.classList.remove('opacity-100');
+        toast.classList.add('opacity-0');
+      }, 2600);
+    }
+
+    // INITIALIZE WITH SPIDER-MAN
+    window.addEventListener('DOMContentLoaded', () => {
+      selectHero(0);
+    });
+  </script>
+
+
+
+
+
+
+</body></html>

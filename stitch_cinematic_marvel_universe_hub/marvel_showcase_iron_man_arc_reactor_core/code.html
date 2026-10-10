@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MARVEL: Iron Man | Earth-616</title>
+<!-- Tailwind CSS v3 CDN with plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Custom Tailwind Configuration -->
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            stark: {
+              gold: '#F5C518',
+              crimson: '#8b0000',
+              red: '#e21b24',
+              cyan: '#38bdf8',
+              dark: '#080808',
+              surface: '#121214'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            display: ['Montserrat', 'Impact', 'Arial Black', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;family=Montserrat:wght@800;900&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome Icons -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Component & Visual Custom Styles -->
+<style data-purpose="ambient-lighting">
+    .bg-crimson-vignette {
+      background: radial-gradient(circle at 75% 45%, rgba(185, 28, 28, 0.45) 0%, rgba(136, 19, 55, 0.25) 30%, rgba(8, 8, 8, 0.95) 75%),
+                  radial-gradient(circle at 20% 80%, rgba(220, 38, 38, 0.15) 0%, transparent 60%),
+                  #080808;
+    }
+    .reactor-glow {
+      box-shadow: 0 0 50px -5px rgba(56, 189, 248, 0.35), 0 0 100px 10px rgba(220, 38, 38, 0.25);
+    }
+    .text-title-shadow {
+      text-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(226, 27, 36, 0.3);
+    }
+    .hud-border {
+      border: 1px solid rgba(245, 197, 24, 0.25);
+    }
+  </style>
+</head>
+<body class="bg-stark-dark text-white font-sans min-h-screen overflow-x-hidden selection:bg-red-600 selection:text-white bg-crimson-vignette relative flex flex-col justify-between"><div class="fixed inset-0 pointer-events-none z-0 overflow-hidden"><!-- Dark base background with radial crimson vignette --><div class="absolute inset-0 bg-[#080808] opacity-90"></div><!-- High-tech Arc Reactor Image Background --><div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] sm:w-[850px] sm:h-[850px] lg:w-[1050px] lg:h-[1050px] rounded-full mix-blend-screen opacity-40 filter pointer-events-none transform scale-100 transition-all duration-700" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBJbFj4BZdk8GMyLZHsQTN0CyyU5hDI7LKfnuRNPxzbx3nkev0XB6N4ErRV3sR8Dhl9pW2K8qtybf1qltDdUzGjJTcc5olr5eqNeKDpOpp85JPIW42IYWFOE5k6TuImqHtHDjN_uyEJYUiwlyE0brRVz3KwBeyZL4RqaoLLf0P5aO5CCqQSoVBMlw9ZfJ8AidUTyh8laTYm5N7E9UiTYUjs9wLPr9nQtl61sldWMj2vsNLavCkkvqDc65gfU_BOh1s_cBo'); background-position: center; background-size: cover; background-repeat: no-repeat; mask-image: radial-gradient(circle at center, black 35%, rgba(0,0,0,0.7) 60%, transparent 80%); -webkit-mask-image: radial-gradient(circle at center, black 35%, rgba(0,0,0,0.7) 60%, transparent 80%);"></div><!-- Central Electric Cyan & Ice-White Luminous Aura --><div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[450px] h-[450px] lg:w-[650px] lg:h-[650px] rounded-full bg-cyan-400/20 blur-[130px] pointer-events-none"></div><div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[250px] h-[250px] rounded-full bg-white/20 blur-[80px] pointer-events-none"></div><!-- Stark Crimson Ambient Orb --><div class="absolute top-1/3 right-1/4 w-[450px] h-[450px] bg-red-600/20 rounded-full blur-[140px] pointer-events-none"></div><div class="absolute bottom-1/4 left-1/4 w-[400px] h-[400px] bg-stark-red/10 rounded-full blur-[130px] pointer-events-none"></div><!-- Diffused darkening overlay for crisp foreground text legibility --><div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-black/60 pointer-events-none"></div></div>
+<!-- BEGIN: NavigationHeader -->
+<header class="w-full z-40 px-6 lg:px-16 py-5 flex items-center justify-between border-b border-white/5 bg-black/40 backdrop-blur-md sticky top-0" data-purpose="top-navbar">
+<!-- Left: Arc Reactor Logo & Archive Pill -->
+<div class="flex items-center space-x-3.5">
+<!-- Arc Reactor Icon Graphic -->
+<div class="relative w-9 h-9 rounded-full border-2 border-stark-cyan/80 flex items-center justify-center shadow-[0_0_15px_#38bdf8] bg-black/50">
+<div class="w-4 h-4 rounded-full border border-stark-cyan/90 flex items-center justify-center">
+<div class="w-1.5 h-1.5 bg-stark-cyan rounded-full animate-ping"></div>
+</div>
+<!-- Reactor fins -->
+<span class="absolute w-full h-[1px] bg-stark-cyan/40"></span>
+<span class="absolute h-full w-[1px] bg-stark-cyan/40"></span>
+</div>
+<div class="flex items-center space-x-2">
+<span class="text-xs uppercase tracking-widest font-black px-2 py-0.5 rounded bg-white/10 text-white/90 border border-white/15">
+          MCU ACTIVE ARCHIVE
+        </span>
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+</div>
+</div>
+<!-- Center: Main Navigation Menu -->
+<nav class="hidden md:flex items-center space-x-10 text-sm font-extrabold tracking-widest uppercase">
+<a class="text-white/60 hover:text-white transition duration-200" href="#story">Story</a>
+<a class="text-white border-b-2 border-white pb-1 tracking-widest font-black" href="#characters">Characters</a>
+<a class="text-white/60 hover:text-white transition duration-200" href="#merch">Merch</a>
+</nav>
+<!-- Right: Hashtag & Audio Soundscape Button -->
+<div class="flex items-center space-x-4">
+<span class="text-sm font-black tracking-widest text-stark-gold drop-shadow-[0_0_8px_rgba(245,197,24,0.4)]">
+        #IRONMAN
+      </span>
+<button aria-label="Toggle Soundscape" class="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 border border-white/10 flex items-center justify-center transition-colors text-white/80 hover:text-white" data-purpose="audio-toggle" type="button">
+<i class="fa-solid fa-volume-high text-xs"></i>
+</button>
+</div>
+</header>
+<!-- END: NavigationHeader -->
+<!-- BEGIN: CarouselNavigationArrows -->
+<!-- Left Arrow -->
+<button aria-label="Previous Hero" class="hidden xl:flex fixed left-5 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full border border-white/20 bg-black/60 backdrop-blur-md items-center justify-center text-white/70 hover:text-white hover:border-stark-gold transition-all duration-300 z-30 shadow-lg group">
+<i class="fa-solid fa-chevron-left text-sm group-hover:-translate-x-0.5 transition-transform"></i>
+</button>
+<!-- Right Arrow -->
+<button aria-label="Next Hero" class="hidden xl:flex fixed right-5 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full border border-white/20 bg-black/60 backdrop-blur-md items-center justify-center text-white/70 hover:text-white hover:border-stark-gold transition-all duration-300 z-30 shadow-lg group">
+<i class="fa-solid fa-chevron-right text-sm group-hover:translate-x-0.5 transition-transform"></i>
+</button>
+<!-- END: CarouselNavigationArrows -->
+<!-- BEGIN: MainHeroStage -->
+<main class="flex-grow flex items-center justify-center px-6 lg:px-16 py-8 relative z-20">
+<div class="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+<!-- BEGIN: LeftInfoColumn -->
+<section class="lg:col-span-7 flex flex-col justify-center space-y-6" data-purpose="hero-details">
+<!-- Earth Badge & Tag -->
+<div class="flex flex-wrap items-center gap-2.5">
+<span class="bg-stark-red text-white text-[11px] font-black uppercase px-2.5 py-0.5 tracking-wider rounded-sm shadow-md">
+            MARVEL
+          </span>
+<span class="text-xs font-mono tracking-widest text-white/60 uppercase">
+            EARTH-616 // STARK INDUSTRIES ARCHIVE
+          </span>
+</div>
+<!-- Hero Headline Title -->
+<div class="space-y-1">
+<h1 class="text-6xl sm:text-7xl xl:text-8xl font-black uppercase tracking-tight text-white font-display leading-none text-title-shadow">
+            IRON MAN
+          </h1>
+<div class="flex flex-wrap items-center gap-3 pt-2">
+<span class="text-base sm:text-lg font-extrabold uppercase tracking-widest text-stark-gold">
+              ANTHONY EDWARD STARK
+            </span>
+<span class="inline-flex items-center text-[11px] font-bold tracking-wider uppercase px-2.5 py-1 rounded-full bg-yellow-500/10 text-yellow-400 border border-yellow-500/30">
+              GENIUS. BILLIONAIRE. PHILANTHROPIST.
+            </span>
+</div>
+</div>
+<!-- Narrative Description -->
+<p class="text-white/80 text-sm sm:text-base leading-relaxed max-w-2xl font-normal">
+          Wounded, captured, and forced to build a weapon by his enemies, industrialist Tony Stark instead created an advanced titanium-gold powered armor to save his life and escape. Upgraded to state-of-the-art nanotechnology Mark LXXXV, the Invincible Iron Man became founding leader of Earth's Mightiest Heroes, defending the cosmos through sheer will, intellect, and unmatched engineering precision.
+        </p>
+<!-- Telemetry & Combat Ratings -->
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-2xl pt-1">
+<!-- Rating 1 -->
+<div class="bg-black/50 border border-white/10 rounded-lg p-3 backdrop-blur-sm">
+<div class="flex justify-between items-baseline mb-1">
+<span class="text-[11px] font-mono text-white/60 tracking-wider">INTELLECT / TECH</span>
+<span class="text-xs font-bold text-white font-mono">100 / 100</span>
+</div>
+<div class="w-full bg-white/10 h-1.5 rounded-full overflow-hidden">
+<div class="bg-stark-cyan h-full rounded-full shadow-[0_0_8px_#38bdf8]" style="width: 100%"></div>
+</div>
+</div>
+<!-- Rating 2 -->
+<div class="bg-black/50 border border-white/10 rounded-lg p-3 backdrop-blur-sm">
+<div class="flex justify-between items-baseline mb-1">
+<span class="text-[11px] font-mono text-white/60 tracking-wider">WEAPONS / REPULSOR</span>
+<span class="text-xs font-bold text-white font-mono">98 / 100</span>
+</div>
+<div class="w-full bg-white/10 h-1.5 rounded-full overflow-hidden">
+<div class="bg-stark-red h-full rounded-full shadow-[0_0_8px_#ef4444]" style="width: 98%"></div>
+</div>
+</div>
+<!-- Rating 3 -->
+<div class="bg-black/50 border border-white/10 rounded-lg p-3 backdrop-blur-sm">
+<div class="text-[11px] font-mono text-white/60 tracking-wider mb-1">THREAT DEFENSE</div>
+<div class="text-xs font-black uppercase text-stark-gold tracking-wider flex items-center space-x-1.5">
+<i class="fa-solid fa-shield-halved text-stark-gold text-[10px]"></i>
+<span>OMEGA DEFENDER</span>
+</div>
+</div>
+</div>
+<!-- Action CTA Buttons -->
+<div class="flex flex-wrap items-center gap-4 pt-2">
+<!-- Primary Pill Button -->
+<button class="px-7 py-3 rounded-full bg-white text-black font-extrabold text-xs sm:text-sm tracking-wider uppercase flex items-center space-x-2.5 hover:bg-stark-gold transition-all duration-200 shadow-[0_0_20px_rgba(255,255,255,0.25)] hover:shadow-[0_0_25px_rgba(245,197,24,0.5)]" type="button">
+<i class="fa-solid fa-bolt-lightning text-xs"></i>
+<span>Armor Schematics</span>
+</button>
+<!-- Secondary Outline Button -->
+<button class="px-7 py-3 rounded-full bg-white/5 border border-white/20 text-white font-extrabold text-xs sm:text-sm tracking-wider uppercase flex items-center space-x-2.5 hover:bg-white/10 hover:border-white/40 transition duration-200 backdrop-blur-sm" type="button">
+<i class="fa-regular fa-circle-play text-xs text-stark-gold"></i>
+<span>J.A.R.V.I.S. Uplink</span>
+</button>
+</div>
+<!-- Subtle Legal Tag -->
+<div class="pt-2 text-[10px] uppercase font-mono tracking-widest text-white/30">
+          STARK INDUSTRIES // TONY STARK FOUNDATION // ALL RIGHTS RESERVED
+        </div>
+</section>
+<!-- END: LeftInfoColumn -->
+<!-- BEGIN: RightPosterColumn -->
+<section class="lg:col-span-5 flex justify-center items-center relative" data-purpose="hero-visual">
+<!-- Ambient Red/Cyan Light Orbs Behind Suit -->
+<div class="absolute -inset-4 bg-gradient-to-r from-red-600/30 to-amber-500/20 rounded-2xl blur-2xl -z-10 pointer-events-none"></div>
+<!-- Poster Frame Container -->
+<div class="relative w-full max-w-sm sm:max-w-md aspect-[3/4] sm:aspect-[7/10] rounded-2xl overflow-hidden border border-white/15 bg-black/60 shadow-2xl reactor-glow group">
+<!-- Iron Man Main Imagery -->
+<img alt="Iron Man in Mark Suit Armor" class="w-full h-full object-cover object-center transform group-hover:scale-105 transition-transform duration-700 ease-out" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_ndz-YJdhLllNlTFDwLVmMc-ROotxPCVCNCZuoHX2PZdoVtK3HZN6wibOBLFoNotX6jV8pTCGfFihatwPRFt94ST1P-3i_TX-AGC5AlOWMz5NWWzCHBbn1x3mlxgcJhhWgvNsVWjQrqg4EwmvwkYeTl17sw1yjF2FVFgXwAD-0i43PBSnWlc9g8GN8Li_bdqSiYx5NSd_YsQPHpK4UjLhwrWQdi4CN-xafc7y2DUexRmMJ-jkv7gMvRiiqOpRIKqxyuM"/>
+<!-- Gradient Overlay for subtle depth blending -->
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20 pointer-events-none"></div>
+<!-- Top Corner HUD Telemetry Overlay -->
+<div class="absolute top-4 left-4 right-4 flex justify-between items-center text-[10px] font-mono tracking-widest text-white/70 uppercase pointer-events-none">
+<span class="bg-black/60 px-2 py-1 rounded backdrop-blur-md border border-white/10">MK-LXXXV NANO-TECH</span>
+<span class="text-stark-cyan flex items-center gap-1 bg-black/60 px-2 py-1 rounded backdrop-blur-md border border-stark-cyan/30">
+<span class="w-1.5 h-1.5 rounded-full bg-stark-cyan animate-pulse"></span> ONLINE
+            </span>
+</div>
+<!-- Bottom Pill Badge in Visual Frame -->
+<div class="absolute bottom-4 right-4 bg-black/80 backdrop-blur-md border border-white/20 text-white text-[11px] font-mono font-bold tracking-widest uppercase px-3 py-1.5 rounded-full shadow-lg flex items-center space-x-2">
+<i class="fa-solid fa-crosshairs text-stark-gold text-[10px]"></i>
+<span>SUBJECT: TONY STARK // MALIBU</span>
+</div>
+</div>
+</section>
+<!-- END: RightPosterColumn -->
+</div>
+</main>
+<!-- END: MainHeroStage -->
+<!-- BEGIN: BottomRosterDock -->
+<footer class="w-full z-30 pb-6 px-4 flex justify-center" data-purpose="floating-roster-dock">
+<div class="bg-black/75 backdrop-blur-xl border border-white/15 px-4 py-2.5 rounded-2xl shadow-2xl flex items-center space-x-3 max-w-full overflow-x-auto scrollbar-none">
+<!-- Dock Label -->
+<div class="hidden sm:flex flex-col pr-2 border-r border-white/15">
+<span class="text-[9px] font-mono text-white/50 tracking-wider uppercase">HERO SELECT</span>
+<span class="text-[11px] font-black uppercase text-stark-gold tracking-widest">ROSTER</span>
+</div>
+<!-- Hero Slot 1: Iron Man (Active Hero) -->
+<button class="relative flex items-center space-x-2 px-3 py-1.5 rounded-xl bg-red-600/30 border border-red-500/80 text-white transition-all shadow-[0_0_12px_rgba(239,68,68,0.5)]">
+<div class="w-7 h-7 rounded-lg overflow-hidden border border-white/30 bg-black flex-shrink-0">
+<img alt="Iron Man Mini" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAIQXPUrBspwbDwzx4CZ0OHR80UTNYQIAWfRTzVmmUvixqsYj67xYVxmHGLGCvI7mak0wzpF_LPwDqwFjCaEpTvSS4wjfUH-5DZloQFIWnaCkGvVhT0rmxUJhFm9tyCUpkTE-I_8K2wq7pwtlqSRnym2RXt2GcpUL0Axb5EblkX9XYRR4i4CiWkDKKY6cPpGsxOaVxZWB9dHACMrGP5Ol8U8uRQTeJoTSF-Sy7bTwUk01a7mgmd83ITK0BQ12zFiUxjMzM"/>
+</div>
+<span class="text-xs font-black uppercase tracking-wider text-white">Iron Man</span>
+<span class="w-1.5 h-1.5 rounded-full bg-stark-gold"></span>
+</button>
+<!-- Hero Slot 2: Spider-Man -->
+<button class="flex items-center space-x-2 px-2.5 py-1.5 rounded-xl hover:bg-white/10 text-white/70 hover:text-white border border-transparent hover:border-white/20 transition-all">
+<div class="w-7 h-7 rounded-lg bg-red-950/70 border border-red-500/30 flex items-center justify-center text-xs text-red-400 font-bold flex-shrink-0">
+<i class="fa-solid fa-spider"></i>
+</div>
+<span class="text-xs font-semibold tracking-wider hidden md:inline">Spider-Man</span>
+</button>
+<!-- Hero Slot 3: Wolverine -->
+<button class="flex items-center space-x-2 px-2.5 py-1.5 rounded-xl hover:bg-white/10 text-white/70 hover:text-white border border-transparent hover:border-white/20 transition-all">
+<div class="w-7 h-7 rounded-lg bg-amber-950/70 border border-amber-500/30 flex items-center justify-center text-xs text-yellow-400 font-bold flex-shrink-0">
+<i class="fa-solid fa-paw"></i>
+</div>
+<span class="text-xs font-semibold tracking-wider hidden md:inline">Wolverine</span>
+</button>
+<!-- Hero Slot 4: Captain America -->
+<button class="flex items-center space-x-2 px-2.5 py-1.5 rounded-xl hover:bg-white/10 text-white/70 hover:text-white border border-transparent hover:border-white/20 transition-all">
+<div class="w-7 h-7 rounded-lg bg-blue-950/70 border border-blue-500/30 flex items-center justify-center text-xs text-blue-400 font-bold flex-shrink-0">
+<i class="fa-solid fa-shield"></i>
+</div>
+<span class="text-xs font-semibold tracking-wider hidden lg:inline">Capt. America</span>
+</button>
+<!-- Hero Slot 5: Doctor Strange -->
+<button class="flex items-center space-x-2 px-2.5 py-1.5 rounded-xl hover:bg-white/10 text-white/70 hover:text-white border border-transparent hover:border-white/20 transition-all">
+<div class="w-7 h-7 rounded-lg bg-orange-950/70 border border-orange-500/30 flex items-center justify-center text-xs text-orange-400 font-bold flex-shrink-0">
+<i class="fa-solid fa-ring"></i>
+</div>
+<span class="text-xs font-semibold tracking-wider hidden lg:inline">Dr. Strange</span>
+</button>
+<!-- Hero Slot 6: Thor -->
+<button class="flex items-center space-x-2 px-2.5 py-1.5 rounded-xl hover:bg-white/10 text-white/70 hover:text-white border border-transparent hover:border-white/20 transition-all">
+<div class="w-7 h-7 rounded-lg bg-cyan-950/70 border border-cyan-500/30 flex items-center justify-center text-xs text-cyan-400 font-bold flex-shrink-0">
+<i class="fa-solid fa-hammer"></i>
+</div>
+<span class="text-xs font-semibold tracking-wider hidden xl:inline">Thor</span>
+</button>
+<!-- Hero Slot 7: Hulk -->
+<button class="flex items-center space-x-2 px-2.5 py-1.5 rounded-xl hover:bg-white/10 text-white/70 hover:text-white border border-transparent hover:border-white/20 transition-all">
+<div class="w-7 h-7 rounded-lg bg-emerald-950/70 border border-emerald-500/30 flex items-center justify-center text-xs text-emerald-400 font-bold flex-shrink-0">
+<i class="fa-solid fa-hand-fist"></i>
+</div>
+<span class="text-xs font-semibold tracking-wider hidden xl:inline">Hulk</span>
+</button>
+</div>
+</footer>
+<!-- END: BottomRosterDock -->
+</body></html>

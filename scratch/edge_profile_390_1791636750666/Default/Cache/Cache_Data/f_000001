@@ -1,0 +1,1342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MARVEL CINEMATIC UNIVERSE — Heroes Archive</title>
+  <meta name="description" content="Explore Earth's Mightiest Heroes in the Marvel Cinematic Universe. Immersive 3D experience featuring Iron Man, Spider-Man, Thor, Hulk, Captain America, Doctor Strange, and Wolverine."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+  <!-- Three.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <style>
+    :root {
+      --canvas: #080808;
+      --surface-1: #0D0D0D;
+      --surface-2: #151515;
+      --hairline: #242424;
+      --hairline-bright: #2A2A2A;
+      --text-dominant: #FFFFFF;
+      --text-secondary: #D0D0D0;
+      --text-muted: #8A8A8A;
+      --crimson: #E62429;
+      --crimson-hover: #FF3439;
+      --gold: #F5C518;
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-body: 'Manrope', sans-serif;
+      --font-mono: 'Space Grotesk', monospace;
+      --theme-primary: #E62429;
+      --theme-secondary: #38bdf8;
+      --theme-glow: rgba(230, 36, 41, 0.4);
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: #333 var(--canvas); }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--canvas); }
+    ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--theme-primary); }
+    body { font-family: var(--font-body); background: var(--canvas); color: var(--text-secondary); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+    ::selection { background: var(--crimson); color: white; }
+
+    /* ═══ THREE.JS CANVAS ═══ */
+    #three-canvas { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+
+    /* ═══ DYNAMIC BACKGROUND LAYERS ═══ */
+    .bg-layer { position: fixed; inset: 0; z-index: 1; pointer-events: none; }
+    .bg-image-layer {
+      position: fixed; inset: 0; z-index: 1;
+      background-size: cover; background-position: center;
+      opacity: 0; transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: none;
+    }
+    .bg-image-layer.active { opacity: 1; }
+    .bg-image-mask {
+      position: fixed; inset: 0; z-index: 2; pointer-events: none;
+      background: radial-gradient(ellipse at 50% 50%, transparent 20%, rgba(8,8,8,0.6) 55%, rgba(8,8,8,0.92) 80%);
+    }
+    .bg-gradient-layer {
+      position: fixed; inset: 0; z-index: 3; pointer-events: none;
+      transition: background 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .bg-darkening {
+      position: fixed; inset: 0; z-index: 4; pointer-events: none;
+      background: linear-gradient(to top, rgba(8,8,8,0.95) 0%, rgba(8,8,8,0.3) 40%, rgba(8,8,8,0.5) 100%);
+    }
+    /* Ambient Orbs */
+    .ambient-orb {
+      position: fixed; border-radius: 50%; filter: blur(120px); pointer-events: none; z-index: 3;
+      transition: all 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    #ambOrb1 { width: 700px; height: 700px; top: 15%; left: 55%; transform: translate(-50%,-50%); background: var(--theme-glow); }
+    #ambOrb2 { width: 500px; height: 500px; top: 65%; left: 25%; transform: translate(-50%,-50%); }
+    #ambOrb3 { width: 350px; height: 350px; top: 35%; left: 10%; transform: translate(-50%,-50%); background: rgba(245,197,24,0.04); }
+
+    /* ═══ NAVIGATION ═══ */
+    .nav-header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 0 3rem; height: 72px;
+      display: flex; align-items: center; justify-content: space-between;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      background: rgba(8,8,8,0.6); backdrop-filter: blur(20px) saturate(1.5);
+      transition: all 0.3s ease;
+    }
+    .nav-header.scrolled { background: rgba(8,8,8,0.92); border-bottom-color: var(--hairline); }
+    .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; color: white; }
+    .nav-logo-icon {
+      width: 40px; height: 40px; border: 2px solid var(--theme-primary); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(230,36,41,0.1); box-shadow: 0 0 20px var(--theme-glow);
+      transition: all 0.5s ease;
+    }
+    .nav-logo-icon svg { width: 20px; height: 20px; fill: var(--theme-primary); transition: fill 0.5s ease; }
+    .nav-brand { display: flex; flex-direction: column; }
+    .nav-brand-title { font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: white; }
+    .nav-brand-sub { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; color: var(--text-muted); text-transform: uppercase; }
+    .nav-links { display: flex; align-items: center; gap: 40px; list-style: none; }
+    .nav-links a {
+      font-family: var(--font-mono); font-size: 13px; font-weight: 600; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--text-muted); text-decoration: none;
+      position: relative; padding-bottom: 4px; transition: color 0.3s ease;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px;
+      background: var(--theme-primary); transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
+    }
+    .nav-links a:hover, .nav-links a.active { color: white; }
+    .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+    .nav-right { display: flex; align-items: center; gap: 16px; }
+    .nav-hashtag {
+      font-family: var(--font-mono); font-size: 13px; font-weight: 700; letter-spacing: 0.12em;
+      color: var(--gold); text-shadow: 0 0 12px rgba(245,197,24,0.4); transition: all 0.5s ease;
+    }
+    .nav-audio-btn {
+      width: 36px; height: 36px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.7);
+      display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease;
+    }
+    .nav-audio-btn:hover { background: rgba(255,255,255,0.1); color: white; }
+
+    /* ═══ HERO SECTION ═══ */
+    .hero-section {
+      position: relative; z-index: 10; min-height: 100vh;
+      display: flex; align-items: center; padding: 76px 3rem 80px;
+    }
+    .hero-container {
+      width: 100%; max-width: 1440px; margin: 0 auto;
+      display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 48px; align-items: center; padding: 8px 0;
+    }
+    /* Hero Content */
+    .hero-content { position: relative; z-index: 5; perspective: 1000px; }
+    .hero-badge-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+    .badge-marvel {
+      background: var(--crimson); color: white; font-family: var(--font-mono);
+      font-size: 11px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
+      padding: 4px 10px; border-radius: 2px;
+    }
+    .badge-earth { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em; color: var(--text-secondary); text-transform: uppercase; }
+    .hero-title {
+      font-family: var(--font-display); font-size: clamp(48px, 6.2vw, 84px); font-weight: 400;
+      line-height: 0.92; letter-spacing: 0.05em; text-transform: uppercase; color: white;
+      margin-bottom: 12px; text-shadow: 0 10px 40px rgba(0,0,0,0.6), 0 0 30px var(--theme-glow);
+      transition: text-shadow 0.8s ease;
+    }
+    .hero-identity-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+    .hero-real-name {
+      font-family: var(--font-body); font-size: 16px; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.08em; color: var(--gold);
+    }
+    .hero-tagline-pill {
+      display: inline-flex; align-items: center; font-family: var(--font-mono);
+      font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 4px 12px; border-radius: 4px;
+      background: rgba(245,197,24,0.08); border: 1px solid rgba(245,197,24,0.22); color: rgba(245,197,24,0.95);
+    }
+    .hero-description {
+      font-size: 14px; line-height: 1.68; color: var(--text-secondary); max-width: 550px; margin-bottom: 20px;
+    }
+    /* Stats */
+    .hero-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; max-width: 550px; margin-bottom: 22px; }
+    .stat-card {
+      background: rgba(13,13,13,0.85); border: 1px solid var(--hairline); border-radius: 4px; padding: 10px 12px;
+      backdrop-filter: blur(8px); transition: all 0.4s ease;
+    }
+    .stat-card:hover { border-color: var(--theme-primary); box-shadow: 0 4px 20px var(--theme-glow); transform: translateY(-2px); }
+    .stat-label { font-family: var(--font-mono); font-size: 9px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 4px; }
+    .stat-value { font-family: var(--font-display); font-size: 24px; color: white; line-height: 1; }
+    .stat-value span { font-size: 14px; color: var(--text-muted); }
+    .stat-bar { margin-top: 6px; width: 100%; height: 3px; background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden; }
+    .stat-bar-fill {
+      height: 100%; border-radius: 2px; background: var(--theme-primary);
+      box-shadow: 0 0 10px var(--theme-glow); transition: width 1.5s cubic-bezier(0.16,1,0.3,1), background 0.8s ease, box-shadow 0.8s ease;
+      width: 0;
+    }
+    .stat-threat { font-family: var(--font-mono); font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold); }
+    /* CTA Buttons */
+    .hero-cta-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px;
+      background: var(--theme-primary); color: white; border: none; border-radius: 4px;
+      font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: 0.15em;
+      text-transform: uppercase; cursor: pointer; transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
+    }
+    .btn-primary:hover { filter: brightness(1.2); box-shadow: 0 0 30px var(--theme-glow); transform: scale(1.03) translateY(-2px); }
+    .btn-secondary {
+      display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px;
+      background: rgba(13,13,13,0.8); color: var(--text-secondary); border: 1px solid var(--hairline-bright);
+      border-radius: 4px; font-family: var(--font-mono); font-size: 11px; font-weight: 700;
+      letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; backdrop-filter: blur(8px); transition: all 0.3s ease;
+    }
+    .btn-secondary:hover { border-color: var(--theme-primary); color: white; box-shadow: 0 0 15px var(--theme-glow); }
+    .hero-legal { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-top: 14px; }
+
+    /* ═══ 3D POSTER CARD ═══ */
+    .hero-visual { position: relative; display: flex; justify-content: center; align-items: center; perspective: 1200px; }
+    .poster-3d-wrapper {
+      transform-style: preserve-3d; transition: transform 0.08s ease-out;
+      will-change: transform;
+    }
+    .poster-ambient {
+      position: absolute; inset: -30px; border-radius: 20px; filter: blur(50px); opacity: 0.5;
+      transition: all 1s ease; z-index: -1;
+    }
+    .poster-card {
+      position: relative; width: 100%; max-width: 380px; aspect-ratio: 3/4;
+      border-radius: 8px; overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.12);
+      box-shadow: 0 0 0 1px rgba(42,42,42,1), 0 20px 60px rgba(0,0,0,0.8), 0 0 40px var(--theme-glow);
+      transition: box-shadow 0.5s cubic-bezier(0.16,1,0.3,1), border-color 0.5s ease;
+      transform-style: preserve-3d;
+    }
+    .poster-card::before {
+      content: ''; position: absolute; inset: -1px; border-radius: 9px; padding: 1px;
+      background: linear-gradient(135deg, var(--theme-primary), transparent 50%, var(--theme-secondary));
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor; mask-composite: exclude; opacity: 0.6; pointer-events: none;
+      transition: opacity 0.5s ease; z-index: 5;
+    }
+    .poster-card:hover::before { opacity: 1; }
+    .poster-card img {
+      width: 100%; height: 100%; object-fit: cover; object-position: center 15%;
+      transition: transform 0.7s cubic-bezier(0.16,1,0.3,1);
+    }
+    .poster-card:hover img { transform: scale(1.04); }
+    .poster-gradient { position: absolute; inset: 0; background: linear-gradient(180deg, transparent 55%, rgba(8,8,8,0.92) 100%); pointer-events: none; z-index: 2; }
+    .poster-shine {
+      position: absolute; inset: 0; pointer-events: none; z-index: 3;
+      background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.03) 45%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.03) 55%, transparent 60%);
+      transform: translateX(-100%); transition: transform 0.6s ease;
+    }
+    .poster-card:hover .poster-shine { transform: translateX(100%); }
+    .poster-hud-top {
+      position: absolute; top: 0; left: 0; right: 0;
+      display: flex; justify-content: space-between; align-items: center; pointer-events: none;
+      padding: 12px 14px;
+      background: linear-gradient(180deg, rgba(8,8,8,0.85) 0%, rgba(8,8,8,0.3) 70%, transparent 100%);
+      border-top-left-radius: 8px; border-top-right-radius: 8px;
+      z-index: 4;
+    }
+    .poster-tag {
+      font-family: var(--font-mono); font-size: 9px; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: rgba(255,255,255,0.85);
+      background: rgba(13,13,13,0.75); backdrop-filter: blur(10px);
+      padding: 4px 8px; border-radius: 3px; border: 1px solid rgba(255,255,255,0.12);
+    }
+    .poster-status {
+      display: flex; align-items: center; gap: 5px;
+      font-family: var(--font-mono); font-size: 9px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 4px 8px; border-radius: 3px; background: rgba(13,13,13,0.75); backdrop-filter: blur(10px);
+      border: 1px solid; color: var(--theme-secondary);
+      transition: all 0.5s ease;
+    }
+    .status-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--theme-secondary); animation: pulse-dot 2s ease-in-out infinite; transition: background 0.5s ease; }
+    @keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1);} 50%{opacity:0.4;transform:scale(0.7);} }
+    .poster-subject {
+      position: absolute; bottom: 14px; right: 14px;
+      display: flex; align-items: center; gap: 6px;
+      font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: white;
+      background: rgba(8,8,8,0.85); backdrop-filter: blur(10px);
+      padding: 5px 12px; border-radius: 100px; border: 1px solid rgba(255,255,255,0.15);
+      z-index: 4;
+    }
+    .poster-subject i { color: var(--gold); font-size: 9px; }
+
+    /* ═══ CAROUSEL ARROWS ═══ */
+    .carousel-arrow {
+      position: fixed; top: 50%; transform: translateY(-50%);
+      width: 50px; height: 50px; border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.12); background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(12px); color: rgba(255,255,255,0.5);
+      display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 50;
+      transition: all 0.3s ease;
+    }
+    .carousel-arrow:hover { border-color: var(--theme-primary); color: white; box-shadow: 0 0 25px var(--theme-glow); background: rgba(0,0,0,0.7); }
+    .carousel-arrow.left { left: 20px; }
+    .carousel-arrow.right { right: 20px; }
+
+    /* ═══ CHARACTERS GRID ═══ */
+    .characters-section { position: relative; z-index: 10; padding: 100px 3rem 80px; }
+    .section-header { text-align: center; margin-bottom: 60px; }
+    .section-overline { font-family: var(--font-mono); font-size: 12px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--crimson); margin-bottom: 12px; }
+    .section-title { font-family: var(--font-display); font-size: clamp(36px,5vw,56px); letter-spacing: 0.05em; color: white; text-transform: uppercase; }
+    .section-divider { width: 60px; height: 3px; background: var(--crimson); margin: 20px auto 0; border-radius: 2px; box-shadow: 0 0 12px rgba(230,36,41,0.4); }
+    .characters-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(280px,1fr)); gap: 24px; max-width: 1440px; margin: 0 auto; }
+    .char-card {
+      background: var(--surface-1); border: 1px solid var(--hairline); border-radius: 8px;
+      overflow: hidden; cursor: pointer; transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
+      transform-style: preserve-3d; perspective: 800px;
+    }
+    .char-card:hover { transform: translateY(-8px) rotateX(2deg); border-color: var(--crimson-hover); box-shadow: 0 0 0 1px #E62429, 0 16px 40px rgba(230,36,41,0.2), 0 4px 12px rgba(230,36,41,0.3); }
+    .char-card-img { position: relative; width: 100%; aspect-ratio: 16/10; overflow: hidden; }
+    .char-card-img img { width: 100%; height: 100%; object-fit: cover; object-position: center top; transition: transform 0.6s cubic-bezier(0.16,1,0.3,1); }
+    .char-card:hover .char-card-img img { transform: scale(1.1); }
+    .char-card-img::after { content:''; position: absolute; inset: 0; background: linear-gradient(180deg,transparent 40%,var(--surface-1) 100%); pointer-events: none; }
+    .char-card-body { padding: 20px; }
+    .char-card-name { font-family: var(--font-display); font-size: 28px; letter-spacing: 0.04em; color: white; text-transform: uppercase; margin-bottom: 4px; }
+    .char-card-alias { font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+    .char-card-desc { font-size: 13px; line-height: 1.6; color: var(--text-muted); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 14px; }
+    .char-card-threat {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--crimson); padding: 4px 10px; border-radius: 4px;
+      background: rgba(230,36,41,0.08); border: 1px solid rgba(230,36,41,0.2);
+    }
+    .char-card-threat .pulse { width: 6px; height: 6px; border-radius: 50%; background: var(--crimson); animation: pulse-dot 2s ease-in-out infinite; }
+
+    /* ═══ ROSTER DOCK ═══ */
+    .roster-dock {
+      position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 80;
+      display: flex; align-items: center; gap: 8px; padding: 8px 14px;
+      max-width: min(1180px, calc(100vw - 32px));
+      background: rgba(8,8,8,0.88); backdrop-filter: blur(24px) saturate(1.5);
+      border: 1px solid rgba(255,255,255,0.08); border-radius: 100px;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.65), 0 0 30px var(--theme-glow);
+      transition: box-shadow 0.8s ease, bottom 0.3s ease, padding 0.3s ease;
+    }
+    .dock-label {
+      display: flex; flex-direction: column; padding-right: 12px;
+      border-right: 1px solid rgba(255,255,255,0.1); margin-right: 2px;
+      flex-shrink: 0; user-select: none;
+    }
+    .dock-label-top { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); }
+    .dock-label-bottom { font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); }
+    .dock-track {
+      display: flex; align-items: center; gap: 6px;
+      overflow-x: auto; overflow-y: hidden;
+      -webkit-overflow-scrolling: touch; scrollbar-width: none;
+      scroll-behavior: smooth; padding: 2px;
+    }
+    .dock-track::-webkit-scrollbar { display: none; }
+    .dock-hero-btn {
+      display: flex; align-items: center; gap: 8px; padding: 6px 12px;
+      border-radius: 100px; border: 1px solid transparent; background: transparent;
+      color: rgba(255,255,255,0.6); cursor: pointer; transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
+      white-space: nowrap; flex-shrink: 0; outline: none;
+    }
+    .dock-hero-btn:hover { background: rgba(255,255,255,0.08); color: white; border-color: rgba(255,255,255,0.15); }
+    .dock-hero-btn:focus-visible {
+      outline: 2px solid var(--theme-primary); outline-offset: 2px;
+      background: rgba(255,255,255,0.1); color: white;
+    }
+    .dock-hero-btn.active {
+      background: rgba(var(--theme-primary-rgb, 230,36,41), 0.18);
+      border-color: var(--theme-primary); color: white;
+      box-shadow: 0 0 16px var(--theme-glow);
+    }
+    .dock-hero-icon { width: 30px; height: 30px; border-radius: 50%; overflow: hidden; border: 1px solid rgba(255,255,255,0.25); flex-shrink: 0; }
+    .dock-hero-icon img { width: 100%; height: 100%; object-fit: cover; }
+    .dock-hero-text { display: flex; flex-direction: column; align-items: flex-start; }
+    .dock-hero-name { font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; line-height: 1.1; }
+    .dock-hero-tag { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.06em; color: var(--text-muted); line-height: 1.1; margin-top: 2px; }
+
+    /* Focus States Across All Interactive Elements */
+    .nav-links a:focus-visible,
+    .nav-logo:focus-visible,
+    .nav-audio-btn:focus-visible,
+    .carousel-arrow:focus-visible,
+    .btn-primary:focus-visible,
+    .btn-secondary:focus-visible,
+    .char-card:focus-visible {
+      outline: 2px solid var(--theme-primary);
+      outline-offset: 3px;
+    }
+
+    /* ═══ FOOTER ═══ */
+    .site-footer { position: relative; z-index: 10; border-top: 1px solid var(--hairline); padding: 40px 3rem 100px; }
+    .footer-inner { max-width: 1440px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+    .footer-text { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); }
+    .footer-links { display: flex; gap: 24px; }
+    .footer-links a { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; transition: color 0.3s ease; }
+    .footer-links a:hover { color: var(--theme-primary); }
+
+    /* ═══ LOADING SCREEN ═══ */
+    .loading-screen {
+      position: fixed; inset: 0; z-index: 9999; background: var(--canvas);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+    }
+    .loading-screen.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+    .loading-logo { font-family: var(--font-display); font-size: 52px; letter-spacing: 0.1em; color: white; margin-bottom: 24px; }
+    .loading-bar { width: 200px; height: 3px; background: var(--hairline); border-radius: 2px; overflow: hidden; }
+    .loading-bar-fill { height: 100%; width: 0; background: var(--crimson); border-radius: 2px; animation: load-fill 2s cubic-bezier(0.16,1,0.3,1) forwards; }
+    @keyframes load-fill { to { width: 100%; } }
+    .loading-text { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); margin-top: 14px; }
+
+    /* ═══ CONTENT TRANSITIONS ═══ */
+    .fade-content { transition: opacity 0.5s ease, transform 0.6s cubic-bezier(0.16,1,0.3,1); }
+    .fade-out { opacity: 0; transform: translateY(20px); }
+    .fade-in { opacity: 1; transform: translateY(0); }
+
+    /* ═══ SCAN LINES ═══ */
+    .hero-section::before {
+      content: ''; position: absolute; inset: 0; z-index: 2; pointer-events: none;
+      background: repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(255,255,255,0.008) 2px,rgba(255,255,255,0.008) 4px);
+    }
+
+    /* ═══ TABLET & INTERMEDIATE (max-width: 1100px) ═══ */
+    @media (max-width: 1100px) {
+      .dock-hero-tag { display: none; }
+      .dock-hero-btn { padding: 6px 10px; gap: 6px; }
+      .dock-label { padding-right: 8px; margin-right: 0; }
+    }
+
+    /* ═══ MOBILE (max-width: 768px) ═══ */
+    @media(max-width:768px) {
+      .nav-header { padding: 0 1.25rem; height: 60px; }
+      .nav-links { display: none; }
+      .nav-brand-sub { display: none; }
+      .hero-section { padding: 68px 1.25rem 90px; }
+      .hero-container { grid-template-columns: 1fr; gap: 36px; padding: 20px 0; }
+      .hero-stats { grid-template-columns: 1fr 1fr; }
+      .poster-card { max-width: 320px; margin: 0 auto; }
+      .characters-section { padding: 60px 1.25rem 100px; }
+      .characters-grid { grid-template-columns: 1fr 1fr; }
+      .carousel-arrow { display: none; }
+      .site-footer { padding: 40px 1.25rem 100px; }
+      .footer-inner { flex-direction: column; gap: 16px; text-align: center; }
+
+      /* Mobile Roster Dock: Compact, touch-scrollable, always accessible */
+      .roster-dock {
+        bottom: 12px;
+        width: calc(100vw - 20px);
+        max-width: 480px;
+        padding: 6px 8px;
+        border-radius: 100px;
+        box-shadow: 0 12px 36px rgba(0,0,0,0.7), 0 0 20px var(--theme-glow);
+      }
+      .dock-label { display: none; }
+      .dock-track {
+        width: 100%;
+        gap: 6px;
+        justify-content: flex-start;
+        padding: 2px 4px;
+      }
+      .dock-hero-btn {
+        padding: 5px 10px;
+        gap: 6px;
+      }
+      .dock-hero-icon { width: 28px; height: 28px; }
+      .dock-hero-name { font-size: 10px; }
+      .dock-hero-tag { display: none; }
+    }
+    @media(max-width:480px) {
+      .characters-grid { grid-template-columns: 1fr; }
+      .hero-stats { grid-template-columns: 1fr; }
+      .hero-title { font-size: clamp(40px, 11vw, 60px); }
+      .roster-dock {
+        width: calc(100vw - 16px);
+        padding: 5px 6px;
+      }
+      .dock-hero-btn {
+        padding: 4px 8px;
+        gap: 5px;
+      }
+      .dock-hero-icon { width: 26px; height: 26px; }
+      .dock-hero-name { font-size: 9px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- LOADING -->
+<div class="loading-screen" id="loadingScreen">
+  <div class="loading-logo">MARVEL</div>
+  <div class="loading-bar"><div class="loading-bar-fill"></div></div>
+  <div class="loading-text">Initializing Archive</div>
+</div>
+
+<!-- THREE.JS 3D CANVAS -->
+<canvas id="three-canvas"></canvas>
+
+<!-- DYNAMIC BACKGROUND LAYERS -->
+<div class="bg-image-layer active" id="bgImage0"></div>
+<div class="bg-image-layer" id="bgImage1"></div>
+<div class="bg-image-mask"></div>
+<div class="bg-gradient-layer" id="bgGradient"></div>
+<div class="bg-darkening"></div>
+<div class="ambient-orb" id="ambOrb1"></div>
+<div class="ambient-orb" id="ambOrb2"></div>
+<div class="ambient-orb" id="ambOrb3"></div>
+
+<!-- NAVIGATION -->
+<header class="nav-header" id="mainNav">
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-icon" id="navLogoIcon">
+      <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+    </div>
+    <div class="nav-brand">
+      <span class="nav-brand-title">MCU Active Archive</span>
+      <span class="nav-brand-sub">Earth-616 Continuity</span>
+    </div>
+  </a>
+  <nav><ul class="nav-links">
+    <li><a href="#hero" class="active">Heroes</a></li>
+    <li><a href="#roster">Roster</a></li>
+    <li><a href="#characters">Characters</a></li>
+  </ul></nav>
+  <div class="nav-right">
+    <span class="nav-hashtag" id="navHashtag">#IRONMAN</span>
+    <button class="nav-audio-btn" aria-label="Toggle Soundscape"><i class="fa-solid fa-volume-high" style="font-size:12px;"></i></button>
+  </div>
+</header>
+
+<!-- CAROUSEL ARROWS -->
+<button class="carousel-arrow left" id="prevHero" aria-label="Previous"><i class="fa-solid fa-chevron-left" style="font-size:14px;"></i></button>
+<button class="carousel-arrow right" id="nextHero" aria-label="Next"><i class="fa-solid fa-chevron-right" style="font-size:14px;"></i></button>
+
+<!-- HERO SECTION -->
+<section class="hero-section" id="hero">
+  <div class="hero-container">
+    <div class="hero-content fade-content fade-in" id="heroContent">
+      <div class="hero-badge-row">
+        <span class="badge-marvel">MARVEL</span>
+        <span class="badge-earth" id="heroBadge"></span>
+      </div>
+      <h1 class="hero-title" id="heroTitle"></h1>
+      <div class="hero-identity-row">
+        <span class="hero-real-name" id="heroRealName"></span>
+        <span class="hero-tagline-pill" id="heroTagline"></span>
+      </div>
+      <p class="hero-description" id="heroDescription"></p>
+      <div class="hero-stats" id="heroStats">
+        <div class="stat-card">
+          <div class="stat-label" id="stat1Label"></div>
+          <div class="stat-value" id="stat1Value"></div>
+          <div class="stat-bar"><div class="stat-bar-fill" id="stat1Bar"></div></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label" id="stat2Label"></div>
+          <div class="stat-value" id="stat2Value"></div>
+          <div class="stat-bar"><div class="stat-bar-fill" id="stat2Bar"></div></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">THREAT LEVEL</div>
+          <div class="stat-threat" id="heroThreat"></div>
+        </div>
+      </div>
+      <div class="hero-cta-row">
+        <button class="btn-primary" id="ctaPrimary"><i class="fa-solid fa-bolt-lightning"></i><span id="ctaPrimaryText"></span></button>
+        <button class="btn-secondary" id="ctaSecondary"><i class="fa-regular fa-circle-play" style="color:var(--gold);"></i><span id="ctaSecondaryText"></span></button>
+      </div>
+      <div class="hero-legal" id="heroLegal"></div>
+    </div>
+    <div class="hero-visual fade-content fade-in" id="heroVisual">
+      <div class="poster-ambient" id="posterAmbient"></div>
+      <div class="poster-3d-wrapper" id="poster3dWrapper">
+        <div class="poster-card" id="posterCard">
+          <img id="heroImage" src="" alt=""/>
+          <div class="poster-gradient"></div>
+          <div class="poster-shine"></div>
+          <div class="poster-hud-top">
+            <span class="poster-tag" id="posterTag"></span>
+            <span class="poster-status" id="posterStatus"><span class="status-dot"></span> ONLINE</span>
+          </div>
+          <div class="poster-subject" id="posterSubject"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CHARACTERS GRID -->
+<section class="characters-section" id="characters">
+  <div class="section-header">
+    <div class="section-overline">EARTH-616 CONTINUITY</div>
+    <h2 class="section-title">THE ROSTER</h2>
+    <div class="section-divider"></div>
+  </div>
+  <div class="characters-grid" id="charactersGrid"></div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-text">MARVEL ENTERTAINMENT // ALL RIGHTS RESERVED // EARTH-616</div>
+    <div class="footer-links"><a href="#">PRIVACY</a><a href="#">TERMS</a><a href="#">ACCESSIBILITY</a></div>
+  </div>
+</footer>
+
+<!-- ROSTER DOCK -->
+<nav class="roster-dock" id="rosterDock" aria-label="Hero Selection Dock">
+  <div class="dock-label"><span class="dock-label-top">HERO SELECT</span><span class="dock-label-bottom">ROSTER</span></div>
+  <div class="dock-track" id="dockTrack" role="tablist" aria-label="MCU Heroes"></div>
+</nav>
+
+<script>
+// ══════════════════════════════════════════════════════════════════
+// FETCH HERO DATA FROM BACKEND API
+// ══════════════════════════════════════════════════════════════════
+let heroes = [];
+let currentHeroIndex = 0;
+let isTransitioning = false;
+let bgLayerToggle = 0;
+let threeScene, threeCamera, threeRenderer, particles, particleMaterial;
+
+async function fetchHeroes() {
+  try {
+    const res = await fetch('/api/heroes');
+    const json = await res.json();
+    heroes = json.data;
+  } catch (e) {
+    // Fallback: load from inline data if API not available
+    console.warn('API not available, using fallback data');
+    heroes = getFallbackHeroes();
+  }
+}
+
+function getFallbackHeroes() {
+  return [
+  {
+    "id": "ironman",
+    "name": "IRON MAN",
+    "realName": "ANTHONY EDWARD STARK",
+    "hashtag": "#IRONMAN",
+    "badge": "EARTH-616 // STARK INDUSTRIES ARCHIVE",
+    "tagline": "GENIUS. BILLIONAIRE. PHILANTHROPIST.",
+    "description": "Wounded, captured, and forced to build a weapon by his enemies, industrialist Tony Stark instead created an advanced titanium-gold powered armor to save his life and escape. Upgraded to state-of-the-art nanotechnology Mark LXXXV, the Invincible Iron Man became founding leader of Earth's Mightiest Heroes, defending the cosmos through sheer will, intellect, and unmatched engineering precision.",
+    "stat1": {
+      "label": "INTELLECT / TECH",
+      "value": 100
+    },
+    "stat2": {
+      "label": "WEAPONS / REPULSOR",
+      "value": 98
+    },
+    "threat": "OMEGA DEFENDER",
+    "ctaPrimary": "ARMOR SCHEMATICS",
+    "ctaSecondary": "J.A.R.V.I.S. UPLINK",
+    "legal": "STARK INDUSTRIES // TONY STARK FOUNDATION // ALL RIGHTS RESERVED",
+    "posterTag": "MK-LXXXV NANO-TECH",
+    "posterSubject": "SUBJECT: TONY STARK // MALIBU",
+    "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuD_ndz-YJdhLllNlTFDwLVmMc-ROotxPCVCNCZuoHX2PZdoVtK3HZN6wibOBLFoNotX6jV8pTCGfFihatwPRFt94ST1P-3i_TX-AGC5AlOWMz5NWWzCHBbn1x3mlxgcJhhWgvNsVWjQrqg4EwmvwkYeTl17sw1yjF2FVFgXwAD-0i43PBSnWlc9g8GN8Li_bdqSiYx5NSd_YsQPHpK4UjLhwrWQdi4CN-xafc7y2DUexRmMJ-jkv7gMvRiiqOpRIKqxyuM",
+    "backgroundImage": "https://lh3.googleusercontent.com/aida-public/AB6AXuBJbFj4BZdk8GMyLZHsQTN0CyyU5hDI7LKfnuRNPxzbx3nkev0XB6N4ErRV3sR8Dhl9pW2K8qtybf1qltDdUzGjJTcc5olr5eqNeKDpOpp85JPIW42IYWFOE5k6TuImqHtHDjN_uyEJYUiwlyE0brRVz3KwBeyZL4RqaoLLf0P5aO5CCqQSoVBMlw9ZfJ8AidUTyh8laTYm5N7E9UiTYUjs9wLPr9nQtl61sldWMj2vsNLavCkkvqDc65gfU_BOh1s_cBo",
+    "theme": {
+      "primary": "#E62429",
+      "secondary": "#38bdf8",
+      "glow": "rgba(230, 36, 41, 0.4)",
+      "gradient": "radial-gradient(circle at 75% 45%, rgba(185, 28, 28, 0.45) 0%, rgba(136, 19, 55, 0.25) 30%, rgba(8, 8, 8, 0.95) 75%)",
+      "particleColor": "#ff4444",
+      "ambientOrb1": "rgba(230, 36, 41, 0.2)",
+      "ambientOrb2": "rgba(56, 189, 248, 0.12)"
+    }
+  },
+  {
+    "id": "spiderman",
+    "name": "SPIDER-MAN",
+    "realName": "PETER BENJAMIN PARKER",
+    "hashtag": "#SPIDERMAN",
+    "badge": "EARTH-616 // QUEENS, NEW YORK",
+    "tagline": "FRIENDLY NEIGHBORHOOD HERO",
+    "description": "Peter Parker balances his life as an ordinary high school student in Queens with his superhero alter-ego Spider-Man, and finds himself on the trail of a new menace prowling the skies of New York City. A young Peter Parker begins to navigate his newfound identity as the web-slinging superhero Spider-Man.",
+    "stat1": {
+      "label": "POWER FACTOR",
+      "value": 96
+    },
+    "stat2": {
+      "label": "AGILITY / REFLEX",
+      "value": 99
+    },
+    "threat": "OMEGA PROTECTOR",
+    "ctaPrimary": "EXPLORE ABILITIES",
+    "ctaSecondary": "VOICE LOG",
+    "legal": "MARVEL ENTERTAINMENT // ALL RIGHTS RESERVED",
+    "posterTag": "WEB-SHOOTER MK IV",
+    "posterSubject": "SUBJECT: PETER PARKER // QUEENS",
+    "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuA1t1lJrVk3JaADdkRzXqiVGqIuyPRGK6FTm-gVYoZKNL9WHsrujjGhbzsu4o23FXU8O4MXfSf0v359zVxHNkq3WJjjVFH81DjHi44fdFzaA1t7IL22nNjFpG1r9tDMitMn9fRIsPvvkLJN3zJCstkQZ-Aql_cxi5hisPl0O4TGTezQY3BkrGw4wdvLCkvK_Qhv-SBz463sK8QUK1-Cv0ycmgUJWRG1SoKWeB8NPPAOaLvKsa7Jd5khUWOiVunLNAgShQ4",
+    "backgroundImage": "https://lh3.googleusercontent.com/aida-public/AB6AXuCUQJHCoDXf1eX0iNX-_J19wJnBGPJBnOGgX5Rnt1NMc-2ZCMuGYXPuZuIYxmHgWRgqYFej1DZzBD6ndV_EP7A9rU1SETfIyG6OueE1pBrydMscUfY3ToGHiVwgQMN1Y2ol3wVbBST0KSNox6qEJLf7su6bhzmzIxCk-2gUU1w8v87tQUwRilGB42Ns4uPTvw0QSg2vRvn6CAt_SGISdS4LITiTP7DkrLaRbH8NwLh2NzBYdxvPJEaPUQ",
+    "theme": {
+      "primary": "#E62429",
+      "secondary": "#ff6666",
+      "glow": "rgba(230, 36, 41, 0.5)",
+      "gradient": "radial-gradient(ellipse at top, rgba(58,9,19,0.9) 0%, rgba(20,4,7,0.95) 60%, rgba(8,3,5,1) 100%)",
+      "particleColor": "#ff3344",
+      "ambientOrb1": "rgba(255, 60, 75, 0.2)",
+      "ambientOrb2": "rgba(200, 20, 35, 0.1)"
+    }
+  },
+  {
+    "id": "thor",
+    "name": "THOR",
+    "realName": "THOR ODINSON",
+    "hashtag": "#THOR",
+    "badge": "REALM-001 // ASGARD CONTINUITY",
+    "tagline": "GOD OF THUNDER & PROTECTOR OF NINE REALMS",
+    "description": "Prince of Asgard and rightful heir to Odin's throne, Thor Odinson commands the raw fury of cosmic tempest and primordial lightning. Wielding Mjolnir and Stormbreaker across the cosmic sea, he bridges realms and shatters existential threats to preserve mortal life across Midgard and the greater universe.",
+    "stat1": {
+      "label": "ENERGY EMISSION",
+      "value": 97
+    },
+    "stat2": {
+      "label": "GODLIKE STRENGTH",
+      "value": 99
+    },
+    "threat": "COSMIC SAVIOUR",
+    "ctaPrimary": "LIGHTNING MANIFEST",
+    "ctaSecondary": "BIFROST CHRONICLES",
+    "legal": "ASGARD CROWN ARCHIVE // ALL RIGHTS RESERVED",
+    "posterTag": "STORMBREAKER ACTIVE",
+    "posterSubject": "SUBJECT: THOR ODINSON // NEW ASGARD",
+    "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuBQqs4vNQCpE44D0PEGSUaN5BPh4QevthvMEYM7nvFCOGl7aqed8yI6GVhAEnSUDm7KNt9_zXeqnDkTCvve33p1WrFAREMyYdUKyhjMGqmywQXkJlPIWnyDQNi3ZIK5hynC_FZUluo6xIrtkMA3xrl1xS2u8UHntLF5aGNCENYKOqDPPKWibWdlYO14nlMBYKWgFOGz4Vp8FYmMyqPd_bC_I4LQLPb68b4LofizsJ5yQkp8TIg2J5YqbVL3UgHtxOyQ2cY",
+    "backgroundImage": "",
+    "theme": {
+      "primary": "#38bdf8",
+      "secondary": "#0ea5e9",
+      "glow": "rgba(56, 189, 248, 0.4)",
+      "gradient": "radial-gradient(ellipse at 60% 40%, rgba(14,40,80,0.9) 0%, rgba(3,7,18,0.95) 60%, rgba(3,7,18,1) 100%)",
+      "particleColor": "#38bdf8",
+      "ambientOrb1": "rgba(56, 189, 248, 0.18)",
+      "ambientOrb2": "rgba(14, 165, 233, 0.1)"
+    }
+  },
+  {
+    "id": "hulk",
+    "name": "THE HULK",
+    "realName": "ROBERT BRUCE BANNER",
+    "hashtag": "#HULK",
+    "badge": "EARTH-616 // CULVER UNIVERSITY INCIDENT",
+    "tagline": "STRONGEST THERE IS // TITAN ALPHA",
+    "description": "Dr. Robert Bruce Banner balances his fractured existence as a genius nuclear physicist with his towering alter-ego: The Hulk. Exposed to extreme lethal doses of synthetic gamma radiation, Banner awakens an indestructible force fueled by raw adrenaline and rage. With seismic thunderclaps capable of shattering tank divisions and boundless physical stamina, he stands as the world's most terrifying protector.",
+    "stat1": {
+      "label": "STRENGTH",
+      "value": 100
+    },
+    "stat2": {
+      "label": "RESILIENCE",
+      "value": 100
+    },
+    "threat": "WORLD BREAKER",
+    "ctaPrimary": "SEISMIC DOSSIER",
+    "ctaSecondary": "BANNER AUDIO LOG",
+    "legal": "CLASSIFIED DATABASE // SULLIVAN BASE RECORD #0492-GREEN",
+    "posterTag": "BIO-SPECIMEN // 004",
+    "posterSubject": "SUBJECT: BRUCE BANNER // CULVER LABS",
+    "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuC59Guje7ZxEzeaR5NSqeAwAoQQXlFOD2IgUlAmaNeepcELZVNfGKAwIXQnxbp_mpvg9gMpngqyO0vG-LX26h8BzLS8DQC2xGQLqSpG1gJhqdvl-3TAX0oSU9zmryRftmVXN_NtPhtPPF2VdPax4KZ6HXOF0e306j-sKcMXJyJfIfHiQp53bflNQR8QCuxQ2AApzbaz6owczgd4SxjjgeMprJCOlJLYBR8grRD5FD4qkGIqgQcwMK4vXiDlYtB_p2JvR6Y",
+    "backgroundImage": "",
+    "theme": {
+      "primary": "#22c55e",
+      "secondary": "#4ade80",
+      "glow": "rgba(34, 197, 94, 0.4)",
+      "gradient": "radial-gradient(ellipse at 55% 50%, rgba(5,40,15,0.9) 0%, rgba(5,10,5,0.95) 60%, rgba(5,5,3,1) 100%)",
+      "particleColor": "#22c55e",
+      "ambientOrb1": "rgba(34, 197, 94, 0.18)",
+      "ambientOrb2": "rgba(22, 163, 74, 0.08)"
+    }
+  },
+  {
+    "id": "captain",
+    "name": "CAPTAIN AMERICA",
+    "realName": "STEVEN GRANT ROGERS",
+    "hashtag": "#CAPTAINAMERICA",
+    "badge": "EARTH-616 // S.H.I.E.L.D. FILE #1941",
+    "tagline": "FIRST AVENGER & SENTINEL OF LIBERTY",
+    "description": "From the streets of Brooklyn to becoming the pinnacle of human capability through the Super-Soldier Serum, Steve Rogers stands as the indestructible shield against tyranny. Wielding his circular vibranium shield and unyielding moral resolve, he inspires both humanity and fellow champions, spearheading the Avengers through every cosmic and earthly extinction threat with timeless courage.",
+    "stat1": {
+      "label": "TACTICAL LEADERSHIP",
+      "value": 100
+    },
+    "stat2": {
+      "label": "PHYSICAL ENDURANCE",
+      "value": 98
+    },
+    "threat": "COMMANDER PRIME",
+    "ctaPrimary": "TACTICAL MATRIX",
+    "ctaSecondary": "DEPUTY LOG",
+    "legal": "AVENGERS FACILITY // COMMAND OVERRIDE // CLASSIFIED 0-8-4",
+    "posterTag": "VIBRANIUM MK II",
+    "posterSubject": "SUBJECT: STEVE ROGERS // BROOKLYN",
+    "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuCbpCzMswC5uXjewXLjSGVTsD1xNmx9QxWbX3M3D0FL9NAmhIYUqrO6vfXcNwssu_AQFz37nmM01VmoW5IZZahAN6eLPO7oyPA5plGfpotABQ-UJ1_QWfwyvimpk5DRV1SNlrKiEHW5-7QnebdQ93FUgic82A2zssUhMLpTUns7NV-IPkt4d2PvumFu-gEQP4GOP8lsg0yFpiuQ48EvzextQazSO0nGrlQtOIhpGBA1IefOInsZi9I5t2d5xaTFrXLyF38",
+    "backgroundImage": "https://lh3.googleusercontent.com/aida-public/AB6AXuClX1C1BdiRgNScfna5NOQE97Tg_CDyVHv2-roVFFuL5p_GTZUf0483DqOD6QYK3AfO4c3oTB-tQ_-QryGHT8rp3EAUX_7oBHROPDW5AMU63moBrFkWvrI87qpmzeCDdrpX9gyrKb71mTiVmWZzNdk8jQLmZn2k8L2R-dBiAXJGIvMwlFaXI0UiA6WOAoGkwHcWtlP1AWvZ98Bw4BV07WOtzeKwYi9zF7v9-tSJEAc1R5SMvYCtYENRZ5TAeWFxkBTbIcY",
+    "theme": {
+      "primary": "#3b82f6",
+      "secondary": "#60a5fa",
+      "glow": "rgba(59, 130, 246, 0.4)",
+      "gradient": "radial-gradient(ellipse at 50% 50%, rgba(4,15,40,0.9) 0%, rgba(4,9,20,0.95) 60%, rgba(4,9,20,1) 100%)",
+      "particleColor": "#3b82f6",
+      "ambientOrb1": "rgba(59, 130, 246, 0.18)",
+      "ambientOrb2": "rgba(96, 165, 250, 0.08)"
+    }
+  },
+  {
+    "id": "strange",
+    "name": "DOCTOR STRANGE",
+    "realName": "DR. STEPHEN VINCENT STRANGE",
+    "hashtag": "#DOCTORSTRANGE",
+    "badge": "EARTH-616 // SANCTUM SANCTORUM",
+    "tagline": "MASTER OF THE MYSTIC ARTS",
+    "description": "Once a prodigal yet arrogant neurosurgeon, Stephen Strange unlocked the pathways of dimensional sorcery following a fateful crash. Wielding the Eye of Agamotto and Cloak of Levitation, he ascends as Earth's primary guardian against cosmic entities, interdimensional anomalies, and eldritch powers tearing across the fabric of the Multiverse.",
+    "stat1": {
+      "label": "MYSTIC POTENCY",
+      "value": 99
+    },
+    "stat2": {
+      "label": "ASTRAL PROJECTION",
+      "value": 98
+    },
+    "threat": "SORCERER SUPREME",
+    "ctaPrimary": "SPELL COMPENDIUM",
+    "ctaSecondary": "SANCTUM LOG",
+    "legal": "MASTERS OF THE MYSTIC ARTS // ALL REALMS SECURED",
+    "posterTag": "EYE OF AGAMOTTO",
+    "posterSubject": "SUBJECT: STEPHEN STRANGE // BLEECKER ST",
+    "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuDj8F06oybu-A47eNacednrV5mgp2XAoJV9FfJ-uAn9A7Jcg0CnkZ8pLgmiGIb4DqpPGFNrEdCLqkjXfaYOrvEoEXopExrWAaGk7nJnu3hyY2vZxSmQTMuX4z2MpV9PvhI97zm-d5GMinV545-DUAflazavEgeSjbSJtb08Berl5s31jHDEwdBmfrLvvJETbLcdBcV6SNfs9w9hbgprmQnm62rvutaIkJN39VgYpZtAJv9kvHPu5x4kYCvi3X263lzt8sk",
+    "backgroundImage": "",
+    "theme": {
+      "primary": "#f59e0b",
+      "secondary": "#fbbf24",
+      "glow": "rgba(245, 158, 11, 0.4)",
+      "gradient": "radial-gradient(ellipse at 40% 40%, rgba(60,30,8,0.8) 0%, rgba(20,12,5,0.9) 50%, rgba(10,8,6,1) 100%)",
+      "particleColor": "#f59e0b",
+      "ambientOrb1": "rgba(245, 158, 11, 0.15)",
+      "ambientOrb2": "rgba(234, 88, 12, 0.08)"
+    }
+  },
+  {
+    "id": "wolverine",
+    "name": "WOLVERINE",
+    "realName": "JAMES \"LOGAN\" HOWLETT",
+    "hashtag": "#WOLVERINE",
+    "badge": "EARTH-616 // WEAPON X PROGRAM",
+    "tagline": "THE BEST THERE IS AT WHAT HE DOES",
+    "description": "Born James Howlett, the mutant known as Logan carries within him an unbreakable adamantium skeleton and a devastating set of retractable claws. With a healing factor that borders on immortality and centuries of combat experience, Wolverine serves as one of the X-Men's most lethal and complex warriors — torn between his feral nature and the hero he chooses to be.",
+    "stat1": {
+      "label": "HEALING FACTOR",
+      "value": 100
+    },
+    "stat2": {
+      "label": "COMBAT MASTERY",
+      "value": 99
+    },
+    "threat": "ALPHA PREDATOR",
+    "ctaPrimary": "WEAPON X FILES",
+    "ctaSecondary": "BERSERKER PROTOCOL",
+    "legal": "WEAPON X // XAVIER INSTITUTE // CLASSIFIED",
+    "posterTag": "ADAMANTIUM GRADE",
+    "posterSubject": "SUBJECT: LOGAN // WEAPON X",
+    "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuBep0kvYp0fJ87tTVvgT88Z05mIjt_c1bcy_EOIi-kmmoTb3LJbcVJ6VIPuqENMeUKxKQvtshaEbpXIQEBY285iMzpc-6gGSbusCsyNJAnp5PSUNzh3D8jkVJ8r6uIIKKuXBBBKH7ybPfbgEfpJQcGsSjrqrcvM4j1Hptrh-vvWqnaOkHH9MIj09qhgTlQjGW8jGLeEwMwpqWFFXwBF9M3BXN39FapMSBp-gEewErU-jdJsl24uzJlTun4S98-jRQr3XeM",
+    "backgroundImage": "https://lh3.googleusercontent.com/aida-public/AB6AXuBep0kvYp0fJ87tTVvgT88Z05mIjt_c1bcy_EOIi-kmmoTb3LJbcVJ6VIPuqENMeUKxKQvtshaEbpXIQEBY285iMzpc-6gGSbusCsyNJAnp5PSUNzh3D8jkVJ8r6uIIKKuXBBBKH7ybPfbgEfpJQcGsSjrqrcvM4j1Hptrh-vvWqnaOkHH9MIj09qhgTlQjGW8jGLeEwMwpqWFFXwBF9M3BXN39FapMSBp-gEewErU-jdJsl24uzJlTun4S98-jRQr3XeM",
+    "theme": {
+      "primary": "#facc15",
+      "secondary": "#eab308",
+      "glow": "rgba(250, 204, 21, 0.4)",
+      "gradient": "radial-gradient(ellipse at 65% 48%, rgba(60,45,5,0.8) 0%, rgba(15,12,3,0.95) 55%, rgba(8,8,5,1) 100%)",
+      "particleColor": "#facc15",
+      "ambientOrb1": "rgba(250, 204, 21, 0.18)",
+      "ambientOrb2": "rgba(202, 138, 4, 0.08)"
+    }
+  }
+];
+}
+
+// ══════════════════════════════════════════════════════════════════
+// THREE.JS 3D PARTICLE SYSTEM
+// ══════════════════════════════════════════════════════════════════
+function initThreeJS() {
+  const canvas = document.getElementById('three-canvas');
+  threeRenderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+  threeRenderer.setSize(window.innerWidth, window.innerHeight);
+  threeRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+  threeScene = new THREE.Scene();
+  threeCamera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+  threeCamera.position.z = 50;
+
+  // Create particle geometry
+  const particleCount = 800;
+  const geometry = new THREE.BufferGeometry();
+  const positions = new Float32Array(particleCount * 3);
+  const velocities = new Float32Array(particleCount * 3);
+  const sizes = new Float32Array(particleCount);
+
+  for (let i = 0; i < particleCount; i++) {
+    positions[i * 3] = (Math.random() - 0.5) * 120;
+    positions[i * 3 + 1] = (Math.random() - 0.5) * 80;
+    positions[i * 3 + 2] = (Math.random() - 0.5) * 60;
+    velocities[i * 3] = (Math.random() - 0.5) * 0.02;
+    velocities[i * 3 + 1] = (Math.random() - 0.5) * 0.02;
+    velocities[i * 3 + 2] = (Math.random() - 0.5) * 0.01;
+    sizes[i] = Math.random() * 2 + 0.5;
+  }
+
+  geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+  geometry.userData.velocities = velocities;
+
+  // Particle material
+  particleMaterial = new THREE.PointsMaterial({
+    color: new THREE.Color('#ff4444'),
+    size: 0.4,
+    transparent: true,
+    opacity: 0.6,
+    blending: THREE.AdditiveBlending,
+    sizeAttenuation: true
+  });
+
+  particles = new THREE.Points(geometry, particleMaterial);
+  threeScene.add(particles);
+
+  // Add floating geometric shapes for depth
+  const ringGeo = new THREE.RingGeometry(12, 12.3, 64);
+  const ringMat = new THREE.MeshBasicMaterial({ color: '#E62429', transparent: true, opacity: 0.08, side: THREE.DoubleSide });
+  const ring1 = new THREE.Mesh(ringGeo, ringMat);
+  ring1.position.set(15, -5, -20);
+  ring1.rotation.x = Math.PI * 0.3;
+  threeScene.add(ring1);
+
+  const ring2Geo = new THREE.RingGeometry(18, 18.2, 64);
+  const ring2Mat = new THREE.MeshBasicMaterial({ color: '#E62429', transparent: true, opacity: 0.05, side: THREE.DoubleSide });
+  const ring2 = new THREE.Mesh(ring2Geo, ring2Mat);
+  ring2.position.set(-10, 8, -30);
+  ring2.rotation.x = Math.PI * 0.5;
+  ring2.rotation.y = Math.PI * 0.2;
+  threeScene.add(ring2);
+
+  window.threeRing1 = ring1;
+  window.threeRing2 = ring2;
+  window.threeRingMat = ringMat;
+  window.threeRing2Mat = ring2Mat;
+
+  // Mouse parallax
+  let mouseX = 0, mouseY = 0;
+  document.addEventListener('mousemove', (e) => {
+    mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+    mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+  });
+
+  // Animation loop
+  function animate() {
+    requestAnimationFrame(animate);
+
+    // Rotate particles slowly
+    particles.rotation.y += 0.0003;
+    particles.rotation.x += 0.0001;
+
+    // Animate individual particles
+    const pos = particles.geometry.attributes.position.array;
+    const vel = particles.geometry.userData.velocities;
+    for (let i = 0; i < pos.length; i += 3) {
+      pos[i] += vel[i];
+      pos[i+1] += vel[i+1];
+      pos[i+2] += vel[i+2];
+      if (Math.abs(pos[i]) > 60) vel[i] *= -1;
+      if (Math.abs(pos[i+1]) > 40) vel[i+1] *= -1;
+      if (Math.abs(pos[i+2]) > 30) vel[i+2] *= -1;
+    }
+    particles.geometry.attributes.position.needsUpdate = true;
+
+    // Rotate rings
+    if (window.threeRing1) {
+      window.threeRing1.rotation.z += 0.002;
+      window.threeRing2.rotation.z -= 0.001;
+    }
+
+    // Camera parallax with mouse
+    threeCamera.position.x += (mouseX * 3 - threeCamera.position.x) * 0.03;
+    threeCamera.position.y += (-mouseY * 2 - threeCamera.position.y) * 0.03;
+    threeCamera.lookAt(threeScene.position);
+
+    threeRenderer.render(threeScene, threeCamera);
+  }
+  animate();
+
+  window.addEventListener('resize', () => {
+    threeCamera.aspect = window.innerWidth / window.innerHeight;
+    threeCamera.updateProjectionMatrix();
+    threeRenderer.setSize(window.innerWidth, window.innerHeight);
+  });
+}
+
+function updateParticleColor(hexColor) {
+  if (particleMaterial) {
+    particleMaterial.color.set(hexColor);
+  }
+  if (window.threeRingMat) {
+    window.threeRingMat.color.set(hexColor);
+    window.threeRing2Mat.color.set(hexColor);
+  }
+}
+
+// ══════════════════════════════════════════════════════════════════
+// 3D CARD TILT EFFECT
+// ══════════════════════════════════════════════════════════════════
+function init3DCardTilt() {
+  const wrapper = document.getElementById('poster3dWrapper');
+  const card = document.getElementById('posterCard');
+  if (!wrapper || !card) return;
+
+  let currentRx = 0, currentRy = 0, currentScale = 1;
+  let targetRx = 0, targetRy = 0, targetScale = 1;
+  let animId = null;
+
+  function renderTilt() {
+    currentRx += (targetRx - currentRx) * 0.12;
+    currentRy += (targetRy - currentRy) * 0.12;
+    currentScale += (targetScale - currentScale) * 0.12;
+
+    wrapper.style.transform = `perspective(1000px) rotateX(${currentRx.toFixed(2)}deg) rotateY(${currentRy.toFixed(2)}deg) scale3d(${currentScale.toFixed(3)},${currentScale.toFixed(3)},${currentScale.toFixed(3)})`;
+
+    const delta = Math.abs(targetRx - currentRx) + Math.abs(targetRy - currentRy) + Math.abs(targetScale - currentScale);
+    if (delta > 0.01) {
+      animId = requestAnimationFrame(renderTilt);
+    } else {
+      animId = null;
+    }
+  }
+
+  card.addEventListener('mousemove', (e) => {
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    targetRx = ((y - centerY) / centerY) * -10;
+    targetRy = ((x - centerX) / centerX) * 10;
+    targetScale = 1.03;
+
+    if (!animId) {
+      animId = requestAnimationFrame(renderTilt);
+    }
+  });
+
+  card.addEventListener('mouseleave', () => {
+    targetRx = 0;
+    targetRy = 0;
+    targetScale = 1;
+    if (!animId) {
+      animId = requestAnimationFrame(renderTilt);
+    }
+  });
+}
+
+// ══════════════════════════════════════════════════════════════════
+// DYNAMIC THEMED BACKGROUND
+// ══════════════════════════════════════════════════════════════════
+function updateBackground(hero) {
+  const nextLayer = bgLayerToggle === 0 ? 1 : 0;
+  const currentEl = document.getElementById(`bgImage${bgLayerToggle}`);
+  const nextEl = document.getElementById(`bgImage${nextLayer}`);
+
+  // Set background image
+  if (hero.backgroundImage) {
+    nextEl.style.backgroundImage = `url('${hero.backgroundImage}')`;
+    nextEl.style.filter = 'contrast(1.2) brightness(0.6)';
+  } else {
+    nextEl.style.backgroundImage = 'none';
+    nextEl.style.filter = 'none';
+  }
+
+  // Cross-fade
+  nextEl.classList.add('active');
+  currentEl.classList.remove('active');
+  bgLayerToggle = nextLayer;
+
+  // Update gradient overlay
+  document.getElementById('bgGradient').style.background = hero.theme.gradient;
+
+  // Update ambient orbs
+  document.getElementById('ambOrb1').style.background = hero.theme.ambientOrb1;
+  document.getElementById('ambOrb2').style.background = hero.theme.ambientOrb2;
+
+  // Update CSS custom properties for theme
+  document.documentElement.style.setProperty('--theme-primary', hero.theme.primary);
+  document.documentElement.style.setProperty('--theme-secondary', hero.theme.secondary);
+  document.documentElement.style.setProperty('--theme-glow', hero.theme.glow);
+
+  // Update nav logo glow
+  const logoIcon = document.getElementById('navLogoIcon');
+  logoIcon.style.borderColor = hero.theme.primary;
+  logoIcon.style.boxShadow = `0 0 20px ${hero.theme.glow}`;
+  logoIcon.querySelector('svg').style.fill = hero.theme.primary;
+
+  // Update poster ambient glow
+  document.getElementById('posterAmbient').style.background = hero.theme.glow;
+
+  // Update poster card glow & border
+  const posterCard = document.getElementById('posterCard');
+  posterCard.style.boxShadow = `0 0 0 1px rgba(42,42,42,1), 0 20px 60px rgba(0,0,0,0.8), 0 0 40px ${hero.theme.glow}`;
+
+  // Update poster status
+  const status = document.getElementById('posterStatus');
+  status.style.borderColor = `${hero.theme.secondary}44`;
+  status.style.color = hero.theme.secondary;
+  status.querySelector('.status-dot').style.background = hero.theme.secondary;
+
+  // Update stat bar colors
+  document.querySelectorAll('.stat-bar-fill').forEach(bar => {
+    bar.style.background = hero.theme.primary;
+    bar.style.boxShadow = `0 0 10px ${hero.theme.glow}`;
+  });
+
+  // Update 3D particle color
+  updateParticleColor(hero.theme.particleColor);
+
+  // Update dock glow
+  document.querySelector('.roster-dock').style.boxShadow = `0 16px 48px rgba(0,0,0,0.6), 0 0 30px ${hero.theme.glow}`;
+}
+
+// ══════════════════════════════════════════════════════════════════
+// HERO CONTENT SWITCHER
+// ══════════════════════════════════════════════════════════════════
+function switchHero(index) {
+  if (isTransitioning) return;
+  if (index < 0) index = heroes.length - 1;
+  if (index >= heroes.length) index = 0;
+  isTransitioning = true;
+  currentHeroIndex = index;
+  const hero = heroes[index];
+
+  const content = document.getElementById('heroContent');
+  const visual = document.getElementById('heroVisual');
+
+  // Fade out
+  content.classList.remove('fade-in');
+  content.classList.add('fade-out');
+  visual.classList.remove('fade-in');
+  visual.classList.add('fade-out');
+
+  // Update background immediately for smooth transition
+  updateBackground(hero);
+
+  setTimeout(() => {
+    // Update all hero content
+    document.getElementById('heroTitle').textContent = hero.name;
+    document.getElementById('heroRealName').textContent = hero.realName;
+    document.getElementById('heroBadge').textContent = hero.badge;
+    document.getElementById('heroTagline').textContent = hero.tagline;
+    document.getElementById('heroDescription').textContent = hero.description;
+    document.getElementById('heroThreat').textContent = hero.threat;
+    document.getElementById('stat1Label').textContent = hero.stat1.label;
+    document.getElementById('stat1Value').innerHTML = `${hero.stat1.value} <span>/ 100</span>`;
+    document.getElementById('stat1Bar').style.width = hero.stat1.value + '%';
+    document.getElementById('stat2Label').textContent = hero.stat2.label;
+    document.getElementById('stat2Value').innerHTML = `${hero.stat2.value} <span>/ 100</span>`;
+    document.getElementById('stat2Bar').style.width = hero.stat2.value + '%';
+    document.getElementById('ctaPrimaryText').textContent = hero.ctaPrimary;
+    document.getElementById('ctaSecondaryText').textContent = hero.ctaSecondary;
+    document.getElementById('heroLegal').textContent = hero.legal;
+    document.getElementById('heroImage').src = hero.image;
+    document.getElementById('heroImage').alt = hero.name;
+    document.getElementById('posterTag').textContent = hero.posterTag;
+    document.getElementById('posterSubject').innerHTML = `<i class="fa-solid fa-crosshairs"></i> ${hero.posterSubject}`;
+    document.getElementById('navHashtag').textContent = hero.hashtag;
+
+    // Update title text shadow
+    document.getElementById('heroTitle').style.textShadow = `0 10px 40px rgba(0,0,0,0.6), 0 0 30px ${hero.theme.glow}`;
+
+    // Update dock active state & accessibility
+    document.querySelectorAll('.dock-hero-btn').forEach((btn, i) => {
+      const isActive = i === index;
+      btn.classList.toggle('active', isActive);
+      btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+      btn.setAttribute('tabindex', isActive ? '0' : '-1');
+      if (isActive) {
+        btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      }
+    });
+
+    // Fade in
+    content.classList.remove('fade-out');
+    content.classList.add('fade-in');
+    visual.classList.remove('fade-out');
+    visual.classList.add('fade-in');
+
+    isTransitioning = false;
+  }, 450);
+}
+
+// ══════════════════════════════════════════════════════════════════
+// BUILD UI ELEMENTS
+// ══════════════════════════════════════════════════════════════════
+function buildDock() {
+  const track = document.getElementById('dockTrack');
+  if (!track) return;
+  track.innerHTML = '';
+  heroes.forEach((hero, i) => {
+    const btn = document.createElement('button');
+    btn.className = `dock-hero-btn ${i === 0 ? 'active' : ''}`;
+    btn.setAttribute('role', 'tab');
+    btn.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
+    btn.setAttribute('aria-label', `Select ${hero.name}`);
+    btn.setAttribute('tabindex', i === 0 ? '0' : '-1');
+    btn.onclick = () => switchHero(i);
+    btn.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+        e.preventDefault();
+        const nextIdx = (i + 1) % heroes.length;
+        switchHero(nextIdx);
+        document.querySelectorAll('.dock-hero-btn')[nextIdx]?.focus();
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        const prevIdx = (i - 1 + heroes.length) % heroes.length;
+        switchHero(prevIdx);
+        document.querySelectorAll('.dock-hero-btn')[prevIdx]?.focus();
+      }
+    });
+    const dockDisplayNames = {
+      ironman: 'IRON MAN',
+      spiderman: 'SPIDER-MAN',
+      thor: 'THOR',
+      hulk: 'HULK',
+      captain: 'CAPT. AMERICA',
+      strange: 'DR. STRANGE',
+      wolverine: 'WOLVERINE'
+    };
+    const shortName = dockDisplayNames[hero.id] || hero.name;
+    btn.innerHTML = `
+      <div class="dock-hero-icon"><img src="${hero.image}" alt="" aria-hidden="true"/></div>
+      <div class="dock-hero-text">
+        <span class="dock-hero-name">${shortName}</span>
+        <span class="dock-hero-tag">${hero.hashtag}</span>
+      </div>`;
+    track.appendChild(btn);
+  });
+}
+
+function buildCharactersGrid() {
+  const grid = document.getElementById('charactersGrid');
+  heroes.forEach((hero, i) => {
+    const card = document.createElement('div');
+    card.className = 'char-card';
+    card.style.opacity = '0';
+    card.style.transform = 'translateY(30px)';
+    card.style.transition = `all 0.6s cubic-bezier(0.16,1,0.3,1) ${i * 0.08}s`;
+    card.onclick = () => {
+      switchHero(i);
+      document.getElementById('hero').scrollIntoView({ behavior: 'smooth' });
+    };
+    card.innerHTML = `
+      <div class="char-card-img"><img src="${hero.image}" alt="${hero.name}" loading="lazy"/></div>
+      <div class="char-card-body">
+        <div class="char-card-name">${hero.name}</div>
+        <div class="char-card-alias">${hero.realName}</div>
+        <div class="char-card-desc">${hero.description}</div>
+        <div class="char-card-threat"><span class="pulse"></span>${hero.threat}</div>
+      </div>`;
+    grid.appendChild(card);
+  });
+
+  // Observe cards for scroll reveal
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.char-card').forEach(c => observer.observe(c));
+}
+
+// ══════════════════════════════════════════════════════════════════
+// INITIALIZATION
+// ══════════════════════════════════════════════════════════════════
+window.addEventListener('DOMContentLoaded', async () => {
+  // Init Three.js 3D immediately
+  initThreeJS();
+  init3DCardTilt();
+
+  // Fetch hero data from backend API
+  await fetchHeroes();
+
+  // Build UI
+  buildDock();
+  buildCharactersGrid();
+
+  // Load first hero
+  if (heroes.length > 0) {
+    const h = heroes[0];
+    document.getElementById('heroTitle').textContent = h.name;
+    document.getElementById('heroRealName').textContent = h.realName;
+    document.getElementById('heroBadge').textContent = h.badge;
+    document.getElementById('heroTagline').textContent = h.tagline;
+    document.getElementById('heroDescription').textContent = h.description;
+    document.getElementById('heroThreat').textContent = h.threat;
+    document.getElementById('stat1Label').textContent = h.stat1.label;
+    document.getElementById('stat1Value').innerHTML = `${h.stat1.value} <span>/ 100</span>`;
+    document.getElementById('stat2Label').textContent = h.stat2.label;
+    document.getElementById('stat2Value').innerHTML = `${h.stat2.value} <span>/ 100</span>`;
+    document.getElementById('ctaPrimaryText').textContent = h.ctaPrimary;
+    document.getElementById('ctaSecondaryText').textContent = h.ctaSecondary;
+    document.getElementById('heroLegal').textContent = h.legal;
+    document.getElementById('heroImage').src = h.image;
+    document.getElementById('heroImage').alt = h.name;
+    document.getElementById('posterTag').textContent = h.posterTag;
+    document.getElementById('posterSubject').innerHTML = `<i class="fa-solid fa-crosshairs"></i> ${h.posterSubject}`;
+    document.getElementById('navHashtag').textContent = h.hashtag;
+
+    // Apply initial theme
+    updateBackground(h);
+
+    // Animate stat bars after a delay
+    setTimeout(() => {
+      document.getElementById('stat1Bar').style.width = h.stat1.value + '%';
+      document.getElementById('stat2Bar').style.width = h.stat2.value + '%';
+    }, 500);
+  }
+
+  // Nav scroll effect
+  window.addEventListener('scroll', () => {
+    document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  // Carousel arrows
+  document.getElementById('prevHero').addEventListener('click', () => switchHero(currentHeroIndex - 1));
+  document.getElementById('nextHero').addEventListener('click', () => switchHero(currentHeroIndex + 1));
+
+  // Keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') switchHero(currentHeroIndex + 1);
+    if (e.key === 'ArrowLeft') switchHero(currentHeroIndex - 1);
+  });
+
+  // Touch swipe support (respects dock touch scrolling)
+  let touchStartX = 0;
+  let touchStartY = 0;
+  document.addEventListener('touchstart', (e) => {
+    if (e.target.closest('#rosterDock')) return;
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+  }, { passive: true });
+  document.addEventListener('touchend', (e) => {
+    if (e.target.closest('#rosterDock')) return;
+    const diffX = touchStartX - e.changedTouches[0].clientX;
+    const diffY = touchStartY - e.changedTouches[0].clientY;
+    if (Math.abs(diffX) > 60 && Math.abs(diffX) > Math.abs(diffY)) {
+      if (diffX > 0) switchHero(currentHeroIndex + 1);
+      else switchHero(currentHeroIndex - 1);
+    }
+  }, { passive: true });
+
+  // Hide loading screen
+  setTimeout(() => {
+    document.getElementById('loadingScreen').classList.add('hidden');
+  }, 2400);
+
+  // Auto-rotate
+  setInterval(() => { switchHero(currentHeroIndex + 1); }, 14000);
+});
+</script>
+</body>
+</html>

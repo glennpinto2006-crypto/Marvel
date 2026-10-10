@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Marvel Studios - Doctor Strange | Master of the Mystic Arts</title>
+<!-- Tailwind CSS v3 -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts for Cinematic Typography -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&amp;family=Montserrat:wght@400;500;600;700;800&amp;family=Space+Grotesk:wght@500;700&amp;display=swap" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            mystic: {
+              gold: '#F5C518',
+              amber: '#E67E22',
+              portal: '#FF9F1C',
+              teal: '#00F2FE',
+              violet: '#7928CA',
+              dark: '#080808',
+              card: '#121114'
+            }
+          },
+          fontFamily: {
+            cinzel: ['Cinzel', 'serif'],
+            sans: ['Montserrat', 'sans-serif'],
+            mono: ['Space Grotesk', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+<!-- BEGIN: Custom Mystic Styles -->
+<style data-purpose="ambient-effects">
+    body {
+      background-color: #060608;
+      color: #E2E8F0;
+      overflow-x: hidden;
+    }
+    .mystic-bg-radial {
+      background: radial-gradient(circle at 75% 45%, rgba(121, 40, 202, 0.18) 0%, rgba(245, 197, 24, 0.08) 35%, rgba(6, 6, 8, 0.98) 75%),
+                  radial-gradient(circle at 20% 80%, rgba(0, 242, 254, 0.07) 0%, transparent 50%);
+    }
+    .sparks-glow {
+      box-shadow: 0 0 50px -10px rgba(245, 197, 24, 0.35), 0 0 100px 20px rgba(121, 40, 202, 0.2);
+    }
+    .mandala-border {
+      position: relative;
+    }
+    .mandala-border::before {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      border-radius: 1.5rem;
+      padding: 2px;
+      background: linear-gradient(135deg, #F5C518, #FF9F1C, #7928CA, #00F2FE);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+  </style>
+<!-- END: Custom Mystic Styles -->
+</head>
+<body class="font-sans min-h-screen relative flex flex-col justify-between select-none mystic-bg-radial">
+<!-- Ambient Mystic Glow Elements -->
+<div class="fixed top-12 right-1/4 w-96 h-96 bg-amber-500/10 rounded-full blur-[140px] pointer-events-none"></div>
+<div class="fixed bottom-10 left-1/4 w-80 h-80 bg-violet-600/15 rounded-full blur-[120px] pointer-events-none"></div>
+<!-- BEGIN: TopNavbar -->
+<header class="w-full max-w-7xl mx-auto px-6 py-6 flex items-center justify-between z-30 relative" data-purpose="main-navigation">
+<!-- Left: Eye of Agamotto Emblem + Kamar-Taj Pill -->
+<div class="flex items-center space-x-3">
+<!-- Agamotto Glyphic SVG Icon -->
+<div class="w-10 h-10 rounded-full border border-mystic-gold/40 flex items-center justify-center bg-black/60 shadow-[0_0_15px_rgba(245,197,24,0.3)]">
+<svg class="w-6 h-6 text-mystic-gold" fill="none" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24">
+<ellipse cx="12" cy="12" rx="9" ry="5.5"></ellipse>
+<circle cx="12" cy="12" r="2.8"></circle>
+<path d="M12 2v3M12 19v3M3.5 6.5l2.5 1.5M18 16l2.5 1.5M3.5 17.5l2.5-1.5M18 8l2.5-1.5"></path>
+</svg>
+</div>
+<div class="flex items-center space-x-2 border border-white/10 bg-white/5 backdrop-blur-md px-3.5 py-1.5 rounded-full">
+<span class="w-1.5 h-1.5 rounded-full bg-mystic-gold animate-pulse"></span>
+<span class="text-[11px] font-mono tracking-widest text-neutral-300 font-semibold uppercase">Kamar-Taj Archive</span>
+</div>
+</div>
+<!-- Center Navigation Links (Matching layout from reference image) -->
+<nav class="hidden md:flex items-center space-x-10 text-xs font-bold tracking-[0.2em] uppercase">
+<a class="text-neutral-400 hover:text-white transition-colors duration-200" href="#">Story</a>
+<a class="text-white relative pb-1 transition-colors duration-200 flex flex-col items-center" href="#">
+<span>Characters</span>
+<span class="w-6 h-[2px] bg-white rounded-full mt-1"></span>
+</a>
+<a class="text-neutral-400 hover:text-white transition-colors duration-200" href="#">Merch</a>
+</nav>
+<!-- Right: Hashtag & Ambient Sound Controller -->
+<div class="flex items-center space-x-4">
+<span class="text-xs md:text-sm font-black tracking-wider text-mystic-gold uppercase drop-shadow-[0_0_10px_rgba(245,197,24,0.4)]">
+        #DoctorStrange
+      </span>
+<button aria-label="Audio Playback Toggle" class="w-9 h-9 rounded-full border border-white/20 bg-white/5 hover:border-mystic-gold/60 flex items-center justify-center text-neutral-300 hover:text-mystic-gold transition-all duration-300">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M11 5L6 9H2v6h4l5 4V5z" stroke-linecap="round" stroke-linejoin="round"></path>
+<path d="M15.54 8.46a5 5 0 010 7.07M19.07 4.93a10 10 0 010 14.14" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</button>
+</div>
+</header>
+<!-- END: TopNavbar -->
+<!-- BEGIN: MainHeroStage -->
+<main class="w-full max-w-7xl mx-auto px-6 py-4 flex-1 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-20" data-purpose="hero-content-showcase">
+<!-- Left Column: Character Narrative & Attributes (Matching layout style) -->
+<section class="lg:col-span-7 flex flex-col justify-center space-y-6 pt-2 lg:pt-0">
+<!-- Marvel Header Badge & Reality Tag -->
+<div class="flex items-center space-x-3">
+<div class="bg-red-600 text-white font-extrabold text-[11px] px-2.5 py-0.5 rounded tracking-tighter uppercase font-sans">
+          Marvel
+        </div>
+<div class="text-[10px] font-mono tracking-widest text-neutral-400 border border-neutral-800 bg-neutral-900/60 px-3 py-0.5 rounded-full">
+          Earth-616 // Sanctum Sanctorum
+        </div>
+</div>
+<!-- Large Bold Title (Spider-Man style bold header typography) -->
+<div class="space-y-1">
+<h1 class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight text-white uppercase drop-shadow-[0_8px_30px_rgba(0,0,0,0.9)] leading-none">
+          Doctor Strange
+        </h1>
+<div class="flex flex-wrap items-center gap-3 pt-2">
+<h2 class="text-sm md:text-base font-bold tracking-widest text-mystic-gold uppercase font-mono">
+            Dr. Stephen Vincent Strange
+          </h2>
+<span class="text-xs uppercase font-bold tracking-wider px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-300 border border-amber-500/30">
+            Master of the Mystic Arts
+          </span>
+</div>
+</div>
+<!-- Bio Paragraph (Modeled closely after the Spider-man hero synopsis) -->
+<p class="text-neutral-300 text-sm md:text-base leading-relaxed max-w-2xl font-normal font-sans pr-4">
+        Once a prodigal yet arrogant neurosurgeon, Stephen Strange unlocked the gateways of dimensional sorcery following a fateful crash. Wielding the Eye of Agamotto and Cloak of Levitation, he ascends as Earth's primary guardian against cosmic entities, interdimensional anomalies, and eldritch perils tearing across the fabric of the Multiverse.
+      </p>
+<!-- Mystic Telemetry Metrics -->
+<div class="grid grid-cols-3 gap-4 max-w-lg pt-1 pb-1">
+<div class="bg-neutral-950/70 border border-neutral-800/80 rounded-xl p-3 backdrop-blur-sm">
+<div class="text-[10px] text-neutral-400 font-mono tracking-wider uppercase">Mystic Potency</div>
+<div class="text-lg md:text-xl font-black text-white mt-0.5 font-mono">99 <span class="text-xs text-neutral-500 font-normal">/ 100</span></div>
+</div>
+<div class="bg-neutral-950/70 border border-neutral-800/80 rounded-xl p-3 backdrop-blur-sm">
+<div class="text-[10px] text-neutral-400 font-mono tracking-wider uppercase">Astral Projection</div>
+<div class="text-lg md:text-xl font-black text-white mt-0.5 font-mono">98 <span class="text-xs text-neutral-500 font-normal">/ 100</span></div>
+</div>
+<div class="bg-neutral-950/70 border border-neutral-800/80 rounded-xl p-3 backdrop-blur-sm">
+<div class="text-[10px] text-neutral-400 font-mono tracking-wider uppercase">Threat Level</div>
+<div class="text-xs md:text-sm font-black text-mystic-gold mt-1.5 uppercase tracking-wide">Sorcerer Supreme</div>
+</div>
+</div>
+<!-- Call-To-Action Button Suite -->
+<div class="flex flex-wrap items-center gap-4 pt-2">
+<button class="px-7 py-3 rounded-full bg-white text-black font-extrabold text-xs uppercase tracking-widest hover:bg-mystic-gold hover:text-black transition-all duration-300 shadow-[0_0_25px_rgba(255,255,255,0.25)] flex items-center space-x-2">
+<svg class="w-4 h-4 text-black" fill="currentColor" viewbox="0 0 24 24">
+<path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"></path>
+</svg>
+<span>Spell Compendium</span>
+</button>
+<button class="px-6 py-3 rounded-full bg-white/5 border border-white/20 text-white font-semibold text-xs uppercase tracking-widest hover:bg-white/10 hover:border-mystic-gold/60 transition-all duration-300 flex items-center space-x-2">
+<svg class="w-4 h-4 text-mystic-gold" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<polygon points="5 3 19 12 5 21 5 3"></polygon>
+</svg>
+<span>Sanctum Log</span>
+</button>
+</div>
+<!-- Sub-Footer Meta -->
+<div class="text-[11px] font-mono tracking-widest text-neutral-500 uppercase flex items-center space-x-2 pt-1">
+<span class="inline-block w-2 h-2 rounded-full bg-emerald-500"></span>
+<span>Masters of the Mystic Arts // All Realms Secured</span>
+</div>
+</section>
+<!-- Right Column: Requested Doctor Strange Visual Poster Card -->
+<section class="lg:col-span-5 flex justify-center items-center relative py-4 lg:py-0" data-purpose="hero-character-display">
+<!-- Eldritch Magic Ring Background Aura -->
+<div class="absolute -inset-4 rounded-3xl bg-gradient-to-tr from-amber-600/30 via-violet-600/20 to-teal-400/20 blur-2xl -z-10 opacity-70"></div>
+<!-- Poster Card Container -->
+<div class="mandala-border relative rounded-2xl overflow-hidden sparks-glow bg-neutral-900/90 shadow-2xl max-w-sm w-full group">
+<!-- DOCTOR STRANGE POSTER IMAGE (IMAGE_9) -->
+<img alt="Doctor Strange - Master of the Mystic Arts poster" class="w-full h-auto object-cover transform transition-transform duration-700 ease-out group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDj8F06oybu-A47eNacednrV5mgp2XAoJV9FfJ-uAn9A7Jcg0CnkZ8pLgmiGIb4DqpPGFNrEdCLqkjXfaYOrvEoEXopExrWAaGk7nJnu3hyY2vZxSmQTMuX4z2MpV9PvhI97zm-d5GMinV545-DUAflazavEgeSjbSJtb08Berl5s31jHDEwdBmfrLvvJETbLcdBcV6SNfs9w9hbgprmQnm62rvutaIkJN39VgYpZtAJv9kvHPu5x4kYCvi3X263lzt8sk"/>
+<!-- Overlay Vignette & Mystic Gradient -->
+<div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-black/30 pointer-events-none"></div>
+<!-- Pill Badge Bottom Right of Poster -->
+<div class="absolute bottom-4 right-4 z-10">
+<div class="backdrop-blur-md bg-black/70 border border-white/20 rounded-full px-3 py-1 flex items-center space-x-2 shadow-lg">
+<span class="w-2 h-2 rounded-full bg-mystic-portal animate-ping"></span>
+<span class="text-[10px] font-mono tracking-wider text-neutral-300 font-semibold uppercase">
+              Subject: Stephen Strange // Bleecker St
+            </span>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- END: MainHeroStage -->
+<!-- BEGIN: CarouselNavButtons -->
+<!-- Left and Right pagination arrows matching game/hero showcase portals -->
+<button aria-label="Previous Hero" class="fixed left-3 top-1/2 -translate-y-1/2 hidden xl:flex w-11 h-11 rounded-full border border-white/10 bg-black/60 backdrop-blur-md hover:border-mystic-gold hover:text-mystic-gold text-neutral-400 items-center justify-center transition-all duration-200 z-30 shadow-lg">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</button>
+<button aria-label="Next Hero" class="fixed right-3 top-1/2 -translate-y-1/2 hidden xl:flex w-11 h-11 rounded-full border border-white/10 bg-black/60 backdrop-blur-md hover:border-mystic-gold hover:text-mystic-gold text-neutral-400 items-center justify-center transition-all duration-200 z-30 shadow-lg">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24">
+<path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+</button>
+<!-- END: CarouselNavButtons -->
+<!-- BEGIN: BottomRosterDock -->
+<!-- Floating bottom switcher bar -->
+<footer class="w-full pb-5 pt-2 px-6 relative z-30" data-purpose="hero-switcher-dock">
+<div class="max-w-xl mx-auto backdrop-blur-xl bg-neutral-950/80 border border-white/10 rounded-2xl px-4 py-2.5 flex items-center justify-between shadow-2xl">
+<!-- Spider-Man Thumbnail Option -->
+<div class="flex items-center space-x-2.5 px-3 py-1.5 rounded-xl cursor-pointer hover:bg-white/5 transition-all text-neutral-400 hover:text-white">
+<div class="w-7 h-7 rounded-full bg-red-600/30 border border-red-500/50 flex items-center justify-center text-xs font-black text-red-400">
+          🕷
+        </div>
+<div class="text-left hidden sm:block">
+<div class="text-[11px] font-bold uppercase tracking-wider leading-tight">Spider-Man</div>
+<div class="text-[9px] text-neutral-500 font-mono">Queens, NY</div>
+</div>
+</div>
+<!-- Doctor Strange Active Option (Highlighted) -->
+<div class="flex items-center space-x-2.5 px-3.5 py-1.5 rounded-xl bg-mystic-gold/15 border border-mystic-gold/50 shadow-[0_0_12px_rgba(245,197,24,0.2)]">
+<div class="w-7 h-7 rounded-full bg-amber-500/40 border border-mystic-gold flex items-center justify-center text-xs font-black text-mystic-gold">
+          👁
+        </div>
+<div class="text-left">
+<div class="text-[11px] font-extrabold uppercase tracking-wider text-mystic-gold leading-tight">Dr. Strange</div>
+<div class="text-[9px] text-amber-200/70 font-mono">Sorcerer Supreme</div>
+</div>
+</div>
+<!-- Iron Man Thumbnail Option -->
+<div class="flex items-center space-x-2.5 px-3 py-1.5 rounded-xl cursor-pointer hover:bg-white/5 transition-all text-neutral-400 hover:text-white">
+<div class="w-7 h-7 rounded-full bg-yellow-600/30 border border-yellow-500/50 flex items-center justify-center text-xs font-black text-yellow-400">
+          ⚡
+        </div>
+<div class="text-left hidden sm:block">
+<div class="text-[11px] font-bold uppercase tracking-wider leading-tight">Iron Man</div>
+<div class="text-[9px] text-neutral-500 font-mono">Stark Tower</div>
+</div>
+</div>
+<!-- Scarlet Witch Thumbnail Option -->
+<div class="flex items-center space-x-2.5 px-3 py-1.5 rounded-xl cursor-pointer hover:bg-white/5 transition-all text-neutral-400 hover:text-white">
+<div class="w-7 h-7 rounded-full bg-rose-600/30 border border-rose-500/50 flex items-center justify-center text-xs font-black text-rose-400">
+          🔮
+        </div>
+<div class="text-left hidden sm:block">
+<div class="text-[11px] font-bold uppercase tracking-wider leading-tight">Wanda</div>
+<div class="text-[9px] text-neutral-500 font-mono">Chaos Magic</div>
+</div>
+</div>
+</div>
+</footer>
+<!-- END: BottomRosterDock -->
+</body></html>
