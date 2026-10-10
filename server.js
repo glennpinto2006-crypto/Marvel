@@ -138,17 +138,17 @@ const heroes = [
     ctaSecondary: 'DEPUTY LOG',
     legal: 'AVENGERS FACILITY // COMMAND OVERRIDE // CLASSIFIED 0-8-4',
     posterTag: 'VIBRANIUM MK II',
-    posterSubject: 'SUBJECT: STEVE ROGERS // BROOKLYN',
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCbpCzMswC5uXjewXLjSGVTsD1xNmx9QxWbX3M3D0FL9NAmhIYUqrO6vfXcNwssu_AQFz37nmM01VmoW5IZZahAN6eLPO7oyPA5plGfpotABQ-UJ1_QWfwyvimpk5DRV1SNlrKiEHW5-7QnebdQ93FUgic82A2zssUhMLpTUns7NV-IPkt4d2PvumFu-gEQP4GOP8lsg0yFpiuQ48EvzextQazSO0nGrlQtOIhpGBA1IefOInsZi9I5t2d5xaTFrXLyF38',
-    backgroundImage: 'https://lh3.googleusercontent.com/aida-public/AB6AXuClX1C1BdiRgNScfna5NOQE97Tg_CDyVHv2-roVFFuL5p_GTZUf0483DqOD6QYK3AfO4c3oTB-tQ_-QryGHT8rp3EAUX_7oBHROPDW5AMU63moBrFkWvrI87qpmzeCDdrpX9gyrKb71mTiVmWZzNdk8jQLmZn2k8L2R-dBiAXJGIvMwlFaXI0UiA6WOAoGkwHcWtlP1AWvZ98Bw4BV07WOtzeKwYi9zF7v9-tSJEAc1R5SMvYCtYENRZ5TAeWFxkBTbIcY',
+    posterSubject: 'SUBJECT: STEVE ROGERS // BROOKLYN, NY',
+    image: 'assets/captain_america_card.jpg',
+    backgroundImage: 'assets/captain_america_shield.jpg',
     theme: {
       primary: '#3b82f6',
       secondary: '#60a5fa',
-      glow: 'rgba(59, 130, 246, 0.4)',
-      gradient: 'radial-gradient(ellipse at 50% 50%, rgba(4,15,40,0.9) 0%, rgba(4,9,20,0.95) 60%, rgba(4,9,20,1) 100%)',
+      glow: 'rgba(59, 130, 246, 0.45)',
+      gradient: 'radial-gradient(circle at 50% 48%, rgba(13,35,71,0.2) 0%, rgba(8,21,46,0.45) 45%, rgba(4,9,20,0.85) 75%, #040914 100%)',
       particleColor: '#3b82f6',
-      ambientOrb1: 'rgba(59, 130, 246, 0.18)',
-      ambientOrb2: 'rgba(96, 165, 250, 0.08)'
+      ambientOrb1: 'rgba(59, 130, 246, 0.32)',
+      ambientOrb2: 'rgba(220, 38, 38, 0.2)'
     }
   },
   {
@@ -168,7 +168,7 @@ const heroes = [
     posterTag: 'EYE OF AGAMOTTO',
     posterSubject: 'SUBJECT: STEPHEN STRANGE // BLEECKER ST',
     image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDj8F06oybu-A47eNacednrV5mgp2XAoJV9FfJ-uAn9A7Jcg0CnkZ8pLgmiGIb4DqpPGFNrEdCLqkjXfaYOrvEoEXopExrWAaGk7nJnu3hyY2vZxSmQTMuX4z2MpV9PvhI97zm-d5GMinV545-DUAflazavEgeSjbSJtb08Berl5s31jHDEwdBmfrLvvJETbLcdBcV6SNfs9w9hbgprmQnm62rvutaIkJN39VgYpZtAJv9kvHPu5x4kYCvi3X263lzt8sk',
-    backgroundImage: '',
+    backgroundImage: 'assets/doctor_strange_sanctum.jpg',
     theme: {
       primary: '#f59e0b',
       secondary: '#fbbf24',

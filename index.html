@@ -55,14 +55,26 @@
     .bg-image-mask {
       position: fixed; inset: 0; z-index: 2; pointer-events: none;
       background: radial-gradient(ellipse at 50% 50%, transparent 20%, rgba(8,8,8,0.6) 55%, rgba(8,8,8,0.92) 80%);
+      transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .bg-gradient-layer {
       position: fixed; inset: 0; z-index: 3; pointer-events: none;
       transition: background 1.2s cubic-bezier(0.16, 1, 0.3, 1);
     }
+    .bg-gradient-layer.captain-shield-rings {
+      background-image: 
+        radial-gradient(circle at 50% 48%, transparent 160px, rgba(59, 130, 246, 0.12) 161px, transparent 164px),
+        radial-gradient(circle at 50% 48%, transparent 290px, rgba(59, 130, 246, 0.09) 291px, transparent 294px),
+        radial-gradient(circle at 50% 48%, transparent 420px, rgba(59, 130, 246, 0.07) 421px, transparent 425px),
+        radial-gradient(circle at 50% 48%, transparent 560px, rgba(37, 99, 235, 0.05) 561px, transparent 565px),
+        linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 64px 64px, 64px 64px;
+    }
     .bg-darkening {
       position: fixed; inset: 0; z-index: 4; pointer-events: none;
       background: linear-gradient(to top, rgba(8,8,8,0.95) 0%, rgba(8,8,8,0.3) 40%, rgba(8,8,8,0.5) 100%);
+      transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1);
     }
     /* Ambient Orbs */
     .ambient-orb {
@@ -589,7 +601,7 @@
 // ══════════════════════════════════════════════════════════════════
 // FETCH HERO DATA FROM BACKEND API
 // ══════════════════════════════════════════════════════════════════
-let heroes = [];
+let heroes = getFallbackHeroes();
 let currentHeroIndex = 0;
 let isTransitioning = false;
 let bgLayerToggle = 0;
@@ -766,17 +778,17 @@ function getFallbackHeroes() {
     "ctaSecondary": "DEPUTY LOG",
     "legal": "AVENGERS FACILITY // COMMAND OVERRIDE // CLASSIFIED 0-8-4",
     "posterTag": "VIBRANIUM MK II",
-    "posterSubject": "SUBJECT: STEVE ROGERS // BROOKLYN",
-    "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuCbpCzMswC5uXjewXLjSGVTsD1xNmx9QxWbX3M3D0FL9NAmhIYUqrO6vfXcNwssu_AQFz37nmM01VmoW5IZZahAN6eLPO7oyPA5plGfpotABQ-UJ1_QWfwyvimpk5DRV1SNlrKiEHW5-7QnebdQ93FUgic82A2zssUhMLpTUns7NV-IPkt4d2PvumFu-gEQP4GOP8lsg0yFpiuQ48EvzextQazSO0nGrlQtOIhpGBA1IefOInsZi9I5t2d5xaTFrXLyF38",
-    "backgroundImage": "https://lh3.googleusercontent.com/aida-public/AB6AXuClX1C1BdiRgNScfna5NOQE97Tg_CDyVHv2-roVFFuL5p_GTZUf0483DqOD6QYK3AfO4c3oTB-tQ_-QryGHT8rp3EAUX_7oBHROPDW5AMU63moBrFkWvrI87qpmzeCDdrpX9gyrKb71mTiVmWZzNdk8jQLmZn2k8L2R-dBiAXJGIvMwlFaXI0UiA6WOAoGkwHcWtlP1AWvZ98Bw4BV07WOtzeKwYi9zF7v9-tSJEAc1R5SMvYCtYENRZ5TAeWFxkBTbIcY",
+    "posterSubject": "SUBJECT: STEVE ROGERS // BROOKLYN, NY",
+    "image": "assets/captain_america_card.jpg",
+    "backgroundImage": "assets/captain_america_shield.jpg",
     "theme": {
       "primary": "#3b82f6",
       "secondary": "#60a5fa",
-      "glow": "rgba(59, 130, 246, 0.4)",
-      "gradient": "radial-gradient(ellipse at 50% 50%, rgba(4,15,40,0.9) 0%, rgba(4,9,20,0.95) 60%, rgba(4,9,20,1) 100%)",
+      "glow": "rgba(59, 130, 246, 0.45)",
+      "gradient": "radial-gradient(circle at 50% 48%, rgba(13,35,71,0.2) 0%, rgba(8,21,46,0.45) 45%, rgba(4,9,20,0.85) 75%, #040914 100%)",
       "particleColor": "#3b82f6",
-      "ambientOrb1": "rgba(59, 130, 246, 0.18)",
-      "ambientOrb2": "rgba(96, 165, 250, 0.08)"
+      "ambientOrb1": "rgba(59, 130, 246, 0.32)",
+      "ambientOrb2": "rgba(220, 38, 38, 0.2)"
     }
   },
   {
@@ -802,7 +814,7 @@ function getFallbackHeroes() {
     "posterTag": "EYE OF AGAMOTTO",
     "posterSubject": "SUBJECT: STEPHEN STRANGE // BLEECKER ST",
     "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuDj8F06oybu-A47eNacednrV5mgp2XAoJV9FfJ-uAn9A7Jcg0CnkZ8pLgmiGIb4DqpPGFNrEdCLqkjXfaYOrvEoEXopExrWAaGk7nJnu3hyY2vZxSmQTMuX4z2MpV9PvhI97zm-d5GMinV545-DUAflazavEgeSjbSJtb08Berl5s31jHDEwdBmfrLvvJETbLcdBcV6SNfs9w9hbgprmQnm62rvutaIkJN39VgYpZtAJv9kvHPu5x4kYCvi3X263lzt8sk",
-    "backgroundImage": "",
+    "backgroundImage": "assets/doctor_strange_sanctum.jpg",
     "theme": {
       "primary": "#f59e0b",
       "secondary": "#fbbf24",
@@ -1038,26 +1050,130 @@ function updateBackground(hero) {
   const currentEl = document.getElementById(`bgImage${bgLayerToggle}`);
   const nextEl = document.getElementById(`bgImage${nextLayer}`);
 
-  // Set background image
-  if (hero.backgroundImage) {
+  // Atmospheric background layers & mask controls
+  const bgMask = document.querySelector('.bg-image-mask');
+  const bgDarkening = document.querySelector('.bg-darkening');
+  const bgGradient = document.getElementById('bgGradient');
+  const amb1 = document.getElementById('ambOrb1');
+  const amb2 = document.getElementById('ambOrb2');
+  const amb3 = document.getElementById('ambOrb3');
+
+  // Hero-specific background tuning
+  if (hero.id === 'captain') {
     nextEl.style.backgroundImage = `url('${hero.backgroundImage}')`;
-    nextEl.style.filter = 'contrast(1.2) brightness(0.6)';
+    nextEl.style.backgroundPosition = 'center 46%';
+    nextEl.style.backgroundSize = 'cover';
+    nextEl.style.filter = 'contrast(1.28) brightness(0.92) saturate(1.15)';
+    nextEl.style.opacity = '0.9';
+
+    // Cinematic Vibranium Shield vignette matching Image 2
+    bgGradient.style.background = `
+      radial-gradient(circle at 50% 48%, transparent 28%, rgba(4,9,20,0.48) 58%, rgba(4,9,20,0.92) 86%, #040914 100%),
+      linear-gradient(to top, #040914 0%, transparent 42%, rgba(4,9,20,0.75) 100%),
+      linear-gradient(to right, rgba(4,9,20,0.7) 0%, transparent 35%, transparent 65%, rgba(4,9,20,0.62) 100%)
+    `;
+    bgGradient.classList.add('captain-shield-rings');
+
+    // Soften darkening masks so shield star and vibranium texture gleam through
+    if (bgMask) bgMask.style.opacity = '0.22';
+    if (bgDarkening) bgDarkening.style.opacity = '0.35';
+
+    // Ambient vibranium energy orbs
+    amb1.style.background = 'radial-gradient(circle, rgba(59, 130, 246, 0.35) 0%, rgba(37, 99, 235, 0.12) 55%, transparent 80%)';
+    amb1.style.width = '800px';
+    amb1.style.height = '800px';
+    amb1.style.top = '48%';
+    amb1.style.left = '50%';
+
+    amb2.style.background = 'radial-gradient(circle, rgba(220, 38, 38, 0.22) 0%, rgba(185, 28, 28, 0.06) 55%, transparent 80%)';
+    amb2.style.width = '600px';
+    amb2.style.height = '600px';
+    amb2.style.top = '48%';
+    amb2.style.left = '50%';
+
+    amb3.style.background = 'radial-gradient(circle, rgba(96, 165, 250, 0.3) 0%, transparent 70%)';
+    amb3.style.width = '350px';
+    amb3.style.height = '350px';
+    amb3.style.top = '46%';
+    amb3.style.left = '50%';
+  } else if (hero.id === 'strange') {
+    bgGradient.classList.remove('captain-shield-rings');
+    nextEl.style.backgroundImage = `url('${hero.backgroundImage}')`;
+    nextEl.style.backgroundPosition = 'center 42%';
+    nextEl.style.backgroundSize = 'cover';
+    nextEl.style.filter = 'contrast(1.2) brightness(0.88) saturate(1.15)';
+    nextEl.style.opacity = '0.92';
+
+    // Sanctum Sanctorum occult chamber atmospheric vignette
+    bgGradient.style.background = `
+      radial-gradient(circle at 50% 44%, transparent 22%, rgba(6,7,12,0.42) 54%, rgba(5,6,10,0.88) 84%, #040508 100%),
+      linear-gradient(to top, #040508 0%, transparent 42%, rgba(5,6,10,0.65) 100%),
+      linear-gradient(to right, rgba(5,6,10,0.65) 0%, transparent 32%, transparent 68%, rgba(5,6,10,0.65) 100%)
+    `;
+
+    if (bgMask) bgMask.style.opacity = '0.28';
+    if (bgDarkening) bgDarkening.style.opacity = '0.38';
+
+    // Mystic Eldritch & Eye of Agamotto ambient energy glow
+    amb1.style.background = 'radial-gradient(circle, rgba(245, 158, 11, 0.32) 0%, rgba(217, 119, 6, 0.1) 50%, transparent 75%)';
+    amb1.style.width = '750px';
+    amb1.style.height = '750px';
+    amb1.style.top = '42%';
+    amb1.style.left = '50%';
+
+    amb2.style.background = 'radial-gradient(circle, rgba(20, 184, 166, 0.25) 0%, rgba(13, 148, 136, 0.06) 50%, transparent 75%)';
+    amb2.style.width = '620px';
+    amb2.style.height = '620px';
+    amb2.style.top = '44%';
+    amb2.style.left = '48%';
+
+    amb3.style.background = 'radial-gradient(circle, rgba(251, 191, 36, 0.25) 0%, transparent 70%)';
+    amb3.style.width = '400px';
+    amb3.style.height = '400px';
+    amb3.style.top = '42%';
+    amb3.style.left = '50%';
   } else {
-    nextEl.style.backgroundImage = 'none';
-    nextEl.style.filter = 'none';
+    bgGradient.classList.remove('captain-shield-rings');
+    if (bgMask) bgMask.style.opacity = '1';
+    if (bgDarkening) bgDarkening.style.opacity = '1';
+
+    nextEl.style.backgroundPosition = 'center center';
+    nextEl.style.backgroundSize = 'cover';
+    if (hero.backgroundImage) {
+      nextEl.style.backgroundImage = `url('${hero.backgroundImage}')`;
+      nextEl.style.filter = 'contrast(1.2) brightness(0.6)';
+      nextEl.style.opacity = '1';
+    } else {
+      nextEl.style.backgroundImage = 'none';
+      nextEl.style.filter = 'none';
+    }
+
+    bgGradient.style.background = hero.theme.gradient;
+    amb1.style.background = hero.theme.ambientOrb1;
+    amb1.style.width = '700px';
+    amb1.style.height = '700px';
+    amb1.style.top = '15%';
+    amb1.style.left = '55%';
+
+    amb2.style.background = hero.theme.ambientOrb2;
+    amb2.style.width = '500px';
+    amb2.style.height = '500px';
+    amb2.style.top = '65%';
+    amb2.style.left = '25%';
+
+    amb3.style.background = 'rgba(245,197,24,0.04)';
+    amb3.style.width = '350px';
+    amb3.style.height = '350px';
+    amb3.style.top = '35%';
+    amb3.style.left = '10%';
   }
 
-  // Cross-fade
+  // Cross-fade with explicit opacity handling
   nextEl.classList.add('active');
+  nextEl.style.opacity = (hero.id === 'captain' || hero.id === 'strange') ? '0.92' : '1';
   currentEl.classList.remove('active');
+  currentEl.style.opacity = '0';
   bgLayerToggle = nextLayer;
-
-  // Update gradient overlay
-  document.getElementById('bgGradient').style.background = hero.theme.gradient;
-
-  // Update ambient orbs
-  document.getElementById('ambOrb1').style.background = hero.theme.ambientOrb1;
-  document.getElementById('ambOrb2').style.background = hero.theme.ambientOrb2;
 
   // Update CSS custom properties for theme
   document.documentElement.style.setProperty('--theme-primary', hero.theme.primary);
@@ -1257,16 +1373,27 @@ window.addEventListener('DOMContentLoaded', async () => {
   initThreeJS();
   init3DCardTilt();
 
-  // Fetch hero data from backend API
-  await fetchHeroes();
+  // Fetch hero data from backend API asynchronously
+  fetchHeroes().catch(console.warn);
 
   // Build UI
   buildDock();
   buildCharactersGrid();
 
-  // Load first hero
+  // Load initial hero (supports #captain, #captainamerica, or defaults to first hero)
   if (heroes.length > 0) {
-    const h = heroes[0];
+    const rawHash = (window.location.hash || '').replace('#', '').toLowerCase();
+    const hashIndex = heroes.findIndex(hero => hero.id === rawHash || hero.hashtag.toLowerCase().replace('#', '') === rawHash);
+    if (hashIndex !== -1) {
+      currentHeroIndex = hashIndex;
+      document.querySelectorAll('.dock-hero-btn').forEach((btn, i) => {
+        const isActive = i === currentHeroIndex;
+        btn.classList.toggle('active', isActive);
+        btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+        btn.setAttribute('tabindex', isActive ? '0' : '-1');
+      });
+    }
+    const h = heroes[currentHeroIndex];
     document.getElementById('heroTitle').textContent = h.name;
     document.getElementById('heroRealName').textContent = h.realName;
     document.getElementById('heroBadge').textContent = h.badge;
