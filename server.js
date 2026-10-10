@@ -28,7 +28,7 @@ const heroes = [
     posterTag: 'MK-LXXXV NANO-TECH',
     posterSubject: 'SUBJECT: TONY STARK // MALIBU',
     image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuD_ndz-YJdhLllNlTFDwLVmMc-ROotxPCVCNCZuoHX2PZdoVtK3HZN6wibOBLFoNotX6jV8pTCGfFihatwPRFt94ST1P-3i_TX-AGC5AlOWMz5NWWzCHBbn1x3mlxgcJhhWgvNsVWjQrqg4EwmvwkYeTl17sw1yjF2FVFgXwAD-0i43PBSnWlc9g8GN8Li_bdqSiYx5NSd_YsQPHpK4UjLhwrWQdi4CN-xafc7y2DUexRmMJ-jkv7gMvRiiqOpRIKqxyuM',
-    backgroundImage: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBJbFj4BZdk8GMyLZHsQTN0CyyU5hDI7LKfnuRNPxzbx3nkev0XB6N4ErRV3sR8Dhl9pW2K8qtybf1qltDdUzGjJTcc5olr5eqNeKDpOpp85JPIW42IYWFOE5k6TuImqHtHDjN_uyEJYUiwlyE0brRVz3KwBeyZL4RqaoLLf0P5aO5CCqQSoVBMlw9ZfJ8AidUTyh8laTYm5N7E9UiTYUjs9wLPr9nQtl61sldWMj2vsNLavCkkvqDc65gfU_BOh1s_cBo',
+    backgroundImage: 'assets/ironman_arc_reactor.jpg',
     theme: {
       primary: '#E62429',
       secondary: '#38bdf8',
@@ -140,7 +140,7 @@ const heroes = [
     posterTag: 'VIBRANIUM MK II',
     posterSubject: 'SUBJECT: STEVE ROGERS // BROOKLYN, NY',
     image: 'assets/captain_america_card.jpg',
-    backgroundImage: 'assets/captain_america_shield.jpg',
+    backgroundImage: 'assets/captain_america_gym.jpg',
     theme: {
       primary: '#3b82f6',
       secondary: '#60a5fa',

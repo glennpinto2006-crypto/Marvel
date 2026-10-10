@@ -644,7 +644,7 @@ function getFallbackHeroes() {
     "posterTag": "MK-LXXXV NANO-TECH",
     "posterSubject": "SUBJECT: TONY STARK // MALIBU",
     "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuD_ndz-YJdhLllNlTFDwLVmMc-ROotxPCVCNCZuoHX2PZdoVtK3HZN6wibOBLFoNotX6jV8pTCGfFihatwPRFt94ST1P-3i_TX-AGC5AlOWMz5NWWzCHBbn1x3mlxgcJhhWgvNsVWjQrqg4EwmvwkYeTl17sw1yjF2FVFgXwAD-0i43PBSnWlc9g8GN8Li_bdqSiYx5NSd_YsQPHpK4UjLhwrWQdi4CN-xafc7y2DUexRmMJ-jkv7gMvRiiqOpRIKqxyuM",
-    "backgroundImage": "https://lh3.googleusercontent.com/aida-public/AB6AXuBJbFj4BZdk8GMyLZHsQTN0CyyU5hDI7LKfnuRNPxzbx3nkev0XB6N4ErRV3sR8Dhl9pW2K8qtybf1qltDdUzGjJTcc5olr5eqNeKDpOpp85JPIW42IYWFOE5k6TuImqHtHDjN_uyEJYUiwlyE0brRVz3KwBeyZL4RqaoLLf0P5aO5CCqQSoVBMlw9ZfJ8AidUTyh8laTYm5N7E9UiTYUjs9wLPr9nQtl61sldWMj2vsNLavCkkvqDc65gfU_BOh1s_cBo",
+    "backgroundImage": "assets/ironman_arc_reactor.jpg",
     "theme": {
       "primary": "#E62429",
       "secondary": "#38bdf8",
@@ -780,7 +780,7 @@ function getFallbackHeroes() {
     "posterTag": "VIBRANIUM MK II",
     "posterSubject": "SUBJECT: STEVE ROGERS // BROOKLYN, NY",
     "image": "assets/captain_america_card.jpg",
-    "backgroundImage": "assets/captain_america_shield.jpg",
+    "backgroundImage": "assets/captain_america_gym.jpg",
     "theme": {
       "primary": "#3b82f6",
       "secondary": "#60a5fa",
@@ -1060,42 +1060,42 @@ function updateBackground(hero) {
 
   // Hero-specific background tuning
   if (hero.id === 'captain') {
+    bgGradient.classList.remove('captain-shield-rings');
     nextEl.style.backgroundImage = `url('${hero.backgroundImage}')`;
     nextEl.style.backgroundPosition = 'center 46%';
     nextEl.style.backgroundSize = 'cover';
-    nextEl.style.filter = 'contrast(1.28) brightness(0.92) saturate(1.15)';
-    nextEl.style.opacity = '0.9';
+    nextEl.style.filter = 'contrast(1.22) brightness(0.92) saturate(1.15)';
+    nextEl.style.opacity = '0.94';
 
-    // Cinematic Vibranium Shield vignette matching Image 2
+    // Brooklyn boxing gym & "I Can Do This All Day" atmospheric vignette
     bgGradient.style.background = `
-      radial-gradient(circle at 50% 48%, transparent 28%, rgba(4,9,20,0.48) 58%, rgba(4,9,20,0.92) 86%, #040914 100%),
-      linear-gradient(to top, #040914 0%, transparent 42%, rgba(4,9,20,0.75) 100%),
-      linear-gradient(to right, rgba(4,9,20,0.7) 0%, transparent 35%, transparent 65%, rgba(4,9,20,0.62) 100%)
+      radial-gradient(circle at 50% 48%, transparent 26%, rgba(6,16,36,0.42) 56%, rgba(4,9,20,0.88) 84%, #040914 100%),
+      linear-gradient(to top, #040914 0%, transparent 42%, rgba(4,9,20,0.65) 100%),
+      linear-gradient(to right, rgba(4,9,20,0.65) 0%, transparent 32%, transparent 68%, rgba(4,9,20,0.65) 100%)
     `;
-    bgGradient.classList.add('captain-shield-rings');
 
-    // Soften darkening masks so shield star and vibranium texture gleam through
-    if (bgMask) bgMask.style.opacity = '0.22';
-    if (bgDarkening) bgDarkening.style.opacity = '0.35';
+    // Soften darkening masks so typography and gym scene emerge clearly
+    if (bgMask) bgMask.style.opacity = '0.24';
+    if (bgDarkening) bgDarkening.style.opacity = '0.34';
 
-    // Ambient vibranium energy orbs
-    amb1.style.background = 'radial-gradient(circle, rgba(59, 130, 246, 0.35) 0%, rgba(37, 99, 235, 0.12) 55%, transparent 80%)';
-    amb1.style.width = '800px';
-    amb1.style.height = '800px';
-    amb1.style.top = '48%';
+    // Warm Brooklyn gym rim lighting & Captain America ambient energy
+    amb1.style.background = 'radial-gradient(circle, rgba(59, 130, 246, 0.32) 0%, rgba(37, 99, 235, 0.1) 50%, transparent 75%)';
+    amb1.style.width = '750px';
+    amb1.style.height = '750px';
+    amb1.style.top = '46%';
     amb1.style.left = '50%';
 
-    amb2.style.background = 'radial-gradient(circle, rgba(220, 38, 38, 0.22) 0%, rgba(185, 28, 28, 0.06) 55%, transparent 80%)';
-    amb2.style.width = '600px';
-    amb2.style.height = '600px';
+    amb2.style.background = 'radial-gradient(circle, rgba(220, 38, 38, 0.24) 0%, rgba(185, 28, 28, 0.06) 50%, transparent 75%)';
+    amb2.style.width = '620px';
+    amb2.style.height = '620px';
     amb2.style.top = '48%';
-    amb2.style.left = '50%';
+    amb2.style.left = '35%';
 
-    amb3.style.background = 'radial-gradient(circle, rgba(96, 165, 250, 0.3) 0%, transparent 70%)';
-    amb3.style.width = '350px';
-    amb3.style.height = '350px';
-    amb3.style.top = '46%';
-    amb3.style.left = '50%';
+    amb3.style.background = 'radial-gradient(circle, rgba(255, 255, 255, 0.22) 0%, transparent 70%)';
+    amb3.style.width = '380px';
+    amb3.style.height = '380px';
+    amb3.style.top = '42%';
+    amb3.style.left = '55%';
   } else if (hero.id === 'strange') {
     bgGradient.classList.remove('captain-shield-rings');
     nextEl.style.backgroundImage = `url('${hero.backgroundImage}')`;
@@ -1204,6 +1204,43 @@ function updateBackground(hero) {
     amb3.style.height = '380px';
     amb3.style.top = '42%';
     amb3.style.left = '50%';
+  } else if (hero.id === 'ironman') {
+    bgGradient.classList.remove('captain-shield-rings');
+    nextEl.style.backgroundImage = `url('${hero.backgroundImage}')`;
+    nextEl.style.backgroundPosition = 'center 46%';
+    nextEl.style.backgroundRepeat = 'no-repeat';
+    nextEl.style.backgroundSize = 'contain';
+    nextEl.style.filter = 'contrast(1.22) brightness(0.96) saturate(1.15)';
+    nextEl.style.opacity = '0.94';
+
+    // Arc Reactor central power core & Stark Industries dark vignette
+    bgGradient.style.background = `
+      radial-gradient(circle at 50% 45%, transparent 24%, rgba(18,4,8,0.42) 56%, rgba(10,2,4,0.88) 84%, #080204 100%),
+      linear-gradient(to top, #080204 0%, transparent 42%, rgba(10,2,4,0.65) 100%),
+      linear-gradient(to right, rgba(10,2,4,0.68) 0%, transparent 32%, transparent 68%, rgba(10,2,4,0.68) 100%)
+    `;
+
+    if (bgMask) bgMask.style.opacity = '0.24';
+    if (bgDarkening) bgDarkening.style.opacity = '0.34';
+
+    // Luminous electric cyan power core & Stark crimson ambient energy
+    amb1.style.background = 'radial-gradient(circle, rgba(56, 189, 248, 0.35) 0%, rgba(14, 165, 233, 0.12) 50%, transparent 75%)';
+    amb1.style.width = '750px';
+    amb1.style.height = '750px';
+    amb1.style.top = '44%';
+    amb1.style.left = '50%';
+
+    amb2.style.background = 'radial-gradient(circle, rgba(230, 36, 41, 0.28) 0%, rgba(185, 28, 28, 0.08) 50%, transparent 75%)';
+    amb2.style.width = '650px';
+    amb2.style.height = '650px';
+    amb2.style.top = '42%';
+    amb2.style.left = '48%';
+
+    amb3.style.background = 'radial-gradient(circle, rgba(255, 255, 255, 0.28) 0%, rgba(56, 189, 248, 0.15) 40%, transparent 70%)';
+    amb3.style.width = '420px';
+    amb3.style.height = '420px';
+    amb3.style.top = '44%';
+    amb3.style.left = '50%';
   } else {
     bgGradient.classList.remove('captain-shield-rings');
     if (bgMask) bgMask.style.opacity = '1';
@@ -1242,7 +1279,7 @@ function updateBackground(hero) {
 
   // Cross-fade with explicit opacity handling
   nextEl.classList.add('active');
-  nextEl.style.opacity = (hero.id === 'captain' || hero.id === 'strange' || hero.id === 'wolverine' || hero.id === 'thor') ? '0.92' : '1';
+  nextEl.style.opacity = (hero.id === 'captain' || hero.id === 'strange' || hero.id === 'wolverine' || hero.id === 'thor' || hero.id === 'ironman') ? '0.94' : '1';
   currentEl.classList.remove('active');
   currentEl.style.opacity = '0';
   bgLayerToggle = nextLayer;
